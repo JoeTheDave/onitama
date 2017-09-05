@@ -1,6 +1,5 @@
-# atlas
+# Onitama
 
-##TODO:
 * Webpack not rebuilding on file changes
 * Incorporate ESLint
 * Add a prod vs dev build and include redux dev tools
