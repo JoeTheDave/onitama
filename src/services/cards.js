@@ -1,4 +1,3 @@
-
 import { alignmentTypes, players } from '../architecture/constants';
 
 const cards = [
