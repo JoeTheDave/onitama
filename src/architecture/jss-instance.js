@@ -1,6 +1,7 @@
 import { create } from 'jss';
 
 import nested from 'jss-nested';
+import compose from 'jss-compose';
 import camelCase from 'jss-camel-case';
 import defaultUnit from 'jss-default-unit';
 import expand from 'jss-expand';
@@ -26,6 +27,7 @@ const jssInstance = create({
     // Order matters!
     // https://github.com/cssinjs/jss/blob/master/docs/plugins.md#order-does-matter
     nested(),
+    compose(),
     camelCase(),
     defaultUnit(defaultUnitOverrides),
     expand(),

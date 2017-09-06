@@ -14,7 +14,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      title: 'Onitama'
+      template: 'src/index.html'
     })
   ],
   output: {
@@ -27,6 +27,10 @@ module.exports = {
         test: /\.js|\.jsx|\.es6$/,
         use: ['babel-loader'],
         exclude: /node_modules/,
+      },
+      {
+        test: /\.(png|jpg)$/,
+        loader: 'url-loader'
       }
     ]
   }

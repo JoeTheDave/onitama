@@ -22,4 +22,5 @@ export const colors = {
   opaqueBlue: 'rgba(90, 120, 140, 0.3)',
   opaqueRed: 'rgba(145, 85, 75, 0.3)',
   opaqueGreen: 'rgba(130, 140, 120, 0.3)',
+  characterColor: 'rgba(100, 100, 100, 0.6)'
 };

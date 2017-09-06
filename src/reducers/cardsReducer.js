@@ -9,7 +9,7 @@ export default function (state = initialState, action) {
   switch (action.type) {
     case CARDS_RECEIVED:
       return {
-        cards: shuffle(action.cards)
+        cards: action.cards
       };
 
     case RESET_ALL_REDUCERS:

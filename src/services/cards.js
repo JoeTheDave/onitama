@@ -4,7 +4,7 @@ const cards = [
   {
     name: 'Dragon',
     firstPlayer: players.red,
-    text: "Be swift as the thunder that peals before you have a chance to cover your ears, fast as the lightning that flashes before you can blink your eyes.",
+    text: `Be swift as the thunder that peals before you have a chance to cover your ears, fast as the lightning that flashes before you can blink your eyes.`,
     attackPattern: [{ x: -2, y: 1 }, { x: 2, y: 1 }, { x: -1, y: -1 }, { x: 1, y: -1 }],
     alignment: alignmentTypes.center
   },

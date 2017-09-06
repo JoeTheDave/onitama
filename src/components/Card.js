@@ -4,17 +4,25 @@ import injectSheet from 'react-jss';
 
 import { alignmentTypes, colors } from '../architecture/constants';
 import AttackPatternGrid from './AttackPatternGrid';
+import { getCharacterComponent, Swish } from './svg';
+import cardBackground from '../assets/card-background.png';
 
 const styles = {
   card: {
     width: 400,
-    height: 220,
+    height: 250,
     float: 'left',
-    margin: 10,
-    border: { type: 'solid', width: 1, color: 'black' },
-    backgroundColor: 'rgba(224, 221, 191, 0.7)',
+    backgroundImage: `url("${cardBackground}")`,
     borderRadius: 10,
-    padding: 10
+    margin: 10,
+  },
+  cardBackground: {
+    width: '100%',
+    height: '100%',
+    backgroundColor: 'rgba(224, 221, 191, 0.8)',
+    borderRadius: 10,
+    padding: 10,
+    boxSizing: 'border-box',
   },
   content: {
     width: '100%',
@@ -22,96 +30,91 @@ const styles = {
     position: 'relative'
   },
   leftContent: {
-    width: '60%',
+    width: '55%',
     height: '100%',
     position: 'absolute',
     left: 0
   },
+  character: {
+    width: '100%',
+    //backgroundColor: 'red',
+    textAlign: 'center',
+    position: 'absolute',
+    top: 5,
+  },
   cardName: {
     width: '100%',
     fontSize: 36,
+    fontFamily: 'IM Fell English SC',
+    fontWeight: 'bold',
     textAlign: 'center',
-    marginTop: 120
+    position: 'absolute',
+    top: 120,
+    color: 'rgba(60, 60, 60, 1)'
   },
   rightContent: {
-    width: '40%',
+    width: 160,
     height: '100%',
     position: 'absolute',
     right: 0
   },
   bottomContent: {
-    height: 50,
+    height: 60,
     width: '100%',
     position: 'absolute',
     bottom: 0,
     borderRadius: 5,
-    padding: 10,
-    boxSizing: 'border-box'
-    // Not sure how to modify these classes with Props.  that would allow a major refactor
+    padding: [0, 10],
+    boxSizing: 'border-box',
+    backgroundColor: props => {
+      switch (props.cardInfo.alignment) {
+        case alignmentTypes.left:
+          return colors.opaqueBlue;
+        case alignmentTypes.center:
+          return colors.opaqueGreen;
+        case alignmentTypes.right:
+          return colors.opaqueRed;
+        default:
+          return '';
+      }
+    }
+  },
+  verticalAligner: {
+    height: '100%',
+    width: 1,
+    display: 'inline-block',
+    verticalAlign: 'middle',
   },
   wisdom: {
     width: '90%',
     display: 'inline-block',
-    fontSize: 10,
+    verticalAlign: 'middle',
+    fontSize: 12,
+    fontFamily: 'Caudex',
     color: '#444',
     textAlign: 'center',
-    paddingTop: 3
-  },
-  redBackground: { backgroundColor: colors.opaqueRed },
-  greenBackground: { backgroundColor: colors.opaqueGreen },
-  blueBackground: { backgroundColor: colors.opaqueBlue },
-  redContent: { color: colors.red },
-  greenContent: { color: colors.green },
-  blueContent: { color: colors.blue }
-
-  // Possible Google Fonts
-  // font-family: 'Caudex', serif;
-  // font-family: 'IM Fell English SC', serif;
-  // font-family: 'Holtwood One SC', serif;
-  // font-family: 'Kotta One', serif;
-
+  }
 };
 
 export const Card = ({ cardInfo, classes }) => {
   const { alignment, attackPattern, name, text } = cardInfo;
-
-  const getBackground = () => {
-    switch (alignment) {
-      case alignmentTypes.left:
-        return classes.blueBackground;
-      case alignmentTypes.center:
-        return classes.greenBackground;
-      case alignmentTypes.right:
-        return classes.redBackground;
-      default:
-        return '';
-    }
-  };
-
-  const getContentColor = () => {
-    switch (alignment) {
-      case alignmentTypes.left:
-        return classes.blueContent;
-      case alignmentTypes.center:
-        return classes.greenContent;
-      case alignmentTypes.right:
-        return classes.redContent;
-      default:
-        return '';
-    }
-  };
-
+  const Character = getCharacterComponent(name);
   return (
     <div className={classes.card}>
-      <div className={classes.content}>
-        <div className={classes.leftContent}>
-          <div className={`${classes.cardName} ${getContentColor()}`}>{name.toUpperCase()}</div>
-        </div>
-        <div className={classes.rightContent}>
-          <AttackPatternGrid attackPattern={attackPattern} alignment={alignment} />
-        </div>
-        <div className={`${classes.bottomContent} ${getBackground()}`}>
-          <div className={classes.wisdom}>{`"${text}"`}</div>
+      <div className={classes.cardBackground}>
+        <div className={classes.content}>
+          <div className={classes.leftContent}>
+            <Swish />
+            <div className={classes.character}><Character fillColor={colors.characterColor} /></div>
+            <div className={classes.cardName}>{name.toUpperCase()}</div>
+          </div>
+          <div className={classes.rightContent}>
+            <AttackPatternGrid attackPattern={attackPattern} alignment={alignment} />
+          </div>
+          <div className={classes.bottomContent}>
+            <div className={classes.verticalAligner}></div>
+            <div className={classes.wisdom}>{`"${text}"`}</div>
+          </div>
         </div>
       </div>
     </div>

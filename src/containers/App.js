@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import actionCreators from '../actions';
-import Card from '../Components/Card';
+import Card from '../components/Card';
 
 const mapStateToProps = state => ({
   cards: state.cards.cards

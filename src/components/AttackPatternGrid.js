@@ -5,43 +5,57 @@ import injectSheet from 'react-jss';
 import { alignmentTypes, colors } from '../architecture/constants';
 
 const styles = {
+  container: {
+    borderRadius: 8,
+    overflow: 'hidden'
+  },
   gridElement: {
     backgroundColor: 'white',
     width: 30,
     height: 30,
     margin: 1,
     float: 'left'
+  },
+  referencePoint: {
+    backgroundColor: '#444'
+  },
+  attackOption: {
+    backgroundColor: props => {
+      switch (props.alignment) {
+        case alignmentTypes.left:
+          return colors.blue;
+        case alignmentTypes.center:
+          return colors.green;
+        case alignmentTypes.right:
+          return colors.red;
+        default:
+          return '';
+      }
+    }
   }
 };
 
 export const AttackPatternGrid = ({ attackPattern, alignment, classes }) => {
-
-  const getBackground = () => {
-    switch (alignment) {
-      case alignmentTypes.left:
-        return classes.blueBackground;
-      case alignmentTypes.center:
-        return classes.greenBackground;
-      case alignmentTypes.right:
-        return classes.redBackground;
-      default:
-        return '';
-    }
-  };
-
   const gridElements = () => {
     const elements = [];
     for (let x = 0; x < 25; x++) {
-      elements.push(null);
+      elements.push(0);
     }
+    elements[12] = 1;
+    attackPattern.forEach(option => {
+      elements[12 + option.x - (option.y * 5)] = 2;
+    })
     return elements;
   }
 
   return (
-    <div>
-      {gridElements().map((element, index) => (
-        <div key={index} className={classes.gridElement}></div>
-      ))}
+    <div className={classes.container}>
+      {gridElements().map((element, index) => {
+        const classComposition = [classes.gridElement];
+        if (element === 1) { classComposition.push(classes.referencePoint); }
+        if (element === 2) { classComposition.push(classes.attackOption); }
+        return (<div key={index} className={classComposition.join(' ')}></div>);
+      })}
     </div>
   );
 };
