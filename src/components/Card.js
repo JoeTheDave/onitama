@@ -2,19 +2,20 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 
-import { alignmentTypes, colors } from '../architecture/constants';
+import { alignmentTypes, colors, players } from '../architecture/constants';
 import AttackPatternGrid from './AttackPatternGrid';
-import { getCharacterComponent, Swish } from './svg';
+import { getCharacterComponent, FirstPlayerIcon, Swish } from './svg';
 import cardBackground from '../assets/card-background.png';
 
 const styles = {
   card: {
     width: 400,
-    height: 250,
+    height: 260,
     float: 'left',
     backgroundImage: `url("${cardBackground}")`,
     borderRadius: 10,
     margin: 10,
+    border: { style: 'solid', width: 1, color: '#999' }
   },
   cardBackground: {
     width: '100%',
@@ -59,7 +60,7 @@ const styles = {
     right: 0
   },
   bottomContent: {
-    height: 60,
+    height: 70,
     width: '100%',
     position: 'absolute',
     bottom: 0,
@@ -86,18 +87,32 @@ const styles = {
     verticalAlign: 'middle',
   },
   wisdom: {
-    width: '90%',
+    width: '85%',
     display: 'inline-block',
     verticalAlign: 'middle',
     fontSize: 12,
     fontFamily: 'Caudex',
     color: '#444',
     textAlign: 'center',
+  },
+  firstPlayerIcon: {
+    display: 'inline-block',
+    verticalAlign: 'middle',
+    width: 40,
+    height: 30,
+    position: 'relative',
+    right: -10,
+    border: { style: 'solid', width: 2, color: colors.opaqueWhite },
+    backgroundColor: props => {
+      console.log(props);
+      if (props.cardInfo.firstPlayer === players.red) { return colors.red; }
+      if (props.cardInfo.firstPlayer === players.blue) { return colors.blue; }
+    }
   }
 };
 
 export const Card = ({ cardInfo, classes }) => {
-  const { alignment, attackPattern, name, text } = cardInfo;
+  const { alignment, attackPattern, firstPlayer, name, text } = cardInfo;
   const Character = getCharacterComponent(name);
   return (
     <div className={classes.card}>
@@ -113,7 +128,10 @@ export const Card = ({ cardInfo, classes }) => {
           </div>
           <div className={classes.bottomContent}>
             <div className={classes.verticalAligner}></div>
-            <div className={classes.wisdom}>{`"${text}"`}</div>
+            <div className={classes.wisdom}>{text.split('\n').map(t => <div>{t}</div>)}</div>
+            <div className={classes.firstPlayerIcon}>
+              <FirstPlayerIcon />
+            </div>
           </div>
         </div>
       </div>

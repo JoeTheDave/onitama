@@ -11,7 +11,7 @@ const cards = [
   {
     name: 'Giraffe',
     firstPlayer: players.blue,
-    text: "Project your power, vaulting at oppenents who believe themselves safely out of range. Agrression is subservient to surprise.",
+    text: "Project your power, vaulting at oppenents\nwho believe themselves safely out of range.\nAgrression is subservient to surprise.",
     attackPattern: [{ x: -2, y: 1 }, { x: 0, y: -1 }, { x: 2, y: 1 }],
     alignment: alignmentTypes.center
   },
@@ -25,21 +25,21 @@ const cards = [
   {
     name: 'Tiger',
     firstPlayer: players.blue,
-    text: "The power of your Art projects itself like a shadow. Sense your opponent's fear, and pounce with certainty and strength.",
+    text: "The power of your Art projects itself like a shadow. Sense your opponent's fear,\nand pounce with certainty and strength.",
     attackPattern: [{ x: 0, y: 2 }, { x: 0, y: -1 }],
     alignment: alignmentTypes.center
   },
   {
     name: 'Rat',
     firstPlayer: players.red,
-    text: "Your opponent cannot attack when he cannot predict. Let your movements be immediate, your attacks be unexpected.",
+    text: "Your opponent cannot attack when he cannot predict. Let your movements be immediate,\nyour attacks be unexpected.",
     attackPattern: [{ x: -1, y: 0 }, { x: 0, y: 1 }, { x: 1, y: -1 }],
     alignment: alignmentTypes.left
   },
   {
     name: 'Viper',
     firstPlayer: players.red,
-    text: "The Art of the Viper is to strike in the Moment. This is the true Art.",
+    text: "The Art of the Viper is to strike in the Moment.\nThis is the true Art.",
     attackPattern: [{ x: -2, y: 0 }, { x: 0, y: 1 }, { x: 1, y: -1 }],
     alignment: alignmentTypes.left
   },
@@ -53,28 +53,28 @@ const cards = [
   {
     name: 'Fox',
     firstPlayer: players.red,
-    text: "Hurry your opponent through your Art, give him no time to think, less time to act.",
+    text: "Hurry your opponent through your Art,\ngive him no time to think, less time to act.",
     attackPattern: [{ x: 1, y: 1 }, { x: 1, y: 0 }, { x: 1, y: -1 }],
     alignment: alignmentTypes.right
   },
   {
     name: 'Dog',
     firstPlayer: players.blue,
-    text: "Deny your opponent his Art. Once you have blocked his attack, do not let him go, but instead relentlessly hamper his momentum.",
+    text: "Deny your opponent his Art. Once you have blocked\nhis attack, do not let him go, but instead\nrelentlessly hamper his momentum.",
     attackPattern: [{ x: -1, y: 1 }, { x: -1, y: 0 }, { x: -1, y: -1 }],
     alignment: alignmentTypes.left
   },
   {
     name: 'Ox',
     firstPlayer: players.blue,
-    text: "Pour your strength into the forms of your Art - in it's punches, it's kicks, in the steady advance of your agression.",
+    text: "Pour your strength into the forms of your Art.\nIn it's punches, it's kicks, in the steady\nadvance of your agression.",
     attackPattern: [{ x: 0, y: 1 }, { x: 1, y: 0 }, { x: 0, y: -1 }],
     alignment: alignmentTypes.right
   },
   {
     name: 'Sea Snake',
     firstPlayer: players.blue,
-    text: "There is no movement or opportunity wasted. Strike where you are not expected, flow where your opponent believes you cannot be.",
+    text: "There is no movement or opportunity wasted.\nStrike where you are not expected,\nflow where your opponent believes you cannot be.",
     attackPattern: [{ x: -1, y: -1 }, { x: 0, y: 1 }, { x: 2, y: 0 }],
     alignment: alignmentTypes.right
   },
@@ -95,21 +95,21 @@ const cards = [
   {
     name: 'Cobra',
     firstPlayer: players.red,
-    text: "Attack violently when your opponents are not expecting it - show leisure in the beginning, then suddenly attack vigorously.",
+    text: "Attack violently when your opponents are not\nexpecting it - show leisure in the beginning,\nthen suddenly attack vigorously.",
     attackPattern: [{ x: -1, y: 0 }, { x: 1, y: 1 }, { x: 1, y: -1 }],
     alignment: alignmentTypes.right
   },
   {
     name: 'Phoenix',
     firstPlayer: players.blue,
-    text: "No opponent expects that which he believes is not there. Harness the shadows, bend the sun, strike as the wind - from a place unseen.",
+    text: "No opponent expects that which he believes is not there. Harness the shadows, bend the sun,\nstrike as the wind - from a place unseen.",
     attackPattern: [{ x: -2, y: 0 }, { x: -1, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 0 }],
     alignment: alignmentTypes.center
   },
   {
     name: 'Mouse',
     firstPlayer: players.blue,
-    text: "All opponents have a hole in their Art, an opening of weakness. The Art of the Mouse is to find that opening, enter it, and strike.",
+    text: "All opponents have a hole in their Art, an opening of weakness. The Art of the Mouse is to find\nthat opening, enter it, and strike.",
     attackPattern: [{ x: -1, y: -1 }, { x: 0, y: 1 }, { x: 1, y: 0 }],
     alignment: alignmentTypes.right
   },
@@ -123,28 +123,28 @@ const cards = [
   {
     name: 'Iguana',
     firstPlayer: players.red,
-    text: "While your opponent wears himself out with unnecessary movement, you will gather your strength. A devastating sweep or fatal punch is the pinnacle of the Art.",
+    text: "While your opponent wears himself out with unnecessary movement, you will gather your strength.\nA devastating sweep or fatal punch\nis the pinnacle of the Art.",
     attackPattern: [{ x: -2, y: 1 }, { x: 0, y: 1 }, { x: 1, y: -1 }],
     alignment: alignmentTypes.left
   },
   {
     name: 'Crane',
     firstPlayer: players.blue,
-    text: "Make no unnecessary movement, conserving your strength until the time is right to strike. The true Art is a symphony of graceful strikes.",
+    text: "Make no unnecessary movement, conserving your strength until the time is right to strike.\nThe true Art is a symphony of graceful strikes.",
     attackPattern: [{ x: -1, y: -1 }, { x: 0, y: 1 }, { x: 1, y: -1 }],
     alignment: alignmentTypes.center
   },
   {
     name: 'Frog',
     firstPlayer: players.red,
-    text: "Do not fail to learn from the pure voice of an ever-flowing mountain stream spashing over the rocks. Emulate it's flow, mimic it's power.",
+    text: "Do not fail to learn from the pure voice of an ever flowing mountain stream spashing over the rocks. Emulate it's flow, mimic it's power.",
     attackPattern: [{ x: -2, y: 0 }, { x: -1, y: 1 }, { x: 1, y: -1 }],
     alignment: alignmentTypes.left
   },
   {
     name: 'Crab',
     firstPlayer: players.blue,
-    text: "Move with your opponent's movements, as if you are the mever-ceasing tide. When the time is right, he will fall prey to your attack.",
+    text: "Move with your opponent's movements,\nas if you are the mever-ceasing tide. When the\ntime is right, he will fall prey to your attack.",
     attackPattern: [{ x: -2, y: 0 }, { x: 0, y: 1 }, { x: 2, y: 0 }],
     alignment: alignmentTypes.center
   },
@@ -179,7 +179,7 @@ const cards = [
   {
     name: 'Horse',
     firstPlayer: players.red,
-    text: "Lose yourself in the rhythm of your Art. At times be swift and decisive, at other times measured and taunting.",
+    text: "Lose yourself in the rhythm of your Art.\nAt times be swift and decisive, at other\ntimes measured and taunting.",
     attackPattern: [{ x: -1, y: 0 }, { x: 0, y: 1 }, { x: 0, y: -1 }],
     alignment: alignmentTypes.left
   },
@@ -193,7 +193,7 @@ const cards = [
   {
     name: 'Mantis',
     firstPlayer: players.red,
-    text: "Your opponent sees, but does not understand. Distract the watchful, misguide the wary. This is the Art of the Mantis, the Art of the deceptive strike.",
+    text: "Your opponent sees, but does not understand.\nDistract the watchful, misguide the wary. This is the\nArt of the Mantis, the Art of the deceptive strike.",
     attackPattern: [{ x: -1, y: 1 }, { x: 0, y: -1 }, { x: 1, y: 1 }],
     alignment: alignmentTypes.center
   },
