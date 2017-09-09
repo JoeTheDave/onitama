@@ -33,5 +33,17 @@ module.exports = {
         loader: 'url-loader'
       }
     ]
-  }
+  },
+  resolve: {
+    alias: {
+      Actions: path.resolve(__dirname, 'src/actions/'),
+      Architecture: path.resolve(__dirname, 'src/architecture/'),
+      Assets: path.resolve(__dirname, 'src/assets/'),
+      Components: path.resolve(__dirname, 'src/components/'),
+      Containers: path.resolve(__dirname, 'src/containers/'),
+      Reducers: path.resolve(__dirname, 'src/reducers/'),
+      Services: path.resolve(__dirname, 'src/services/'),
+    },
+    extensions: ['*', '.js', '.jsx'],
+  },
 };

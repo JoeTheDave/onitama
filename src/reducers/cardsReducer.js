@@ -1,5 +1,5 @@
 import { shuffle } from 'lodash';
-import { CARDS_RECEIVED, RESET_ALL_REDUCERS } from '../architecture/constants';
+import { CARDS_RECEIVED, RESET_ALL_REDUCERS } from 'Architecture/constants';
 
 const initialState = {
   cards: []

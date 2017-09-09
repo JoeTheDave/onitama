@@ -1,4 +1,4 @@
-import { alignmentTypes, players } from '../architecture/constants';
+import { alignmentTypes, players } from 'Architecture/constants';
 
 const cards = [
   {

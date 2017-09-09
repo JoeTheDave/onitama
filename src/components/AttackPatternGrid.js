@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 
-import { alignmentTypes, colors } from '../architecture/constants';
+import { alignmentTypes, colors } from 'Architecture/constants';
 
 const styles = {
   container: {

@@ -1,5 +1,5 @@
-import { CARDS_RECEIVED } from '../architecture/constants';
-import cardsService from '../services/cards';
+import { CARDS_RECEIVED } from 'Architecture/constants';
+import cardsService from 'Services/cards';
 
 const cardsReceived = (cards) => {
   return {

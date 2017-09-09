@@ -1,4 +1,3 @@
-
 // Redux state transitions for the cardsReducer
 export const CARDS_RECEIVED = 'CARDS_RECEIVED';
 

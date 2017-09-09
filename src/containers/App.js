@@ -3,8 +3,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import actionCreators from '../actions';
-import Card from '../components/Card';
+import actionCreators from 'Actions';
+import Frame from 'Components/Frame';
 
 const mapStateToProps = state => ({
   cards: state.cards.cards
@@ -31,11 +31,7 @@ export class App extends React.Component {
 
   render() {
     return (
-      <div>
-        {this.props.cards.map((card, index) => {
-          return <Card key={index} cardInfo={card} />
-        })}
-      </div>
+      <Frame cards={this.props.cards} />
     );
   }
 }

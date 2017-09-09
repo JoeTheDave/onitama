@@ -2,10 +2,10 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 
-import { alignmentTypes, colors, players } from '../architecture/constants';
+import { alignmentTypes, colors, players } from 'Architecture/constants';
 import AttackPatternGrid from './AttackPatternGrid';
 import { getCharacterComponent, FirstPlayerIcon, Swish } from './svg';
-import cardBackground from '../assets/card-background.png';
+import cardBackground from 'Assets/card-background.png';
 
 const styles = {
   card: {
@@ -15,7 +15,10 @@ const styles = {
     backgroundImage: `url("${cardBackground}")`,
     borderRadius: 10,
     margin: 10,
-    border: { style: 'solid', width: 1, color: '#999' }
+    border: { style: 'solid', width: 1, color: '#999' },
+    position: 'absolute',
+    top: 30,
+    left: -300,
   },
   cardBackground: {
     width: '100%',
@@ -104,7 +107,6 @@ const styles = {
     right: -10,
     border: { style: 'solid', width: 2, color: colors.opaqueWhite },
     backgroundColor: props => {
-      console.log(props);
       if (props.cardInfo.firstPlayer === players.red) { return colors.red; }
       if (props.cardInfo.firstPlayer === players.blue) { return colors.blue; }
     }
@@ -128,7 +130,7 @@ export const Card = ({ cardInfo, classes }) => {
           </div>
           <div className={classes.bottomContent}>
             <div className={classes.verticalAligner}></div>
-            <div className={classes.wisdom}>{text.split('\n').map(t => <div>{t}</div>)}</div>
+            <div className={classes.wisdom}>{text.split('\n').map((textPart, index) => <div key={index}>{textPart}</div>)}</div>
             <div className={classes.firstPlayerIcon}>
               <FirstPlayerIcon />
             </div>
