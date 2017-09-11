@@ -17,8 +17,8 @@ const styles = {
     margin: 10,
     border: { style: 'solid', width: 1, color: '#999' },
     position: 'absolute',
-    top: 30,
-    left: -300,
+    top: 1280,
+    left: 30,
   },
   cardBackground: {
     width: '100%',
