@@ -1,9 +1,9 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
-import { fill } from 'lodash';
 
-import boardBackground from 'Assets/board-background.jpg';
+import ActionGridContainer from 'Containers/ActionGridContainer';
+import boardBackground from 'Assets/mural.jpg';
 import boardBackgroundCenter from 'Assets/ying-yang.png';
 import boardBackgroundTexture from 'Assets/board-background-texture.png';
 
@@ -89,7 +89,6 @@ const styles = {
     backgroundImage: `url("${boardBackgroundCenter}")`,
     backgroundSize: [300, 300],
     borderRadius: 150,
-    border: { style: 'solid', width: 1, color: 'pink' },
     boxShadow: '0px 0px 1000px 100px white',
     transform: 'rotateZ(60deg)',
     animationName: 'rotateActionGridGraphic',
@@ -136,13 +135,7 @@ const styles = {
     backgroundImage: `url("${boardBackgroundTexture}")`,
     opacity: 0.3
   },
-  actionGridContainer: {
-    width: 940,
-    height: 940,
-    position: 'absolute',
-    top: 330,
-    left: 580,
-  },
+
   cardPositionOne: {
     width: 400,
     height: 260,
@@ -188,18 +181,11 @@ const styles = {
     border: { style: 'solid', width: 10, color: '#700' },
     boxSizing: 'border-box'
   },
-  actionSquare: {
-    width: 184,
-    height: 184,
-    float: 'left',
-    margin: 2,
-    border: { style: 'solid', width: 3, color: '#444' },
-    boxSizing: 'border-box',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
-  }
+
+
 };
 
-const squares = fill(Array(25), {});
+
 
 export const Board = ({ cardInfo, classes }) => {
   return (
@@ -223,9 +209,8 @@ export const Board = ({ cardInfo, classes }) => {
 
         <div className={classes.boardGraphicTexture}></div>
 
-        <div className={classes.actionGridContainer}>
-          {squares.map((square, index) => <div key={index} className={classes.actionSquare}></div>)}
-        </div>
+        <ActionGridContainer />
+
       </div>
 
     </div>

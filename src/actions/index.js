@@ -1,5 +1,5 @@
-import * as cards from './cards';
+import * as game from './game';
 
 export default {
-  cards
+  game
 };

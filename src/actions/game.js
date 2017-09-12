@@ -1,5 +1,11 @@
-import { CARDS_RECEIVED } from 'Architecture/constants';
+import { CARDS_RECEIVED, START_NEW_GAME } from 'Architecture/constants';
 import cardsService from 'Services/cards';
+
+export function startNewGame() {
+  return {
+    type: START_NEW_GAME
+  };
+};
 
 const cardsReceived = (cards) => {
   return {
@@ -16,4 +22,4 @@ export function getCards() {
       throw(error);
     });
   };
-}
+};

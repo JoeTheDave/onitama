@@ -4,21 +4,27 @@ import injectSheet from 'react-jss';
 
 import { alignmentTypes, colors, players } from 'Architecture/constants';
 import AttackPatternGrid from './AttackPatternGrid';
-import { getCharacterComponent, FirstPlayerIcon, Swish } from './svg';
-import cardBackground from 'Assets/card-background.png';
+import { getCharacterComponent, FirstPlayerIcon, Logo, Swish } from './svg';
+import cardBackground from 'Assets/mural.jpg';
+import cardTexture from 'Assets/card-texture.png';
 
 const styles = {
+  cardContainer: {
+    width: 400,
+    height: 260,
+    borderRadius: 10,
+    position: 'absolute',
+    transformStyle: 'preserve-3d',
+  },
   card: {
     width: 400,
     height: 260,
-    float: 'left',
-    backgroundImage: `url("${cardBackground}")`,
+    backgroundImage: `url("${cardTexture}")`,
     borderRadius: 10,
-    margin: 10,
     border: { style: 'solid', width: 1, color: '#999' },
+    boxSizing: 'border-box',
     position: 'absolute',
-    top: 1280,
-    left: 30,
+    backfaceVisibility: 'hidden',
   },
   cardBackground: {
     width: '100%',
@@ -41,7 +47,6 @@ const styles = {
   },
   character: {
     width: '100%',
-    //backgroundColor: 'red',
     textAlign: 'center',
     position: 'absolute',
     top: 5,
@@ -110,6 +115,54 @@ const styles = {
       if (props.cardInfo.firstPlayer === players.red) { return colors.red; }
       if (props.cardInfo.firstPlayer === players.blue) { return colors.blue; }
     }
+  },
+
+  cardBack: {
+    width: 400,
+    height: 260,
+    backgroundImage: `url("${cardBackground}")`,
+    backgroundSize: [400, 260],
+    borderRadius: 10,
+    border: { style: 'solid', width: 1, color: '#999' },
+    position: 'absolute',
+    top: 0,
+    left: 0,
+    transform: 'rotateY(180deg)',
+    boxSizing: 'border-box',
+    backfaceVisibility: 'hidden',
+  },
+  cardBackTexture: {
+    width: 400,
+    height: 260,
+    backgroundImage: `url("${cardTexture}")`,
+    backgroundSize: [400, 260],
+    borderRadius: 10,
+    position: 'absolute',
+    opacity: 0.6
+  },
+  cardBackTone: {
+    width: 400,
+    height: 260,
+    backgroundColor: 'orange',
+    borderRadius: 10,
+    position: 'absolute',
+    opacity: 0.6
+  },
+  cardBackLogoContainer: {
+    width: 400,
+    height: 260,
+    borderRadius: 10,
+    position: 'absolute',
+  },
+  cardBackLogoBackground: {
+    position: 'absolute',
+    top: 80,
+    left: 25
+  },
+  cardBackLogoForeground: {
+    position: 'absolute',
+    top: 75,
+    left: 30
   }
 };
 
@@ -117,24 +170,34 @@ export const Card = ({ cardInfo, classes }) => {
   const { alignment, attackPattern, firstPlayer, name, text } = cardInfo;
   const Character = getCharacterComponent(name);
   return (
-    <div className={classes.card}>
-      <div className={classes.cardBackground}>
-        <div className={classes.content}>
-          <div className={classes.leftContent}>
-            <Swish />
-            <div className={classes.character}><Character fillColor={colors.characterColor} /></div>
-            <div className={classes.cardName}>{name.toUpperCase()}</div>
-          </div>
-          <div className={classes.rightContent}>
-            <AttackPatternGrid attackPattern={attackPattern} alignment={alignment} />
-          </div>
-          <div className={classes.bottomContent}>
-            <div className={classes.verticalAligner}></div>
-            <div className={classes.wisdom}>{text.split('\n').map((textPart, index) => <div key={index}>{textPart}</div>)}</div>
-            <div className={classes.firstPlayerIcon}>
-              <FirstPlayerIcon />
+    <div className={classes.cardContainer}>
+      <div className={classes.card}>
+        <div className={classes.cardBackground}>
+          <div className={classes.content}>
+            <div className={classes.leftContent}>
+              <Swish />
+              <div className={classes.character}><Character fillColor={colors.characterColor} /></div>
+              <div className={classes.cardName}>{name.toUpperCase()}</div>
+            </div>
+            <div className={classes.rightContent}>
+              <AttackPatternGrid attackPattern={attackPattern} alignment={alignment} />
+            </div>
+            <div className={classes.bottomContent}>
+              <div className={classes.verticalAligner}></div>
+              <div className={classes.wisdom}>{text.split('\n').map((textPart, index) => <div key={index}>{textPart}</div>)}</div>
+              <div className={classes.firstPlayerIcon}>
+                <FirstPlayerIcon />
+              </div>
             </div>
           </div>
+        </div>
+      </div>
+      <div className={classes.cardBack}>
+        <div className={classes.cardBackTexture}></div>
+        <div className={classes.cardBackTone}></div>
+        <div className={classes.cardBackLogoContainer}>
+          <div className={classes.cardBackLogoBackground}><Logo width={100} fillColor={'rgba(0, 0, 0, 0.3)'} /></div>
+          <div className={classes.cardBackLogoForeground}><Logo width={100} fillColor={'white'} /></div>
         </div>
       </div>
     </div>

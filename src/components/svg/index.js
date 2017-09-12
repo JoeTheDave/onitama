@@ -15,6 +15,7 @@ import Goose from './Goose';
 import Horse from './Horse';
 import Iguana from './Iguana';
 import Kirin from './Kirin';
+import Logo from './Logo';
 import Mantis from './Mantis';
 import Monkey from './Monkey';
 import Mouse from './Mouse';
@@ -93,6 +94,7 @@ export {
   Horse,
   Iguana,
   Kirin,
+  Logo,
   Mantis,
   Monkey,
   Mouse,

@@ -1,5 +1,6 @@
-// Redux state transitions for the cardsReducer
+// Redux state transitions
 export const CARDS_RECEIVED = 'CARDS_RECEIVED';
+export const START_NEW_GAME = 'START_NEW_GAME';
 
 export const RESET_ALL_REDUCERS = 'RESET_ALL_REDUCERS';
 

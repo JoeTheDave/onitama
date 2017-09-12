@@ -1,5 +1,5 @@
-import cardsReducer from './cardsReducer';
+import gameReducer from './gameReducer';
 
 export default {
-  cards: cardsReducer
+  game: gameReducer
 };

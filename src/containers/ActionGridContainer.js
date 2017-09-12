@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
 import actionCreators from 'Actions';
-import Frame from 'Components/Frame';
+import ActionGrid from 'Components/ActionGrid';
 
 const mapStateToProps = state => ({
   game: state.game
@@ -16,7 +16,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export class App extends React.Component {
+export class ActionGridContainer extends React.Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
   };
@@ -25,16 +25,11 @@ export class App extends React.Component {
     super(props);
   }
 
-  componentWillMount() {
-    this.props.actions.game.getCards();
-  }
-
   render() {
-    const { game, actions } = this.props;
     return (
-      <Frame game={game} startNewGameHandler={actions.game.startNewGame} />
+      <ActionGrid game={this.props.game} />
     );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(App);
+export default connect(mapStateToProps, mapDispatchToProps)(ActionGridContainer);
