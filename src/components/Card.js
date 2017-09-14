@@ -24,16 +24,22 @@ const styles = {
         return `translateY(1200px) translateX(100px) rotateY(180deg) translateZ(${deckPosition * -2}px)`;
       }
       if (props.cardInfo.location === 'blue-1') {
-        return `translateY(1300px) translateX(600px) rotateY(0deg)`;
+        return `translateY(1300px) translateX(600px)`;
       }
       if (props.cardInfo.location === 'blue-2') {
-        return `translateY(1300px) translateX(1100px) rotateY(0deg)`;
+        return `translateY(1300px) translateX(1100px)`;
+      }
+      if (props.cardInfo.location === 'blue-3') {
+        return `translateY(670px) translateX(140px)`;
       }
       if (props.cardInfo.location === 'red-1') {
         return `translateY(40px) translateX(600px) rotateZ(180deg)`;
       }
       if (props.cardInfo.location === 'red-2') {
         return `translateY(40px) translateX(1100px) rotateZ(180deg)`;
+      }
+      if (props.cardInfo.location === 'red-3') {
+        return `translateY(670px) translateX(140px) rotateZ(180deg)`;
       }
       return '';
     }

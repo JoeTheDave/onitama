@@ -43,14 +43,18 @@ export default function (state = initialState, action) {
       };
     case START_NEW_GAME:
       const cards = shuffleDeck(state.cards);
+      const turn = cards[cards.length - 5].firstPlayer;
       cards[cards.length - 1].location = 'blue-1';
       cards[cards.length - 2].location = 'blue-2';
       cards[cards.length - 3].location = 'red-1';
       cards[cards.length - 4].location = 'red-2';
+      cards[cards.length - 5].location = (turn === players.blue ? 'blue-3' : 'red-3');
+
       return {
         ...state,
         ...newGameState,
         cards,
+        turn,
       };
     case RESET_ALL_REDUCERS:
       return { ...initialState };
