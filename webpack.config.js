@@ -5,21 +5,21 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 module.exports = {
   entry: [
     'webpack-dev-server/client?http://localhost:8080',
-    './src/index.js'
+    './src/index.js',
   ],
   devtool: 'inline-source-map',
   devServer: {
-    contentBase: './dist'
+    contentBase: './dist',
   },
   plugins: [
     new CleanWebpackPlugin(['dist']),
     new HtmlWebpackPlugin({
-      template: 'src/index.html'
-    })
+      template: 'src/index.html',
+    }),
   ],
   output: {
     filename: '[name].bundle.js',
-    path: path.resolve(__dirname, 'dist')
+    path: path.resolve(__dirname, 'dist'),
   },
   module: {
     rules: [
@@ -30,9 +30,9 @@ module.exports = {
       },
       {
         test: /\.(png|jpg)$/,
-        loader: 'url-loader'
-      }
-    ]
+        loader: 'url-loader',
+      },
+    ],
   },
   resolve: {
     alias: {

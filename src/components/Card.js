@@ -13,15 +13,37 @@ const styles = {
     width: 400,
     height: 260,
     borderRadius: 10,
+    transition: '2s',
     position: 'absolute',
     transformStyle: 'preserve-3d',
+
+    transform: props => {
+      console.log(props);
+      if (props.cardInfo.location.indexOf('deck') > -1) {
+        const deckPosition = parseInt(props.cardInfo.location.split('-')[1]);
+        return `translateY(1200px) translateX(100px) rotateY(180deg) translateZ(${deckPosition * -2}px)`;
+      }
+      if (props.cardInfo.location === 'blue-1') {
+        return `translateY(1300px) translateX(600px) rotateY(0deg)`;
+      }
+      if (props.cardInfo.location === 'blue-2') {
+        return `translateY(1300px) translateX(1100px) rotateY(0deg)`;
+      }
+      if (props.cardInfo.location === 'red-1') {
+        return `translateY(40px) translateX(600px) rotateZ(180deg)`;
+      }
+      if (props.cardInfo.location === 'red-2') {
+        return `translateY(40px) translateX(1100px) rotateZ(180deg)`;
+      }
+      return '';
+    }
   },
   card: {
     width: 400,
     height: 260,
     backgroundImage: `url("${cardTexture}")`,
     borderRadius: 10,
-    border: { style: 'solid', width: 1, color: '#999' },
+    border: { style: 'solid', width: 1, color: '#444' },
     boxSizing: 'border-box',
     position: 'absolute',
     backfaceVisibility: 'hidden',
@@ -123,7 +145,7 @@ const styles = {
     backgroundImage: `url("${cardBackground}")`,
     backgroundSize: [400, 260],
     borderRadius: 10,
-    border: { style: 'solid', width: 1, color: '#999' },
+    border: { style: 'solid', width: 1, color: '#444' },
     position: 'absolute',
     top: 0,
     left: 0,
@@ -165,6 +187,8 @@ const styles = {
     left: 30
   }
 };
+
+
 
 export const Card = ({ cardInfo, classes }) => {
   const { alignment, attackPattern, firstPlayer, name, text } = cardInfo;

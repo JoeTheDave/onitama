@@ -30,7 +30,7 @@ const styles = {
     height: '100%',
     position: 'relative',
     //                  45             -20                400              -1100               -200
-    transform: 'rotateX(45deg) rotateZ(-20deg) translateX(400px) translateY(-1100px) translateZ(-200px)',
+    transform: 'rotateX(40deg) rotateZ(-15deg) translateX(400px) translateY(-1000px) translateZ(-550px)',
     transformStyle: 'preserve-3d',
   },
   logo: {
@@ -88,7 +88,7 @@ export const Frame = ({ classes, game, startNewGameHandler }) => {
         <div className={classes.graphicTwo}></div>
         <div className={classes.tableTop}>
           <Board />
-          {cards.map(card => (<Card key={`card-${card.id}`} cardInfo={card} />))}
+          {cards.map((card, index) => (<Card key={`card-${card.id}`} cardInfo={card} />))}
           {pawns.map(pawn => (<Pawn key={`pawn-${pawn.id}`} pawnInfo={pawn} />))}
         </div>
       </div>

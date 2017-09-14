@@ -7,23 +7,20 @@ import actionCreators from 'Actions';
 import ActionGrid from 'Components/ActionGrid';
 
 const mapStateToProps = state => ({
-  game: state.game
+  game: state.game,
 });
 
 const mapDispatchToProps = dispatch => ({
   actions: {
-    game: bindActionCreators(actionCreators.game, dispatch)
+    game: bindActionCreators(actionCreators.game, dispatch),
   },
 });
 
 export class ActionGridContainer extends React.Component {
   static propTypes = {
     actions: PropTypes.object.isRequired,
+    game: PropTypes.object.isRequired,
   };
-
-  constructor(props) {
-    super(props);
-  }
 
   render() {
     return (

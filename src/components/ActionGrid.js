@@ -23,7 +23,6 @@ const styles = {
 };
 
 export const ActionGrid = ({ classes, game }) => {
-  console.log(game);
   const squares = fill(Array(25), {});
   return (
     <div className={classes.container}>
