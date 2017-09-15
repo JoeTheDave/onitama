@@ -1,7 +1,8 @@
-import { deepClone, shuffle } from 'lodash';
+import { shuffle } from 'lodash';
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
+  PAWN_SELECTED,
   START_NEW_GAME,
   RESET_ALL_REDUCERS,
   players,
@@ -65,6 +66,15 @@ export default function (state = initialState, action) {
           return { ...state, selectedCard: null };
         }
         return { ...state, selectedCard: action.card };
+      }
+      return state;
+
+    case PAWN_SELECTED:
+      if (state.turn && action.pawn.player === state.turn) {
+        if (state.selectedPawn && action.pawn.id === state.selectedPawn.id) {
+          return { ...state, selectedPawn: null };
+        }
+        return { ...state, selectedPawn: action.pawn };
       }
       return state;
 

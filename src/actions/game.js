@@ -1,6 +1,7 @@
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
+  PAWN_SELECTED,
   START_NEW_GAME,
 } from 'Architecture/constants';
 import cardsService from 'Services/cards';
@@ -28,5 +29,12 @@ export function cardSelected(card) {
   return {
     type: CARD_SELECTED,
     card,
+  };
+}
+
+export function pawnSelected(pawn) {
+  return {
+    type: PAWN_SELECTED,
+    pawn,
   };
 }

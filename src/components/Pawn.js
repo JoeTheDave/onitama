@@ -8,6 +8,8 @@ const getPawnStyles = () => ({
   position: 'absolute',
   border: { style: 'solid', width: 1, color: 'black' },
   boxSizing: 'border-box',
+  transition: '2s, box-shadow 0.5s',
+  cursor: 'pointer',
 });
 
 const styles = {
@@ -44,6 +46,9 @@ const styles = {
   blue: {
     backgroundColor: 'rgba(0, 0, 200, 0.4)',
   },
+  selected: {
+    boxShadow: '0 0 5px 5px gold',
+  },
 };
 for (let i = 0; i < 25; i++) {
   const x = i % 5;
@@ -53,23 +58,34 @@ for (let i = 0; i < 25; i++) {
   };
 }
 
-export const Pawn = ({ classes, pawnInfo }) => {
+export const Pawn = ({ classes, isSelected, pawnInfo, pawnSelectedHandler }) => {
   const { player } = pawnInfo;
-  const appliedClasses = [classes.pawn, classes[`location${pawnInfo.location}`]];
+  const buildClasses = baseClass => {
+    const classList = [baseClass, classes[player.toLowerCase()]];
+    if (baseClass === classes.pawn) { classList.push(classes[`location${pawnInfo.location}`]); }
+    if (isSelected) { classList.push(classes.selected); }
+    return classList.join(' ');
+  };
+  const handleClick = () => {
+    pawnSelectedHandler(pawnInfo);
+  };
+
   return (
-    <div className={appliedClasses.join(' ')} onClick={() => { console.log('pawn click'); }}>
-      <div className={[classes.northWall, classes[player.toLowerCase()]].join(' ')} />
-      <div className={[classes.eastWall, classes[player.toLowerCase()]].join(' ')} />
-      <div className={[classes.southWall, classes[player.toLowerCase()]].join(' ')} />
-      <div className={[classes.westWall, classes[player.toLowerCase()]].join(' ')} />
-      <div className={[classes.topWall, classes[player.toLowerCase()]].join(' ')} />
+    <div className={buildClasses(classes.pawn)} onClick={handleClick}>
+      <div className={buildClasses(classes.northWall)} />
+      <div className={buildClasses(classes.eastWall)} />
+      <div className={buildClasses(classes.southWall)} />
+      <div className={buildClasses(classes.westWall)} />
+      <div className={buildClasses(classes.topWall)} />
     </div>
   );
 };
 
 Pawn.propTypes = {
   classes: PropTypes.object.isRequired,
+  isSelected: PropTypes.bool.isRequired,
   pawnInfo: PropTypes.object.isRequired,
+  pawnSelectedHandler: PropTypes.func.isRequired,
 };
 
 export default injectSheet(styles)(Pawn);

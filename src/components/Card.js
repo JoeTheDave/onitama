@@ -14,36 +14,35 @@ const styles = {
     height: 260,
     borderRadius: 10,
     transition: '2s, box-shadow 0.5s',
+    cursor: 'pointer',
     position: 'absolute',
     transformStyle: 'preserve-3d',
-    boxShadow: props => {
-      return props.isSelected ? '0 0 5px 5px gold' : 'none';
-    },
+    boxShadow: props => (props.isSelected ? '0 0 10px 10px gold' : 'none'),
     transform: props => {
       if (props.cardInfo.location.indexOf('deck') > -1) {
         const deckPosition = parseInt(props.cardInfo.location.split('-')[1]);
         return `translateY(1200px) translateX(100px) rotateY(180deg) translateZ(${deckPosition * -5}px)`;
       }
       if (props.cardInfo.location === 'blue-1') {
-        return `translateY(1300px) translateX(600px)`;
+        return 'translateY(1300px) translateX(600px)';
       }
       if (props.cardInfo.location === 'blue-2') {
-        return `translateY(1300px) translateX(1100px)`;
+        return 'translateY(1300px) translateX(1100px)';
       }
       if (props.cardInfo.location === 'blue-3') {
-        return `translateY(670px) translateX(140px)`;
+        return 'translateY(670px) translateX(140px)';
       }
       if (props.cardInfo.location === 'red-1') {
-        return `translateY(40px) translateX(600px) rotateZ(180deg)`;
+        return 'translateY(40px) translateX(600px) rotateZ(180deg)';
       }
       if (props.cardInfo.location === 'red-2') {
-        return `translateY(40px) translateX(1100px) rotateZ(180deg)`;
+        return 'translateY(40px) translateX(1100px) rotateZ(180deg)';
       }
       if (props.cardInfo.location === 'red-3') {
-        return `translateY(670px) translateX(140px) rotateZ(180deg)`;
+        return 'translateY(670px) translateX(140px) rotateZ(180deg)';
       }
       return '';
-    }
+    },
   },
   card: {
     width: 400,
@@ -66,13 +65,13 @@ const styles = {
   content: {
     width: '100%',
     height: '100%',
-    position: 'relative'
+    position: 'relative',
   },
   leftContent: {
     width: '55%',
     height: '100%',
     position: 'absolute',
-    left: 0
+    left: 0,
   },
   character: {
     width: '100%',
@@ -88,13 +87,13 @@ const styles = {
     textAlign: 'center',
     position: 'absolute',
     top: 120,
-    color: 'rgba(60, 60, 60, 1)'
+    color: 'rgba(60, 60, 60, 1)',
   },
   rightContent: {
     width: 160,
     height: '100%',
     position: 'absolute',
-    right: 0
+    right: 0,
   },
   bottomContent: {
     height: 70,
@@ -115,7 +114,7 @@ const styles = {
         default:
           return '';
       }
-    }
+    },
   },
   verticalAligner: {
     height: '100%',
@@ -143,7 +142,8 @@ const styles = {
     backgroundColor: props => {
       if (props.cardInfo.firstPlayer === players.red) { return colors.red; }
       if (props.cardInfo.firstPlayer === players.blue) { return colors.blue; }
-    }
+      return '';
+    },
   },
 
   cardBack: {
@@ -195,7 +195,7 @@ const styles = {
   },
 };
 
-export const Card = ({ cardInfo, cardSelectedHandler, classes, isSelected }) => {
+export const Card = ({ cardInfo, cardSelectedHandler, classes }) => {
   const { alignment, attackPattern, name, text } = cardInfo;
   const Character = getCharacterComponent(name);
   const handleClick = () => {

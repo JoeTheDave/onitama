@@ -75,7 +75,7 @@ const styles = {
 };
 
 export const Frame = ({ actions, classes, game }) => {
-  const { cards, pawns, selectedCard } = game;
+  const { cards, pawns, selectedCard, selectedPawn } = game;
   return (
     <div className={classes.perspectiveFrame}>
       <div className={classes.centerFrame}>
@@ -96,7 +96,14 @@ export const Frame = ({ actions, classes, game }) => {
               isSelected={!!(selectedCard && selectedCard.id === card.id)}
             />
           ))}
-          {pawns.map(pawn => (<Pawn key={`pawn-${pawn.id}`} pawnInfo={pawn} />))}
+          {pawns.map(pawn => (
+            <Pawn
+              key={`pawn-${pawn.id}`}
+              pawnInfo={pawn}
+              pawnSelectedHandler={(actions.pawnSelected)}
+              isSelected={!!(selectedPawn && selectedPawn.id === pawn.id)}
+            />
+          ))}
         </div>
       </div>
     </div>
