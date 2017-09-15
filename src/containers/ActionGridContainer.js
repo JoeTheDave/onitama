@@ -24,7 +24,7 @@ export class ActionGridContainer extends React.Component {
 
   render() {
     return (
-      <ActionGrid game={this.props.game} />
+      <ActionGrid game={this.props.game} actions={this.props.actions.game} />
     );
   }
 }

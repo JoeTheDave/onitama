@@ -1,6 +1,7 @@
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
+  EXECUTE_MOVE,
   PAWN_SELECTED,
   START_NEW_GAME,
 } from 'Architecture/constants';
@@ -36,5 +37,12 @@ export function pawnSelected(pawn) {
   return {
     type: PAWN_SELECTED,
     pawn,
+  };
+}
+
+export function executeMove(squareId) {
+  return {
+    type: EXECUTE_MOVE,
+    squareId,
   };
 }

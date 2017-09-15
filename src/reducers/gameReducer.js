@@ -1,14 +1,33 @@
-import { shuffle } from 'lodash';
+import { fill, shuffle } from 'lodash';
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
+  EXECUTE_MOVE,
   PAWN_SELECTED,
   START_NEW_GAME,
   RESET_ALL_REDUCERS,
   players,
 } from 'Architecture/constants';
 
-const newGameState = {
+const calculateValidMoves = state => {
+  state.actionGrid = fill(Array(25), null);
+  if (!state.selectedCard || !state.selectedPawn) {
+    return state;
+  }
+
+  state.selectedCard.attackPattern.forEach(attackOption => {
+    const playerVariant = (state.turn === players.blue ? 1 : -1);
+    const attackTarget = state.selectedPawn.location + (attackOption.y * -5 * playerVariant) + (attackOption.x * playerVariant);
+    const xPosition = (state.selectedPawn.location % 5) + (attackOption.x * playerVariant);
+    if (attackTarget >= 0 && attackTarget <= 24 && xPosition >= 0 && xPosition <= 4) {
+      state.actionGrid[attackTarget] = !state.pawns.some(p => p.location === attackTarget && p.player === state.turn);
+    }
+  });
+
+  return state;
+};
+
+const newGameState = calculateValidMoves({
   pawns: [
     { id: 'r1', location: 0, player: players.red, isMaster: false },
     { id: 'r2', location: 1, player: players.red, isMaster: false },
@@ -24,6 +43,54 @@ const newGameState = {
   turn: null,
   selectedCard: null,
   selectedPawn: null,
+});
+
+const cardSelected = (state, card) => {
+  if (state.turn && card.location.split('-')[0] === state.turn.toLowerCase() && card.location.split('-')[1] !== '3') {
+    if (state.selectedCard && card.id === state.selectedCard.id) {
+      return { ...state, selectedCard: null };
+    }
+    return { ...state, selectedCard: card };
+  }
+  return state;
+};
+
+const pawnSelected = (state, pawn) => {
+  if (state.turn && pawn.player === state.turn) {
+    if (state.selectedPawn && pawn.id === state.selectedPawn.id) {
+      return { ...state, selectedPawn: null };
+    }
+    return { ...state, selectedPawn: pawn };
+  }
+  return state;
+};
+
+const executeMove = (state, squareId) => {
+  if (state.actionGrid[squareId]) {
+    const newTurn = state.turn === players.blue ? players.red : players.blue;
+
+    const newPawns = [...state.pawns];
+    const activePawn = newPawns.find(p => p.id === state.selectedPawn.id);
+    activePawn.location = squareId;
+
+    const newCards = [...state.cards];
+    const activeCard = newCards.find(c => c.id === state.selectedCard.id);
+    const sideCard = newCards.find(c => c.location === `${state.turn.toLowerCase()}-3`);
+    console.log(activeCard)
+
+    sideCard.location = activeCard.location;
+    activeCard.location = `${newTurn.toLowerCase()}-3`;
+
+    return {
+      ...state,
+      selectedCard: null,
+      selectedPawn: null,
+      turn: newTurn,
+      pawns: newPawns,
+      cards: newCards,
+    };
+  }
+  return state;
 };
 
 const shuffleDeck = cards => shuffle(cards).map((card, index) => ({
@@ -61,22 +128,13 @@ export default function (state = initialState, action) {
       };
 
     case CARD_SELECTED:
-      if (state.turn && action.card.location.split('-')[0] === state.turn.toLowerCase() && action.card.location.split('-')[1] !== '3') {
-        if (state.selectedCard && action.card.id === state.selectedCard.id) {
-          return { ...state, selectedCard: null };
-        }
-        return { ...state, selectedCard: action.card };
-      }
-      return state;
+      return calculateValidMoves(cardSelected(state, action.card));
 
     case PAWN_SELECTED:
-      if (state.turn && action.pawn.player === state.turn) {
-        if (state.selectedPawn && action.pawn.id === state.selectedPawn.id) {
-          return { ...state, selectedPawn: null };
-        }
-        return { ...state, selectedPawn: action.pawn };
-      }
-      return state;
+      return calculateValidMoves(pawnSelected(state, action.pawn));
+
+    case EXECUTE_MOVE:
+      return calculateValidMoves(executeMove(state, action.squareId));
 
     case RESET_ALL_REDUCERS:
       return { ...initialState };

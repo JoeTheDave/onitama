@@ -75,6 +75,7 @@ const styles = {
 };
 
 export const Frame = ({ actions, classes, game }) => {
+  console.log(game);
   const { cards, pawns, selectedCard, selectedPawn } = game;
   return (
     <div className={classes.perspectiveFrame}>

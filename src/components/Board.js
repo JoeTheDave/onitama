@@ -5,6 +5,8 @@ import injectSheet from 'react-jss';
 import ActionGridContainer from 'Containers/ActionGridContainer';
 import boardBackground from 'Assets/mural.jpg';
 import boardBackgroundCenter from 'Assets/ying-yang.png';
+import redHome from 'Assets/ying-yang-red.png';
+import blueHome from 'Assets/ying-yang-blue.png';
 import boardBackgroundTexture from 'Assets/board-background-texture.png';
 
 const styles = {
@@ -31,7 +33,6 @@ const styles = {
   southEdge: {
     width: 1600,
     height: 30,
-    backgroundColor: 'white',
     border: { style: 'solid', width: 3, color: 'black' },
     boxSizing: 'border-box',
     position: 'absolute',
@@ -44,7 +45,6 @@ const styles = {
   westEdge: {
     width: 1600,
     height: 30,
-    backgroundColor: 'white',
     border: { style: 'solid', width: 3, color: 'black' },
     boxSizing: 'border-box',
     position: 'absolute',
@@ -57,7 +57,6 @@ const styles = {
   northEdge: {
     width: 1600,
     height: 30,
-    backgroundColor: 'white',
     border: { style: 'solid', width: 3, color: 'black' },
     boxSizing: 'border-box',
     position: 'absolute',
@@ -70,7 +69,6 @@ const styles = {
   eastEdge: {
     width: 1600,
     height: 30,
-    backgroundColor: 'white',
     border: { style: 'solid', width: 3, color: 'black' },
     boxSizing: 'border-box',
     position: 'absolute',
@@ -91,12 +89,42 @@ const styles = {
     borderRadius: 150,
     boxShadow: '0px 0px 1000px 100px white',
     transform: 'rotateZ(60deg)',
-    animationName: 'rotateActionGridGraphic',
+    animationName: 'rotateGridGraphic',
     animationDuration: '60s',
     animationIterationCount: 'infinite',
     animationTimingFunction: 'linear',
   },
-  [`@keyframes rotateActionGridGraphic`]: {
+  blueHome: {
+    position: 'absolute',
+    top: 1125,
+    left: 1000,
+    width: 100,
+    height: 100,
+    backgroundImage: `url("${blueHome}")`,
+    backgroundSize: [100, 100],
+    borderRadius: 50,
+    transform: 'rotateZ(60deg)',
+    animationName: 'rotateGridGraphic',
+    animationDuration: '60s',
+    animationIterationCount: 'infinite',
+    animationTimingFunction: 'linear',
+  },
+  redHome: {
+    position: 'absolute',
+    top: 370,
+    left: 1000,
+    width: 100,
+    height: 100,
+    backgroundImage: `url("${redHome}")`,
+    backgroundSize: [100, 100],
+    borderRadius: 50,
+    transform: 'rotateZ(60deg)',
+    animationName: 'rotateGridGraphic',
+    animationDuration: '60s',
+    animationIterationCount: 'infinite',
+    animationTimingFunction: 'linear',
+  },
+  '@keyframes rotateGridGraphic': {
     from: { transform: 'rotate(0deg)' },
     to: { transform: 'rotate(360deg)' },
   },
@@ -115,7 +143,7 @@ const styles = {
     top: 10,
     left: 10,
     border: { style: 'solid', width: 3, color: '#700' },
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   boardInnerBorder: {
     width: 1560,
@@ -124,7 +152,7 @@ const styles = {
     top: 20,
     left: 20,
     border: { style: 'solid', width: 3, color: '#700' },
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   boardGraphicTexture: {
     width: 1600,
@@ -133,7 +161,7 @@ const styles = {
     top: 0,
     left: 0,
     backgroundImage: `url("${boardBackgroundTexture}")`,
-    opacity: 0.3
+    opacity: 0.3,
   },
   cardPositionOne: {
     width: 400,
@@ -142,7 +170,7 @@ const styles = {
     top: 1300,
     left: 600,
     border: { style: 'solid', width: 10, color: '#700' },
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   cardPositionTwo: {
     width: 400,
@@ -151,7 +179,7 @@ const styles = {
     top: 1300,
     left: 1100,
     border: { style: 'solid', width: 10, color: '#700' },
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   cardPositionThree: {
     width: 400,
@@ -160,7 +188,7 @@ const styles = {
     top: 670,
     left: 140,
     border: { style: 'solid', width: 10, color: '#700' },
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   cardPositionFour: {
     width: 400,
@@ -169,7 +197,7 @@ const styles = {
     top: 40,
     left: 600,
     border: { style: 'solid', width: 10, color: '#700' },
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
   cardPositionFive: {
     width: 400,
@@ -178,7 +206,7 @@ const styles = {
     top: 40,
     left: 1100,
     border: { style: 'solid', width: 10, color: '#700' },
-    boxSizing: 'border-box'
+    boxSizing: 'border-box',
   },
 };
 
@@ -192,6 +220,8 @@ export const Board = ({ cardInfo, classes }) => {
       <div className={classes.eastEdge}></div>
       <div className={classes.gameBoard}>
         <div className={classes.centerGraphicContainer}></div>
+        <div className={classes.redHome}></div>
+        <div className={classes.blueHome}></div>
         <div className={classes.boardGraphicOuterFade}></div>
         <div className={classes.boardOuterBorder}></div>
         <div className={classes.boardInnerBorder}></div>
