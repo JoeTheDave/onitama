@@ -135,7 +135,6 @@ const styles = {
     backgroundImage: `url("${boardBackgroundTexture}")`,
     opacity: 0.3
   },
-
   cardPositionOne: {
     width: 400,
     height: 260,
@@ -181,11 +180,7 @@ const styles = {
     border: { style: 'solid', width: 10, color: '#700' },
     boxSizing: 'border-box'
   },
-
-
 };
-
-
 
 export const Board = ({ cardInfo, classes }) => {
   return (
@@ -200,19 +195,14 @@ export const Board = ({ cardInfo, classes }) => {
         <div className={classes.boardGraphicOuterFade}></div>
         <div className={classes.boardOuterBorder}></div>
         <div className={classes.boardInnerBorder}></div>
-
         <div className={classes.cardPositionOne}></div>
         <div className={classes.cardPositionTwo}></div>
         <div className={classes.cardPositionThree}></div>
         <div className={classes.cardPositionFour}></div>
         <div className={classes.cardPositionFive}></div>
-
         <div className={classes.boardGraphicTexture}></div>
-
         <ActionGridContainer />
-
       </div>
-
     </div>
   );
 };

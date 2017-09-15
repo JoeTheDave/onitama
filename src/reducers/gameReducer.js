@@ -1,5 +1,11 @@
-import { shuffle } from 'lodash';
-import { CARDS_RECEIVED, START_NEW_GAME, RESET_ALL_REDUCERS, players } from 'Architecture/constants';
+import { deepClone, shuffle } from 'lodash';
+import {
+  CARDS_RECEIVED,
+  CARD_SELECTED,
+  START_NEW_GAME,
+  RESET_ALL_REDUCERS,
+  players,
+} from 'Architecture/constants';
 
 const newGameState = {
   pawns: [
@@ -14,14 +20,9 @@ const newGameState = {
     { id: 'b3', location: 23, player: players.blue, isMaster: false },
     { id: 'b4', location: 24, player: players.blue, isMaster: false },
   ],
-  activeCards: {
-    card1: null,
-    card2: null,
-    card3: null,
-    card4: null,
-    card5: null,
-  },
   turn: null,
+  selectedCard: null,
+  selectedPawn: null,
 };
 
 const shuffleDeck = cards => shuffle(cards).map((card, index) => ({
@@ -41,6 +42,7 @@ export default function (state = initialState, action) {
         ...state,
         cards: shuffleDeck(action.cards),
       };
+
     case START_NEW_GAME:
       const cards = shuffleDeck(state.cards);
       const turn = cards[cards.length - 5].firstPlayer;
@@ -56,6 +58,16 @@ export default function (state = initialState, action) {
         cards,
         turn,
       };
+
+    case CARD_SELECTED:
+      if (state.turn && action.card.location.split('-')[0] === state.turn.toLowerCase() && action.card.location.split('-')[1] !== '3') {
+        if (state.selectedCard && action.card.id === state.selectedCard.id) {
+          return { ...state, selectedCard: null };
+        }
+        return { ...state, selectedCard: action.card };
+      }
+      return state;
+
     case RESET_ALL_REDUCERS:
       return { ...initialState };
 

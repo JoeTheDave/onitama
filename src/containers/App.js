@@ -29,7 +29,7 @@ export class App extends React.Component {
   render() {
     const { game, actions } = this.props;
     return (
-      <Frame game={game} startNewGameHandler={actions.game.startNewGame} />
+      <Frame game={game} actions={actions.game} />
     );
   }
 }

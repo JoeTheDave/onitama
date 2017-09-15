@@ -13,15 +13,16 @@ const styles = {
     width: 400,
     height: 260,
     borderRadius: 10,
-    transition: '2s',
+    transition: '2s, box-shadow 0.5s',
     position: 'absolute',
     transformStyle: 'preserve-3d',
-
+    boxShadow: props => {
+      return props.isSelected ? '0 0 5px 5px gold' : 'none';
+    },
     transform: props => {
-      console.log(props);
       if (props.cardInfo.location.indexOf('deck') > -1) {
         const deckPosition = parseInt(props.cardInfo.location.split('-')[1]);
-        return `translateY(1200px) translateX(100px) rotateY(180deg) translateZ(${deckPosition * -2}px)`;
+        return `translateY(1200px) translateX(100px) rotateY(180deg) translateZ(${deckPosition * -5}px)`;
       }
       if (props.cardInfo.location === 'blue-1') {
         return `translateY(1300px) translateX(600px)`;
@@ -166,7 +167,7 @@ const styles = {
     backgroundSize: [400, 260],
     borderRadius: 10,
     position: 'absolute',
-    opacity: 0.6
+    opacity: 0.6,
   },
   cardBackTone: {
     width: 400,
@@ -174,7 +175,7 @@ const styles = {
     backgroundColor: 'orange',
     borderRadius: 10,
     position: 'absolute',
-    opacity: 0.6
+    opacity: 0.6,
   },
   cardBackLogoContainer: {
     width: 400,
@@ -185,22 +186,23 @@ const styles = {
   cardBackLogoBackground: {
     position: 'absolute',
     top: 80,
-    left: 25
+    left: 25,
   },
   cardBackLogoForeground: {
     position: 'absolute',
     top: 75,
-    left: 30
-  }
+    left: 30,
+  },
 };
 
-
-
-export const Card = ({ cardInfo, classes }) => {
-  const { alignment, attackPattern, firstPlayer, name, text } = cardInfo;
+export const Card = ({ cardInfo, cardSelectedHandler, classes, isSelected }) => {
+  const { alignment, attackPattern, name, text } = cardInfo;
   const Character = getCharacterComponent(name);
+  const handleClick = () => {
+    cardSelectedHandler(cardInfo);
+  };
   return (
-    <div className={classes.cardContainer}>
+    <div className={classes.cardContainer} onClick={handleClick}>
       <div className={classes.card}>
         <div className={classes.cardBackground}>
           <div className={classes.content}>
@@ -213,7 +215,7 @@ export const Card = ({ cardInfo, classes }) => {
               <AttackPatternGrid attackPattern={attackPattern} alignment={alignment} />
             </div>
             <div className={classes.bottomContent}>
-              <div className={classes.verticalAligner}></div>
+              <div className={classes.verticalAligner} />
               <div className={classes.wisdom}>{text.split('\n').map((textPart, index) => <div key={index}>{textPart}</div>)}</div>
               <div className={classes.firstPlayerIcon}>
                 <FirstPlayerIcon />
@@ -223,8 +225,8 @@ export const Card = ({ cardInfo, classes }) => {
         </div>
       </div>
       <div className={classes.cardBack}>
-        <div className={classes.cardBackTexture}></div>
-        <div className={classes.cardBackTone}></div>
+        <div className={classes.cardBackTexture} />
+        <div className={classes.cardBackTone} />
         <div className={classes.cardBackLogoContainer}>
           <div className={classes.cardBackLogoBackground}><Logo width={100} fillColor={'rgba(0, 0, 0, 0.3)'} /></div>
           <div className={classes.cardBackLogoForeground}><Logo width={100} fillColor={'white'} /></div>
@@ -236,7 +238,9 @@ export const Card = ({ cardInfo, classes }) => {
 
 Card.propTypes = {
   cardInfo: PropTypes.object.isRequired,
+  cardSelectedHandler: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  isSelected: PropTypes.bool.isRequired,
 };
 
 export default injectSheet(styles)(Card);

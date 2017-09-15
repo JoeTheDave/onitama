@@ -17,7 +17,7 @@ const styles = {
     display: 'inline-block',
     overflow: 'hidden',
     userSelect: 'none',
-    cursor: 'default'
+    cursor: 'default',
   },
   centerFrame: {
     width: 1600,
@@ -29,8 +29,8 @@ const styles = {
     width: '100%',
     height: '100%',
     position: 'relative',
-    //                  45             -20                400              -1100               -200
-    transform: 'rotateX(40deg) rotateZ(-15deg) translateX(400px) translateY(-1000px) translateZ(-550px)',
+    //                  40             -15                400               -1000               -550
+    transform: 'rotateX(30deg) rotateZ(-15deg) translateX(350px) translateY(-900px) translateZ(-550px)',
     transformStyle: 'preserve-3d',
   },
   logo: {
@@ -49,9 +49,9 @@ const styles = {
       animationDuration: '2s',
       animationIterationCount: 'infinite',
       animationTimingFunction: 'linear',
-    }
+    },
   },
-  [`@keyframes startGamePulsate`]: {
+  '@keyframes startGamePulsate': {
     '0%': { textShadow: '1px 1px 5px orange, -1px 1px 5px orange, 1px -1px 5px orange, -1px -1px 5px orange' },
     '50%': { textShadow: '5px 5px 20px orange, -5px 5px 20px orange, 5px -5px 20px orange, -5px -5px 20px orange' },
     '100%': { textShadow: '1px 1px 5px orange, -1px 1px 5px orange, 1px -1px 5px orange, -1px -1px 5px orange' },
@@ -62,7 +62,7 @@ const styles = {
     height: 590,
     position: 'absolute',
     top: 400,
-    left: -200
+    left: -200,
   },
   graphicTwo: {
     backgroundImage: `url("${backgroundGraphicTwo}")`,
@@ -70,12 +70,12 @@ const styles = {
     height: 550,
     position: 'absolute',
     top: -50,
-    left: 1050
-  }
+    left: 1050,
+  },
 };
 
-export const Frame = ({ classes, game, startNewGameHandler }) => {
-  const { cards, pawns } = game;
+export const Frame = ({ actions, classes, game }) => {
+  const { cards, pawns, selectedCard } = game;
   return (
     <div className={classes.perspectiveFrame}>
       <div className={classes.centerFrame}>
@@ -83,12 +83,19 @@ export const Frame = ({ classes, game, startNewGameHandler }) => {
           <Logo width={120} fillColor={'rgba(0, 0, 0, 0.2)'} styles={{ left: -5, top: 5 }} />
           <Logo width={120} fillColor={'black'} />
         </div>
-        <div className={classes.newGameButton} onClick={startNewGameHandler}>Start New Game</div>
-        <div className={classes.graphicOne}></div>
-        <div className={classes.graphicTwo}></div>
+        <div className={classes.newGameButton} onClick={actions.startNewGame}>Start New Game</div>
+        <div className={classes.graphicOne} />
+        <div className={classes.graphicTwo} />
         <div className={classes.tableTop}>
           <Board />
-          {cards.map((card, index) => (<Card key={`card-${card.id}`} cardInfo={card} />))}
+          {cards.map(card => (
+            <Card
+              key={`card-${card.id}`}
+              cardInfo={card}
+              cardSelectedHandler={(actions.cardSelected)}
+              isSelected={!!(selectedCard && selectedCard.id === card.id)}
+            />
+          ))}
           {pawns.map(pawn => (<Pawn key={`pawn-${pawn.id}`} pawnInfo={pawn} />))}
         </div>
       </div>
@@ -99,7 +106,7 @@ export const Frame = ({ classes, game, startNewGameHandler }) => {
 Frame.propTypes = {
   game: PropTypes.object.isRequired,
   classes: PropTypes.object.isRequired,
-  startNewGameHandler: PropTypes.func.isRequired
+  actions: PropTypes.object.isRequired,
 };
 
 export default injectSheet(styles)(Frame);

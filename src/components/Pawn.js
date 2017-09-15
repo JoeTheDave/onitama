@@ -2,15 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 
-const getPawnStyles = () => {
-  return {
-    width: 120,
-    height: 200,
-    position: 'absolute',
-    border: { style: 'solid', width: 1, color: 'black' },
-    boxSizing: 'border-box',
-  };
-};
+const getPawnStyles = () => ({
+  width: 120,
+  height: 200,
+  position: 'absolute',
+  border: { style: 'solid', width: 1, color: 'black' },
+  boxSizing: 'border-box',
+});
 
 const styles = {
   pawn: {
@@ -21,19 +19,19 @@ const styles = {
   },
   northWall: {
     ...getPawnStyles(),
-    transform: 'rotateX(90deg) translateY(100px) translateZ(100px)'
+    transform: 'rotateX(90deg) translateY(100px) translateZ(100px)',
   },
   eastWall: {
     ...getPawnStyles(),
-    transform: 'rotateX(90deg) rotateY(90deg) translateY(100px) translateZ(60px) translateX(-40px)'
+    transform: 'rotateX(90deg) rotateY(90deg) translateY(100px) translateZ(60px) translateX(-40px)',
   },
   southWall: {
     ...getPawnStyles(),
-    transform: 'rotateX(90deg) rotateY(180deg) translateY(100px) translateZ(20px)'
+    transform: 'rotateX(90deg) rotateY(180deg) translateY(100px) translateZ(20px)',
   },
   westWall: {
     ...getPawnStyles(),
-    transform: 'rotateX(90deg) rotateY(270deg) translateY(100px) translateZ(60px) translateX(40px)'
+    transform: 'rotateX(90deg) rotateY(270deg) translateY(100px) translateZ(60px) translateX(40px)',
   },
   topWall: {
     ...getPawnStyles(),
@@ -51,27 +49,27 @@ for (let i = 0; i < 25; i++) {
   const x = i % 5;
   const y = Math.floor(i / 5);
   styles[`location${i}`] = {
-    transform: `translateX(${615 + (x * 188)}px) translateY(${365 + (y * 188)}px) translateZ(1px)`
-  }
+    transform: `translateX(${615 + (x * 188)}px) translateY(${365 + (y * 188)}px) translateZ(1px)`,
+  };
 }
 
 export const Pawn = ({ classes, pawnInfo }) => {
   const { player } = pawnInfo;
-  const appliedClasses = [classes.pawn, classes[`location${pawnInfo.location}`] ];
+  const appliedClasses = [classes.pawn, classes[`location${pawnInfo.location}`]];
   return (
-    <div className={appliedClasses.join(' ')}>
-      <div className={[classes.northWall, classes[player.toLowerCase()]].join(' ')}></div>
-      <div className={[classes.eastWall, classes[player.toLowerCase()]].join(' ')}></div>
-      <div className={[classes.southWall, classes[player.toLowerCase()]].join(' ')}></div>
-      <div className={[classes.westWall, classes[player.toLowerCase()]].join(' ')}></div>
-      <div className={[classes.topWall, classes[player.toLowerCase()]].join(' ')}></div>
+    <div className={appliedClasses.join(' ')} onClick={() => { console.log('pawn click'); }}>
+      <div className={[classes.northWall, classes[player.toLowerCase()]].join(' ')} />
+      <div className={[classes.eastWall, classes[player.toLowerCase()]].join(' ')} />
+      <div className={[classes.southWall, classes[player.toLowerCase()]].join(' ')} />
+      <div className={[classes.westWall, classes[player.toLowerCase()]].join(' ')} />
+      <div className={[classes.topWall, classes[player.toLowerCase()]].join(' ')} />
     </div>
   );
 };
 
 Pawn.propTypes = {
   classes: PropTypes.object.isRequired,
-  pawnInfo: PropTypes.object.isRequired
+  pawnInfo: PropTypes.object.isRequired,
 };
 
 export default injectSheet(styles)(Pawn);

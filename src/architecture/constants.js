@@ -1,18 +1,19 @@
 // Redux state transitions
 export const CARDS_RECEIVED = 'CARDS_RECEIVED';
+export const CARD_SELECTED = 'CARD_SELECTED';
 export const START_NEW_GAME = 'START_NEW_GAME';
 
 export const RESET_ALL_REDUCERS = 'RESET_ALL_REDUCERS';
 
 export const players = {
   red: 'RED',
-  blue: 'BLUE'
+  blue: 'BLUE',
 };
 
 export const alignmentTypes = {
   left: 'LEFT',
   right: 'RIGHT',
-  center: 'CENTER'
+  center: 'CENTER',
 };
 
 export const colors = {
