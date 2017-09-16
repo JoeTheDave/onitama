@@ -1,4 +1,4 @@
-import { fill, shuffle } from 'lodash';
+import { cloneDeep, fill, shuffle } from 'lodash';
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
@@ -29,17 +29,19 @@ const calculateValidMoves = state => {
 
 const newGameState = calculateValidMoves({
   pawns: [
-    { id: 'r1', location: 0, player: players.red, isMaster: false },
-    { id: 'r2', location: 1, player: players.red, isMaster: false },
-    { id: 'rK', location: 2, player: players.red, isMaster: true },
-    { id: 'r3', location: 3, player: players.red, isMaster: false },
-    { id: 'r4', location: 4, player: players.red, isMaster: false },
-    { id: 'b1', location: 20, player: players.blue, isMaster: false },
-    { id: 'b2', location: 21, player: players.blue, isMaster: false },
-    { id: 'bK', location: 22, player: players.blue, isMaster: true },
-    { id: 'b3', location: 23, player: players.blue, isMaster: false },
-    { id: 'b4', location: 24, player: players.blue, isMaster: false },
+    { id: 'r1', location: 0, player: players.red, isMaster: false, alive: true },
+    { id: 'r2', location: 1, player: players.red, isMaster: false, alive: true },
+    { id: 'rK', location: 2, player: players.red, isMaster: true, alive: true },
+    { id: 'r3', location: 3, player: players.red, isMaster: false, alive: true },
+    { id: 'r4', location: 4, player: players.red, isMaster: false, alive: true },
+    { id: 'b1', location: 20, player: players.blue, isMaster: false, alive: true },
+    { id: 'b2', location: 21, player: players.blue, isMaster: false, alive: true },
+    { id: 'bK', location: 22, player: players.blue, isMaster: true, alive: true },
+    { id: 'b3', location: 23, player: players.blue, isMaster: false, alive: true },
+    { id: 'b4', location: 24, player: players.blue, isMaster: false, alive: true },
   ],
+  redCaptured: 0,
+  blueCaptured: 0,
   turn: null,
   selectedCard: null,
   selectedPawn: null,
@@ -72,11 +74,21 @@ const executeMove = (state, squareId) => {
     const newPawns = [...state.pawns];
     const activePawn = newPawns.find(p => p.id === state.selectedPawn.id);
     activePawn.location = squareId;
+    const capturedPawn = newPawns.find(p => p.location === activePawn.location && p.id !== activePawn.id);
+    if (capturedPawn) {
+      capturedPawn.alive = false;
+      if (state.turn === players.blue) {
+        capturedPawn.location = 29 + state.redCaptured;
+        state.redCaptured++;
+      } else {
+        capturedPawn.location = 25 + state.blueCaptured;
+        state.blueCaptured++;
+      }
+    }
 
     const newCards = [...state.cards];
     const activeCard = newCards.find(c => c.id === state.selectedCard.id);
     const sideCard = newCards.find(c => c.location === `${state.turn.toLowerCase()}-3`);
-    console.log(activeCard)
 
     sideCard.location = activeCard.location;
     activeCard.location = `${newTurn.toLowerCase()}-3`;
@@ -128,13 +140,13 @@ export default function (state = initialState, action) {
       };
 
     case CARD_SELECTED:
-      return calculateValidMoves(cardSelected(state, action.card));
+      return calculateValidMoves(cardSelected(cloneDeep(state), action.card));
 
     case PAWN_SELECTED:
-      return calculateValidMoves(pawnSelected(state, action.pawn));
+      return calculateValidMoves(pawnSelected(cloneDeep(state), action.pawn));
 
     case EXECUTE_MOVE:
-      return calculateValidMoves(executeMove(state, action.squareId));
+      return calculateValidMoves(executeMove(cloneDeep(state), action.squareId));
 
     case RESET_ALL_REDUCERS:
       return { ...initialState };

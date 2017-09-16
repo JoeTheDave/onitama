@@ -2,10 +2,12 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 
+import { players } from 'Architecture/constants';
+
 import Board from './Board';
 import Card from './Card';
 import Pawn from './Pawn';
-import { Logo } from 'Components/svg'
+import { Logo } from 'Components/svg';
 import backgroundGraphicOne from 'Assets/abstract-background-decoration-one.jpg';
 import backgroundGraphicTwo from 'Assets/abstract-background-decoration-two.jpg';
 
@@ -29,8 +31,11 @@ const styles = {
     width: '100%',
     height: '100%',
     position: 'relative',
-    //                  40             -15                400               -1000               -550
-    transform: 'rotateX(30deg) rotateZ(-15deg) translateX(350px) translateY(-900px) translateZ(-550px)',
+    transition: '2s',
+    transitionDelay: '2s',
+    transform: props => (props.game.turn === players.red ?
+      'rotateX(30deg) rotateZ(165deg) translateX(-300px) translateY(900px) translateZ(-550px)' :
+      'rotateX(30deg) rotateZ(-15deg) translateX(300px) translateY(-900px) translateZ(-550px)'),
     transformStyle: 'preserve-3d',
   },
   logo: {

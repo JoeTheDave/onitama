@@ -4,7 +4,6 @@ import injectSheet from 'react-jss';
 
 const getPawnStyles = () => ({
   width: 120,
-  height: 200,
   position: 'absolute',
   border: { style: 'solid', width: 1, color: 'black' },
   boxSizing: 'border-box',
@@ -21,24 +20,36 @@ const styles = {
   },
   northWall: {
     ...getPawnStyles(),
-    transform: 'rotateX(90deg) translateY(100px) translateZ(100px)',
+    height: props => (props.pawnInfo.isMaster ? 200 : 120),
+    transform: props => (props.pawnInfo.isMaster ?
+      'rotateX(90deg) translateY(100px) translateZ(100px)' :
+      'rotateX(90deg) translateY(60px) translateZ(60px)'),
   },
   eastWall: {
     ...getPawnStyles(),
-    transform: 'rotateX(90deg) rotateY(90deg) translateY(100px) translateZ(60px) translateX(-40px)',
+    height: props => (props.pawnInfo.isMaster ? 200 : 120),
+    transform: props => (props.pawnInfo.isMaster ?
+      'rotateX(90deg) rotateY(90deg) translateY(100px) translateZ(60px) translateX(-40px)' :
+      'rotateX(90deg) rotateY(90deg) translateY(60px) translateZ(60px)'),
   },
   southWall: {
     ...getPawnStyles(),
-    transform: 'rotateX(90deg) rotateY(180deg) translateY(100px) translateZ(20px)',
+    height: props => (props.pawnInfo.isMaster ? 200 : 120),
+    transform: props => (props.pawnInfo.isMaster ?
+      'rotateX(90deg) rotateY(180deg) translateY(100px) translateZ(20px)' :
+      'rotateX(90deg) rotateY(180deg) translateY(60px) translateZ(60px)'),
   },
   westWall: {
     ...getPawnStyles(),
-    transform: 'rotateX(90deg) rotateY(270deg) translateY(100px) translateZ(60px) translateX(40px)',
+    height: props => (props.pawnInfo.isMaster ? 200 : 120),
+    transform: props => (props.pawnInfo.isMaster ?
+      'rotateX(90deg) rotateY(270deg) translateY(100px) translateZ(60px) translateX(40px)' :
+      'rotateX(90deg) rotateY(270deg) translateY(60px) translateZ(60px)'),
   },
   topWall: {
     ...getPawnStyles(),
     height: 120,
-    transform: 'translateZ(200px)',
+    transform: props => (props.pawnInfo.isMaster ? 'translateZ(200px)' : 'translateZ(120px)'),
   },
   red: {
     backgroundColor: 'rgba(200, 0, 0, 0.4)',
@@ -56,7 +67,16 @@ for (let i = 0; i < 25; i++) {
   styles[`location${i}`] = {
     transform: `translateX(${615 + (x * 188)}px) translateY(${365 + (y * 188)}px) translateZ(1px)`,
   };
+  if (i < 4) {
+    styles[`location${25 + i}`] = {
+      transform: `translateX(${40 + (i * 130)}px) translateY(365px) translateZ(1px)`,
+    };
+    styles[`location${29 + i}`] = {
+      transform: `translateX(${40 + (i * 130)}px) translateY(1117px) translateZ(1px)`,
+    };
+  }
 }
+
 
 export const Pawn = ({ classes, isSelected, pawnInfo, pawnSelectedHandler }) => {
   const { player } = pawnInfo;

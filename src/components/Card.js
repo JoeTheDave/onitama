@@ -21,7 +21,7 @@ const styles = {
     transform: props => {
       if (props.cardInfo.location.indexOf('deck') > -1) {
         const deckPosition = parseInt(props.cardInfo.location.split('-')[1]);
-        return `translateY(1200px) translateX(100px) rotateY(180deg) translateZ(${deckPosition * -5}px)`;
+        return `translateY(1300px) translateX(100px) rotateY(180deg) translateZ(${deckPosition * -5}px)`;
       }
       if (props.cardInfo.location === 'blue-1') {
         return 'translateY(1300px) translateX(600px)';
