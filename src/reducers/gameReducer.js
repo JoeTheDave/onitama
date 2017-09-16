@@ -47,26 +47,6 @@ const newGameState = calculateValidMoves({
   selectedPawn: null,
 });
 
-const cardSelected = (state, card) => {
-  if (state.turn && card.location.split('-')[0] === state.turn.toLowerCase() && card.location.split('-')[1] !== '3') {
-    if (state.selectedCard && card.id === state.selectedCard.id) {
-      return { ...state, selectedCard: null };
-    }
-    return { ...state, selectedCard: card };
-  }
-  return state;
-};
-
-const pawnSelected = (state, pawn) => {
-  if (state.turn && pawn.player === state.turn) {
-    if (state.selectedPawn && pawn.id === state.selectedPawn.id) {
-      return { ...state, selectedPawn: null };
-    }
-    return { ...state, selectedPawn: pawn };
-  }
-  return state;
-};
-
 const executeMove = (state, squareId) => {
   if (state.actionGrid[squareId]) {
     const newTurn = state.turn === players.blue ? players.red : players.blue;
@@ -101,6 +81,30 @@ const executeMove = (state, squareId) => {
       pawns: newPawns,
       cards: newCards,
     };
+  }
+  return state;
+};
+
+const cardSelected = (state, card) => {
+  if (state.turn && card.location.split('-')[0] === state.turn.toLowerCase() && card.location.split('-')[1] !== '3') {
+    if (state.selectedCard && card.id === state.selectedCard.id) {
+      return { ...state, selectedCard: null };
+    }
+    return { ...state, selectedCard: card };
+  }
+  return state;
+};
+
+const pawnSelected = (state, pawn) => {
+  if (state.turn) {
+    if (pawn.player === state.turn) {
+      if (state.selectedPawn && pawn.id === state.selectedPawn.id) {
+        return { ...state, selectedPawn: null };
+      }
+      return { ...state, selectedPawn: pawn };
+    } else if (state.selectedCard && state.selectedPawn) {
+      return executeMove(state, pawn.location);
+    }
   }
   return state;
 };

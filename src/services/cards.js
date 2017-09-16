@@ -219,13 +219,13 @@ const cards = [
     attackPattern: [{ x: -1, y: 2 }, { x: 0, y: -2 }, { x: 1, y: 2 }],
     alignment: alignmentTypes.center,
   },
-  {
-    name: 'Turtle',
-    firstPlayer: players.red,
-    text: 'Within your sphere of power, your Art remains supreme. Engage your opponent, and deflect his strikes.',
-    attackPattern: [{ x: -2, y: 0 }, { x: -1, y: -1 }, { x: 1, y: -1 }, { x: 2, y: 0 }],
-    alignment: alignmentTypes.center,
-  },
+  // {
+  //   name: 'Turtle',
+  //   firstPlayer: players.red,
+  //   text: 'Within your sphere of power, your Art remains supreme. Engage your opponent, and deflect his strikes.',
+  //   attackPattern: [{ x: -2, y: 0 }, { x: -1, y: -1 }, { x: 1, y: -1 }, { x: 2, y: 0 }],
+  //   alignment: alignmentTypes.center,
+  // },
 ];
 
 const getCards = () => {
