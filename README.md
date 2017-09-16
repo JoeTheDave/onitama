@@ -1,7 +1,6 @@
 # Onitama
 
-yarn install
-yarn start
+...
 
 # TODO:
 
