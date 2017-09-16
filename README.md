@@ -1,5 +1,10 @@
 # Onitama
 
+yarn install
+yarn start
+
+# TODO:
+
 - [ ] Add a prod vs dev build and include redux dev tools
 - [ ] Decide on final list of linting rules and clean up code accordingly
 - [ ] Optimize reducers with immutable.js
