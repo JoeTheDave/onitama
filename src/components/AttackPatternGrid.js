@@ -7,17 +7,17 @@ import { alignmentTypes, colors } from 'Architecture/constants';
 const styles = {
   container: {
     borderRadius: 8,
-    overflow: 'hidden'
+    overflow: 'hidden',
   },
   gridElement: {
     backgroundColor: 'white',
     width: 30,
     height: 30,
     margin: 1,
-    float: 'left'
+    float: 'left',
   },
   referencePoint: {
-    backgroundColor: '#444'
+    backgroundColor: '#444',
   },
   attackOption: {
     backgroundColor: props => {
@@ -31,11 +31,11 @@ const styles = {
         default:
           return '';
       }
-    }
-  }
+    },
+  },
 };
 
-export const AttackPatternGrid = ({ attackPattern, alignment, classes }) => {
+export const AttackPatternGrid = ({ attackPattern, classes }) => {
   const gridElements = () => {
     const elements = [];
     for (let x = 0; x < 25; x++) {
@@ -44,9 +44,9 @@ export const AttackPatternGrid = ({ attackPattern, alignment, classes }) => {
     elements[12] = 1;
     attackPattern.forEach(option => {
       elements[12 + option.x - (option.y * 5)] = 2;
-    })
+    });
     return elements;
-  }
+  };
 
   return (
     <div className={classes.container}>
@@ -54,7 +54,7 @@ export const AttackPatternGrid = ({ attackPattern, alignment, classes }) => {
         const classComposition = [classes.gridElement];
         if (element === 1) { classComposition.push(classes.referencePoint); }
         if (element === 2) { classComposition.push(classes.attackOption); }
-        return (<div key={index} className={classComposition.join(' ')}></div>);
+        return (<div key={index} className={classComposition.join(' ')} />);
       })}
     </div>
   );
@@ -62,8 +62,8 @@ export const AttackPatternGrid = ({ attackPattern, alignment, classes }) => {
 
 AttackPatternGrid.propTypes = {
   attackPattern: PropTypes.array.isRequired,
-  alignment: PropTypes.string.isRequired,
-  classes: PropTypes.object.isRequired
+  alignment: PropTypes.string.isRequired, // eslint-disable-line react/no-unused-prop-types
+  classes: PropTypes.object.isRequired,
 };
 
 export default injectSheet(styles)(AttackPatternGrid);

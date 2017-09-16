@@ -1,7 +1,6 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
-import { fill } from 'lodash';
 
 const styles = {
   container: {

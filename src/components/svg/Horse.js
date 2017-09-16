@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export const Horse = ({ fillColor }) => {
-  return (
-    <svg width="110px" height="130px" viewBox="0 0 180 220" preserveAspectRatio="xMidYMid meet">
-      <g transform="translate(0, 220) scale(0.1, -0.1)" fill={fillColor} stroke="none">
-        <path d="M1040 2156 c-59 -32 -270 -109 -334 -122 l-69 -15 -74 37 c-62 32
+export const Horse = ({ fillColor }) => (
+  <svg width="110px" height="130px" viewBox="0 0 180 220" preserveAspectRatio="xMidYMid meet">
+    <g transform="translate(0, 220) scale(0.1, -0.1)" fill={fillColor} stroke="none">
+      <path d="M1040 2156 c-59 -32 -270 -109 -334 -122 l-69 -15 -74 37 c-62 32
         -83 38 -140 38 -62 1 -68 -1 -82 -25 -13 -24 -12 -28 10 -58 32 -43 37 -116
         38 -526 2 -354 8 -418 51 -544 17 -47 39 -117 51 -155 11 -38 35 -103 54 -143
         40 -87 56 -92 109 -33 27 30 36 49 36 76 0 46 -12 69 -67 126 l-46 46 69 20
@@ -26,17 +25,18 @@ export const Horse = ({ fillColor }) => {
         -14 -83 -33 -97 -42 l-25 -16 0 213 c1 118 4 251 7 297 l5 83 27 -24 c14 -13
         37 -31 51 -40z m21 -653 c16 -8 42 -14 59 -14 29 0 30 -2 30 -45 0 -41 -2 -45
         -27 -51 -16 -3 -59 -14 -98 -24 -101 -27 -101 -28 -79 187 l5 51 42 -45 c22
-        -24 53 -51 68 -59z"/>
-        <path d="M137 803 c-3 -54 -13 -130 -22 -169 -10 -41 -15 -83 -11 -98 8 -33
+        -24 53 -51 68 -59z"
+      />
+      <path d="M137 803 c-3 -54 -13 -130 -22 -169 -10 -41 -15 -83 -11 -98 8 -33
         82 -115 114 -127 32 -12 72 10 107 61 27 38 29 50 33 154 7 193 -28 248 -174
-        271 l-41 6 -6 -98z"/>
-      </g>
-    </svg>
-  );
-};
+        271 l-41 6 -6 -98z"
+      />
+    </g>
+  </svg>
+);
 
 Horse.propTypes = {
-  fillColor: PropTypes.string.isRequired
+  fillColor: PropTypes.string.isRequired,
 };
 
 export default Horse;

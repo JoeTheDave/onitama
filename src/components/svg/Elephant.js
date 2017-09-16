@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export const Elephant = ({ fillColor }) => {
-  return (
-    <svg width="130px" height="130px" viewBox="0 0 218 241" preserveAspectRatio="xMidYMid meet">
-      <g transform="translate(0, 241) scale(0.1, -0.1)" fill={fillColor} stroke="none">
-        <path d="M755 2370 c-3 -6 -3 -19 0 -30 14 -45 -51 -134 -234 -323 -154 -159
+export const Elephant = ({ fillColor }) => (
+  <svg width="130px" height="130px" viewBox="0 0 218 241" preserveAspectRatio="xMidYMid meet">
+    <g transform="translate(0, 241) scale(0.1, -0.1)" fill={fillColor} stroke="none">
+      <path d="M755 2370 c-3 -6 -3 -19 0 -30 14 -45 -51 -134 -234 -323 -154 -159
         -131 -182 57 -56 42 28 96 67 119 86 34 27 46 32 61 24 14 -7 46 -4 113 10
         184 38 190 39 210 29 10 -6 19 -15 19 -20 0 -9 -126 -167 -192 -242 l-33 -36
         -193 -22 c-135 -15 -217 -19 -275 -14 -68 5 -85 4 -96 -9 -11 -14 -6 -23 34
@@ -32,14 +31,14 @@ export const Elephant = ({ fillColor }) => {
         -32 -2 3 14 31 36 62 46 66 50 91 20 129 -11 14 -19 27 -17 27 15 7 309 37
         366 38 68 1 72 0 72 -21z m-567 -90 c-14 -35 -39 -86 -56 -114 l-30 -52 -84
         -7 c-47 -4 -86 -5 -87 -3 -5 5 -66 192 -66 201 0 4 21 7 48 8 26 0 92 6 147
-        13 55 7 112 14 127 15 l27 1 -26 -62z"/>
-      </g>
-    </svg>
-  );
-};
+        13 55 7 112 14 127 15 l27 1 -26 -62z"
+      />
+    </g>
+  </svg>
+);
 
 Elephant.propTypes = {
-  fillColor: PropTypes.string.isRequired
+  fillColor: PropTypes.string.isRequired,
 };
 
 export default Elephant;

@@ -1,13 +1,11 @@
-import PropTypes from 'prop-types';
 import React from 'react';
 
 import { colors } from '../../architecture/constants';
 
-export const FirstPlayerIcon = () => {
-  return (
-    <svg width="40px" height="30px" viewBox="0 0 236 176" preserveAspectRatio="xMidYMid meet">
-      <g transform="translate(0, 176) scale(0.1, -0.1)" fill={colors.opaqueWhite} stroke="none">
-        <path d="M872 1538 c-16 -16 -15 -47 3 -98 27 -76 29 -74 -101 -67 -113 5
+export const FirstPlayerIcon = () => (
+  <svg width="40px" height="30px" viewBox="0 0 236 176" preserveAspectRatio="xMidYMid meet">
+    <g transform="translate(0, 176) scale(0.1, -0.1)" fill={colors.opaqueWhite} stroke="none">
+      <path d="M872 1538 c-16 -16 -15 -47 3 -98 27 -76 29 -74 -101 -67 -113 5
         -117 5 -140 -18 -27 -27 -31 -67 -9 -85 13 -11 40 -11 143 -1 70 7 186 11 257
         9 l130 -3 3 -35 3 -35 -194 3 -195 3 -21 -27 c-25 -31 -27 -57 -6 -74 14 -11
         185 -9 353 6 l62 6 0 -46 0 -46 -152 -2 c-226 -4 -239 -3 -285 6 -39 7 -45 5
@@ -23,15 +21,16 @@ export const FirstPlayerIcon = () => {
         17 13 51 44 86 27 125 -53 118 -44 -4 -57 -25 -69 -113 l-8 -60 -218 -3 -217
         -2 6 68 c9 93 -2 112 -64 112 -27 0 -53 -5 -60 -12z m588 -605 c0 -3 -5 -34
         -11 -68 l-11 -62 -220 0 -220 -1 6 37 c3 20 6 48 6 63 l0 27 93 4 c192 6 357
-        7 357 0z"/>
-        <path d="M799 634 c-9 -11 -12 -34 -9 -68 5 -66 5 -176 0 -249 -3 -44 -1 -61
+        7 357 0z"
+      />
+      <path d="M799 634 c-9 -11 -12 -34 -9 -68 5 -66 5 -176 0 -249 -3 -44 -1 -61
         10 -68 9 -6 57 -7 125 -2 142 10 440 10 580 0 68 -5 116 -4 124 2 12 7 15 38
         16 138 0 76 6 145 14 169 9 29 10 47 3 60 -9 17 -31 18 -304 20 -161 2 -350 6
         -419 9 -109 5 -128 3 -140 -11z m725 -105 c4 -3 3 -45 0 -93 l-7 -86 -293 0
-        c-228 0 -294 3 -295 13 -3 31 4 163 8 170 6 10 578 5 587 -4z"/>
-      </g>
-    </svg>
-  );
-};
+        c-228 0 -294 3 -295 13 -3 31 4 163 8 170 6 10 578 5 587 -4z"
+      />
+    </g>
+  </svg>
+);
 
 export default FirstPlayerIcon;

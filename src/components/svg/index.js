@@ -37,7 +37,7 @@ import Viper from './Viper';
 
 // Convert images to SVG - https://convertio.co/png-svg/ (use incogneto to have unlimited access)
 
-const getCharacterComponent = (name) => {
+const getCharacterComponent = name => {
   switch (name.replace(' ', '')) {
     case 'Bear': return Bear;
     case 'Boar': return Boar;
@@ -73,7 +73,7 @@ const getCharacterComponent = (name) => {
     case 'Viper': return Viper;
     default: return NotFound;
   }
-}
+};
 
 export {
   getCharacterComponent,
@@ -111,5 +111,5 @@ export {
   Tanuki,
   Tiger,
   Turtle,
-  Viper
-}
+  Viper,
+};

@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export const Ox = ({ fillColor }) => {
-  return (
-    <svg width="130px" height="130px" viewBox="0 0 545 760" preserveAspectRatio="xMidYMid meet">
-      <g transform="translate(0, 760) scale(0.1, -0.1)" fill={fillColor} stroke="none">
-        <path d="M2780 7588 c-52 -9 -95 -49 -87 -82 3 -12 20 -61 38 -111 l34 -90 -2
+export const Ox = ({ fillColor }) => (
+  <svg width="130px" height="130px" viewBox="0 0 545 760" preserveAspectRatio="xMidYMid meet">
+    <g transform="translate(0, 760) scale(0.1, -0.1)" fill={fillColor} stroke="none">
+      <path d="M2780 7588 c-52 -9 -95 -49 -87 -82 3 -12 20 -61 38 -111 l34 -90 -2
         -335 c-1 -184 -7 -387 -13 -450 -10 -108 -9 -120 12 -191 22 -72 23 -87 15
         -240 -4 -90 -5 -198 -2 -240 l6 -76 -36 -31 c-23 -21 -46 -32 -66 -32 -37 0
         -162 -41 -229 -75 l-49 -25 -19 33 c-11 17 -33 61 -50 97 -46 98 -106 175
@@ -46,14 +45,14 @@ export const Ox = ({ fillColor }) => {
         4 55 20 79 36 67 46 190 100 382 168 96 34 182 66 190 71 22 12 36 11 50 -6z
         m-1831 -706 c38 -13 38 -18 4 -51 -56 -52 -135 -86 -263 -113 -69 -15 -145
         -33 -170 -40 -51 -16 -60 -13 -60 19 0 41 31 63 130 92 52 15 127 40 165 57
-        39 16 88 33 110 37 22 4 43 8 46 9 3 0 20 -4 38 -10z"/>
-      </g>
-    </svg>
-  );
-};
+        39 16 88 33 110 37 22 4 43 8 46 9 3 0 20 -4 38 -10z"
+      />
+    </g>
+  </svg>
+);
 
 Ox.propTypes = {
-  fillColor: PropTypes.string.isRequired
+  fillColor: PropTypes.string.isRequired,
 };
 
 export default Ox;

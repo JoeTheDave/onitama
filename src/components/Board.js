@@ -210,32 +210,30 @@ const styles = {
   },
 };
 
-export const Board = ({ cardInfo, classes }) => {
-  return (
-    <div>
-      <div className={classes.boardBottomSurface}></div>
-      <div className={classes.southEdge}></div>
-      <div className={classes.westEdge}></div>
-      <div className={classes.northEdge}></div>
-      <div className={classes.eastEdge}></div>
-      <div className={classes.gameBoard}>
-        <div className={classes.centerGraphicContainer}></div>
-        <div className={classes.redHome}></div>
-        <div className={classes.blueHome}></div>
-        <div className={classes.boardGraphicOuterFade}></div>
-        <div className={classes.boardOuterBorder}></div>
-        <div className={classes.boardInnerBorder}></div>
-        <div className={classes.cardPositionOne}></div>
-        <div className={classes.cardPositionTwo}></div>
-        <div className={classes.cardPositionThree}></div>
-        <div className={classes.cardPositionFour}></div>
-        <div className={classes.cardPositionFive}></div>
-        <div className={classes.boardGraphicTexture}></div>
-        <ActionGridContainer />
-      </div>
+export const Board = ({ classes }) => (
+  <div>
+    <div className={classes.boardBottomSurface} />
+    <div className={classes.southEdge} />
+    <div className={classes.westEdge} />
+    <div className={classes.northEdge} />
+    <div className={classes.eastEdge} />
+    <div className={classes.gameBoard}>
+      <div className={classes.centerGraphicContainer} />
+      <div className={classes.redHome} />
+      <div className={classes.blueHome} />
+      <div className={classes.boardGraphicOuterFade} />
+      <div className={classes.boardOuterBorder} />
+      <div className={classes.boardInnerBorder} />
+      <div className={classes.cardPositionOne} />
+      <div className={classes.cardPositionTwo} />
+      <div className={classes.cardPositionThree} />
+      <div className={classes.cardPositionFour} />
+      <div className={classes.cardPositionFive} />
+      <div className={classes.boardGraphicTexture} />
+      <ActionGridContainer />
     </div>
-  );
-};
+  </div>
+);
 
 Board.propTypes = {
   classes: PropTypes.object.isRequired,

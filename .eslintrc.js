@@ -36,6 +36,9 @@ module.exports = {
     }],
     "func-names": ['warn', 'as-needed'],
     "camelcase": ["error", {properties: "never"}],
+    "no-param-reassign": 0,
+    "radix": 0,
+    "no-mixed-operators": 0,
 
     // ################################################################################################################
     // Copied and Pasted (should be audited to make sure these are desired)

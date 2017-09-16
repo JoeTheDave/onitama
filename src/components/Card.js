@@ -240,7 +240,7 @@ Card.propTypes = {
   cardInfo: PropTypes.object.isRequired,
   cardSelectedHandler: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
-  isSelected: PropTypes.bool.isRequired,
+  isSelected: PropTypes.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
 };
 
 export default injectSheet(styles)(Card);

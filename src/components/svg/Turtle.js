@@ -1,11 +1,10 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 
-export const Turtle = ({ fillColor }) => {
-  return (
-    <svg width="130px" height="130px" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
-      <g transform="translate(0, 300) scale(0.1, -0.1)" fill={fillColor} stroke="none">
-        <path d="M1255 2768 c-2 -7 -9 -33 -16 -58 -33 -131 -117 -227 -355 -410 l-59
+export const Turtle = ({ fillColor }) => (
+  <svg width="130px" height="130px" viewBox="0 0 300 300" preserveAspectRatio="xMidYMid meet">
+    <g transform="translate(0, 300) scale(0.1, -0.1)" fill={fillColor} stroke="none">
+      <path d="M1255 2768 c-2 -7 -9 -33 -16 -58 -33 -131 -117 -227 -355 -410 l-59
         -45 41 -3 c78 -6 247 79 359 180 l60 54 95 2 c52 1 120 6 150 11 95 16 94 13
         -47 -177 -46 -62 -93 -116 -106 -121 -12 -5 -132 -28 -267 -51 -219 -37 -253
         -40 -320 -32 -120 14 -129 6 -80 -72 42 -65 88 -159 116 -234 30 -79 46 -103
@@ -48,19 +47,20 @@ export const Turtle = ({ fillColor }) => {
         -31 -132 -31 -8 21 c-22 60 -63 217 -57 222 8 9 225 63 254 63 18 1 25 -10 42
         -61z m985 -408 c18 -7 27 -19 32 -47 15 -79 -37 -623 -66 -690 -12 -28 -30
         -29 -72 -3 -19 11 -51 20 -75 20 -35 0 -237 -38 -295 -56 -17 -5 -18 16 -18
-        345 l0 351 36 0 c19 0 90 14 157 31 98 25 223 52 269 58 4 1 18 -3 32 -9z"/>
-        <path d="M1956 1448 c5 -41 1 -66 -16 -111 -12 -32 -28 -61 -35 -63 -7 -3 -43
+        345 l0 351 36 0 c19 0 90 14 157 31 98 25 223 52 269 58 4 1 18 -3 32 -9z"
+      />
+      <path d="M1956 1448 c5 -41 1 -66 -16 -111 -12 -32 -28 -61 -35 -63 -7 -3 -43
         13 -80 36 -67 41 -115 64 -115 55 0 -2 34 -42 75 -87 41 -45 75 -88 75 -94 0
         -7 -31 -54 -69 -106 -38 -51 -68 -95 -66 -97 14 -14 67 20 126 81 l69 71 59
         -56 c33 -32 64 -57 70 -57 20 0 30 35 21 75 -5 23 -24 54 -50 80 l-42 43 52
-        87 c36 62 50 95 46 110 -8 32 -72 85 -101 85 -24 0 -25 -2 -19 -52z"/>
-      </g>
-    </svg>
-  );
-};
+        87 c36 62 50 95 46 110 -8 32 -72 85 -101 85 -24 0 -25 -2 -19 -52z"
+      />
+    </g>
+  </svg>
+);
 
 Turtle.propTypes = {
-  fillColor: PropTypes.string.isRequired
+  fillColor: PropTypes.string.isRequired,
 };
 
 export default Turtle;
