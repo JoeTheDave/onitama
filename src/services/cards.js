@@ -232,6 +232,7 @@ const getCards = () => {
   const cardsList = cards.map((card, index) => ({
     ...card,
     id: padStart(index.toString(), 3, '0'),
+    physicalOrder: index,
   }));
 
   return new Promise(resolve => {
