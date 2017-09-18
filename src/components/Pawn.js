@@ -9,6 +9,7 @@ const getPawnStyles = () => ({
   boxSizing: 'border-box',
   transition: '2s, box-shadow 0.5s',
   cursor: 'pointer',
+  zIndex: 100,
 });
 
 const styles = {
