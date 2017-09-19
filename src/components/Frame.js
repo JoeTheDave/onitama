@@ -37,11 +37,14 @@ const styles = {
       'rotateX(30deg) rotateZ(165deg) translateX(-300px) translateY(900px) translateZ(-550px)' :
       'rotateX(30deg) rotateZ(-15deg) translateX(300px) translateY(-900px) translateZ(-550px)'),
     transformStyle: 'preserve-3d',
+    zIndex: 18,
   },
   logo: {
     position: 'absolute',
+    zIndex: 10,
   },
   newGameButton: {
+    zIndex: 15,
     position: 'absolute',
     top: 110,
     left: 20,
@@ -68,6 +71,7 @@ const styles = {
     position: 'absolute',
     top: 400,
     left: -200,
+    zIndex: 5,
   },
   graphicTwo: {
     backgroundImage: `url("${backgroundGraphicTwo}")`,
@@ -76,9 +80,11 @@ const styles = {
     position: 'absolute',
     top: -50,
     left: 1050,
+    zIndex: 5,
   },
 };
 
+              // key={`card-${card.id}`}
 export const Frame = ({ actions, classes, game }) => {
   console.log(game);
   const { cards, pawns, selectedCard, selectedPawn } = game;

@@ -17,10 +17,11 @@ const styles = {
     cursor: 'pointer',
     position: 'absolute',
     transformStyle: 'preserve-3d',
+    zIndex: props => (props.cardInfo.location === 'deck' ? props.cardInfo.deckPosition + 21 : 21),
     boxShadow: props => (props.isSelected ? '0 0 10px 10px gold' : 'none'),
     transform: props => {
-      if (props.cardInfo.location.indexOf('deck') > -1) {
-        const deckPosition = parseInt(props.cardInfo.location.split('-')[1]);
+      if (props.cardInfo.location === 'deck') {
+        const deckPosition = props.cardInfo.deckPosition;
         return `translateY(1300px) translateX(100px) rotateY(180deg) translateZ(${deckPosition * -5}px)`;
       }
       if (props.cardInfo.location === 'blue-1') {

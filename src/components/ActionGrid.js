@@ -9,6 +9,7 @@ const styles = {
     position: 'absolute',
     top: 330,
     left: 580,
+    zIndex: 20,
   },
   actionSquare: {
     width: 184,

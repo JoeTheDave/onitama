@@ -1,4 +1,4 @@
-import { cloneDeep, fill, shuffle } from 'lodash';
+import { sortBy, cloneDeep, fill, shuffle } from 'lodash';
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
@@ -109,15 +109,18 @@ const pawnSelected = (state, pawn) => {
   return state;
 };
 
-const shuffleDeck = cards => shuffle(cards).map((card, index) => ({
+const shuffleDeck = cards => sortBy(shuffle(cards).map((card, index) => ({
   ...card,
-  location: `deck-${index}`,
-}));
+  location: 'deck',
+  deckPosition: index,
+})), 'physicalOrder');
 
 const initialState = {
   cards: [],
   ...newGameState,
 };
+
+const cardAtDeckPosition = (cards, deckPosition) => cards.find(c => c.deckPosition === deckPosition);
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -129,12 +132,13 @@ export default function (state = initialState, action) {
 
     case START_NEW_GAME:
       const cards = shuffleDeck(state.cards);
-      const turn = cards[cards.length - 5].firstPlayer;
-      cards[cards.length - 1].location = 'blue-1';
-      cards[cards.length - 2].location = 'blue-2';
-      cards[cards.length - 3].location = 'red-1';
-      cards[cards.length - 4].location = 'red-2';
-      cards[cards.length - 5].location = (turn === players.blue ? 'blue-3' : 'red-3');
+      const len = cards.length;
+      const turn = cardAtDeckPosition(cards, len - 5).firstPlayer;
+      cardAtDeckPosition(cards, len - 1).location = 'blue-1';
+      cardAtDeckPosition(cards, len - 2).location = 'blue-2';
+      cardAtDeckPosition(cards, len - 3).location = 'red-1';
+      cardAtDeckPosition(cards, len - 4).location = 'red-2';
+      cardAtDeckPosition(cards, len - 5).location = (turn === players.blue ? 'blue-3' : 'red-3');
 
       return {
         ...state,

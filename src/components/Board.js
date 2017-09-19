@@ -84,6 +84,7 @@ const styles = {
     left: 900,
     width: 300,
     height: 300,
+    backgroundColor: 'transparent',
     backgroundImage: `url("${boardBackgroundCenter}")`,
     backgroundSize: [300, 300],
     borderRadius: 150,
@@ -93,6 +94,7 @@ const styles = {
     animationDuration: '60s',
     animationIterationCount: 'infinite',
     animationTimingFunction: 'linear',
+    zIndex: 19,
   },
   blueHome: {
     position: 'absolute',
