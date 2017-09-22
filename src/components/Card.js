@@ -4,7 +4,7 @@ import injectSheet from 'react-jss';
 
 import { alignmentTypes, colors, players } from 'Architecture/constants';
 import AttackPatternGrid from './AttackPatternGrid';
-import { getCharacterComponent, FirstPlayerIcon, Logo, Swish } from './svg';
+import { getCharacterComponent, MasterIcon, Logo, Swish } from './svg';
 import cardBackground from 'Assets/mural.jpg';
 import cardTexture from 'Assets/card-texture.png';
 
@@ -219,7 +219,7 @@ export const Card = ({ cardInfo, cardSelectedHandler, classes }) => {
               <div className={classes.verticalAligner} />
               <div className={classes.wisdom}>{text.split('\n').map((textPart, index) => <div key={index}>{textPart}</div>)}</div>
               <div className={classes.firstPlayerIcon}>
-                <FirstPlayerIcon />
+                <MasterIcon />
               </div>
             </div>
           </div>

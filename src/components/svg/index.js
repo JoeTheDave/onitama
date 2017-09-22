@@ -7,7 +7,6 @@ import Dog from './Dog';
 import Dragon from './Dragon';
 import Eel from './Eel';
 import Elephant from './Elephant';
-import FirstPlayerIcon from './FirstPlayerIcon';
 import Fox from './Fox';
 import Frog from './Frog';
 import Giraffe from './Giraffe';
@@ -17,6 +16,7 @@ import Iguana from './Iguana';
 import Kirin from './Kirin';
 import Logo from './Logo';
 import Mantis from './Mantis';
+import MasterIcon from './MasterIcon';
 import Monkey from './Monkey';
 import Mouse from './Mouse';
 import NotFound from './NotFound';
@@ -36,7 +36,6 @@ import Turtle from './Turtle';
 import Viper from './Viper';
 
 // Convert images to SVG - https://convertio.co/png-svg/ (use incogneto to have unlimited access)
-
 const getCharacterComponent = name => {
   switch (name.replace(' ', '')) {
     case 'Bear': return Bear;
@@ -86,7 +85,6 @@ export {
   Dragon,
   Eel,
   Elephant,
-  FirstPlayerIcon,
   Fox,
   Frog,
   Giraffe,
@@ -96,6 +94,7 @@ export {
   Kirin,
   Logo,
   Mantis,
+  MasterIcon,
   Monkey,
   Mouse,
   Otter,

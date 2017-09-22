@@ -84,7 +84,6 @@ const styles = {
   },
 };
 
-              // key={`card-${card.id}`}
 export const Frame = ({ actions, classes, game }) => {
   console.log(game);
   const { cards, pawns, selectedCard, selectedPawn } = game;

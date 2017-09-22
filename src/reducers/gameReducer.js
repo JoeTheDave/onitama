@@ -9,6 +9,10 @@ import {
   players,
 } from 'Architecture/constants';
 
+const isCheck = () => {
+
+};
+
 const calculateValidMoves = state => {
   state.actionGrid = fill(Array(25), null);
   if (!state.selectedCard || !state.selectedPawn) {
@@ -45,6 +49,8 @@ const newGameState = calculateValidMoves({
   turn: null,
   selectedCard: null,
   selectedPawn: null,
+  redInCheck: false,
+  blueInCheck: false,
 });
 
 const executeMove = (state, squareId) => {

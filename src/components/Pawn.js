@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
+import { MasterIcon } from 'Components/svg';
 
 const getPawnStyles = () => ({
   width: 120,
@@ -61,6 +62,11 @@ const styles = {
   selected: {
     boxShadow: '0 0 5px 5px gold',
   },
+  masterIconPosition: {
+    width: 100,
+    margin: [70, 'auto', 0, 'auto'],
+    transform: 'rotateX(180deg)',
+  }
 };
 for (let i = 0; i < 25; i++) {
   const x = i % 5;
@@ -93,10 +99,18 @@ export const Pawn = ({ classes, isSelected, pawnInfo, pawnSelectedHandler }) => 
 
   return (
     <div className={buildClasses(classes.pawn)} onClick={handleClick}>
-      <div className={buildClasses(classes.northWall)} />
-      <div className={buildClasses(classes.eastWall)} />
-      <div className={buildClasses(classes.southWall)} />
-      <div className={buildClasses(classes.westWall)} />
+      <div className={buildClasses(classes.northWall)}>
+        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
+      </div>
+      <div className={buildClasses(classes.eastWall)}>
+        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
+      </div>
+      <div className={buildClasses(classes.southWall)}>
+        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
+      </div>
+      <div className={buildClasses(classes.westWall)}>
+        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
+      </div>
       <div className={buildClasses(classes.topWall)} />
     </div>
   );
