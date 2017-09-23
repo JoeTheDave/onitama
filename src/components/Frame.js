@@ -7,6 +7,7 @@ import { players } from 'Architecture/constants';
 import Board from './Board';
 import Card from './Card';
 import Pawn from './Pawn';
+import History from './History';
 import { Logo } from 'Components/svg';
 import backgroundGraphicOne from 'Assets/abstract-background-decoration-one.jpg';
 import backgroundGraphicTwo from 'Assets/abstract-background-decoration-two.jpg';
@@ -34,8 +35,8 @@ const styles = {
     transition: '2s',
     transitionDelay: '2s',
     transform: props => (props.game.turn === players.red ?
-      'rotateX(30deg) rotateZ(165deg) translateX(-300px) translateY(900px) translateZ(-550px)' :
-      'rotateX(30deg) rotateZ(-15deg) translateX(300px) translateY(-900px) translateZ(-550px)'),
+      'rotateX(35deg) rotateZ(165deg) translateX(-300px) translateY(900px) translateZ(-550px)' :
+      'rotateX(35deg) rotateZ(-15deg) translateX(300px) translateY(-900px) translateZ(-550px)'),
     transformStyle: 'preserve-3d',
     zIndex: 18,
   },
@@ -116,6 +117,7 @@ export const Frame = ({ actions, classes, game }) => {
             />
           ))}
         </div>
+        <History history={game.history} />
       </div>
     </div>
   );

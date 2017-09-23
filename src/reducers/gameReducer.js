@@ -51,16 +51,19 @@ const newGameState = calculateValidMoves({
   selectedPawn: null,
   redInCheck: false,
   blueInCheck: false,
+  history: [],
 });
 
 const executeMove = (state, squareId) => {
   if (state.actionGrid[squareId]) {
-    const newTurn = state.turn === players.blue ? players.red : players.blue;
+    const history = state.history.slice(0);
+    history.push({ pawn: state.selectedPawn, card: state.selectedCard, squareId, id: history.length });
+    const turn = state.turn === players.blue ? players.red : players.blue;
 
-    const newPawns = [...state.pawns];
-    const activePawn = newPawns.find(p => p.id === state.selectedPawn.id);
+    const pawns = [...state.pawns];
+    const activePawn = pawns.find(p => p.id === state.selectedPawn.id);
     activePawn.location = squareId;
-    const capturedPawn = newPawns.find(p => p.location === activePawn.location && p.id !== activePawn.id);
+    const capturedPawn = pawns.find(p => p.location === activePawn.location && p.id !== activePawn.id);
     if (capturedPawn) {
       capturedPawn.alive = false;
       if (state.turn === players.blue) {
@@ -72,22 +75,23 @@ const executeMove = (state, squareId) => {
       }
     }
 
-    const newCards = [...state.cards];
-    const activeCard = newCards.find(card => card.id === state.selectedCard.id);
-    const sideCard = newCards.find(card => card.location === state.turn && card.deckPosition === 3);
+    const cards = [...state.cards];
+    const activeCard = cards.find(card => card.id === state.selectedCard.id);
+    const sideCard = cards.find(card => card.location === state.turn && card.deckPosition === 3);
 
     sideCard.location = activeCard.location;
     sideCard.deckPosition = activeCard.deckPosition;
-    activeCard.location = newTurn;
+    activeCard.location = turn;
     activeCard.deckPosition = 3;
 
     return {
       ...state,
       selectedCard: null,
       selectedPawn: null,
-      turn: newTurn,
-      pawns: newPawns,
-      cards: newCards,
+      turn,
+      pawns,
+      cards,
+      history,
     };
   }
   return state;
