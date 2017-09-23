@@ -100,16 +100,16 @@ export const Pawn = ({ classes, isSelected, pawnInfo, pawnSelectedHandler }) => 
   return (
     <div className={buildClasses(classes.pawn)} onClick={handleClick}>
       <div className={buildClasses(classes.northWall)}>
-        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
+        {/* {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>} */}
       </div>
       <div className={buildClasses(classes.eastWall)}>
-        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
+        {/* {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>} */}
       </div>
       <div className={buildClasses(classes.southWall)}>
-        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
+        {/* {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>} */}
       </div>
       <div className={buildClasses(classes.westWall)}>
-        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
+        {/* {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>} */}
       </div>
       <div className={buildClasses(classes.topWall)} />
     </div>
