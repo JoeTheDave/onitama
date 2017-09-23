@@ -23,6 +23,7 @@ const styles = {
   northWall: {
     ...getPawnStyles(),
     height: props => (props.pawnInfo.isMaster ? 200 : 120),
+    transformStyle: 'preserve-3d',
     transform: props => (props.pawnInfo.isMaster ?
       'rotateX(90deg) translateY(100px) translateZ(100px)' :
       'rotateX(90deg) translateY(60px) translateZ(60px)'),
@@ -30,6 +31,7 @@ const styles = {
   eastWall: {
     ...getPawnStyles(),
     height: props => (props.pawnInfo.isMaster ? 200 : 120),
+    transformStyle: 'preserve-3d',
     transform: props => (props.pawnInfo.isMaster ?
       'rotateX(90deg) rotateY(90deg) translateY(100px) translateZ(60px) translateX(-40px)' :
       'rotateX(90deg) rotateY(90deg) translateY(60px) translateZ(60px)'),
@@ -37,6 +39,7 @@ const styles = {
   southWall: {
     ...getPawnStyles(),
     height: props => (props.pawnInfo.isMaster ? 200 : 120),
+    transformStyle: 'preserve-3d',
     transform: props => (props.pawnInfo.isMaster ?
       'rotateX(90deg) rotateY(180deg) translateY(100px) translateZ(20px)' :
       'rotateX(90deg) rotateY(180deg) translateY(60px) translateZ(60px)'),
@@ -44,6 +47,7 @@ const styles = {
   westWall: {
     ...getPawnStyles(),
     height: props => (props.pawnInfo.isMaster ? 200 : 120),
+    transformStyle: 'preserve-3d',
     transform: props => (props.pawnInfo.isMaster ?
       'rotateX(90deg) rotateY(270deg) translateY(100px) translateZ(60px) translateX(40px)' :
       'rotateX(90deg) rotateY(270deg) translateY(60px) translateZ(60px)'),
@@ -66,7 +70,7 @@ const styles = {
     width: 100,
     margin: [70, 'auto', 0, 'auto'],
     transform: 'rotateX(180deg)',
-  }
+  },
 };
 for (let i = 0; i < 25; i++) {
   const x = i % 5;
@@ -100,16 +104,16 @@ export const Pawn = ({ classes, isSelected, pawnInfo, pawnSelectedHandler }) => 
   return (
     <div className={buildClasses(classes.pawn)} onClick={handleClick}>
       <div className={buildClasses(classes.northWall)}>
-        {/* {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>} */}
+        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
       </div>
       <div className={buildClasses(classes.eastWall)}>
-        {/* {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>} */}
+        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
       </div>
       <div className={buildClasses(classes.southWall)}>
-        {/* {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>} */}
+        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
       </div>
       <div className={buildClasses(classes.westWall)}>
-        {/* {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>} */}
+        {pawnInfo.isMaster && <div className={classes.masterIconPosition}><MasterIcon width={100} /></div>}
       </div>
       <div className={buildClasses(classes.topWall)} />
     </div>
