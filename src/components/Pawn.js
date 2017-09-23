@@ -92,7 +92,7 @@ for (let i = 0; i < 25; i++) {
 export const Pawn = ({ classes, isSelected, pawnInfo, pawnSelectedHandler }) => {
   const { player } = pawnInfo;
   const buildClasses = baseClass => {
-    const classList = [baseClass, classes[player.toLowerCase()]];
+    const classList = [baseClass, classes[player]];
     if (baseClass === classes.pawn) { classList.push(classes[`location${pawnInfo.location}`]); }
     if (isSelected) { classList.push(classes.selected); }
     return classList.join(' ');

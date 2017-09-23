@@ -73,11 +73,13 @@ const executeMove = (state, squareId) => {
     }
 
     const newCards = [...state.cards];
-    const activeCard = newCards.find(c => c.id === state.selectedCard.id);
-    const sideCard = newCards.find(c => c.location === `${state.turn.toLowerCase()}-3`);
+    const activeCard = newCards.find(card => card.id === state.selectedCard.id);
+    const sideCard = newCards.find(card => card.location === state.turn && card.deckPosition === 3);
 
     sideCard.location = activeCard.location;
-    activeCard.location = `${newTurn.toLowerCase()}-3`;
+    sideCard.deckPosition = activeCard.deckPosition;
+    activeCard.location = newTurn;
+    activeCard.deckPosition = 3;
 
     return {
       ...state,
@@ -92,7 +94,7 @@ const executeMove = (state, squareId) => {
 };
 
 const cardSelected = (state, card) => {
-  if (state.turn && card.location.split('-')[0] === state.turn.toLowerCase() && card.location.split('-')[1] !== '3') {
+  if (state.turn && card.location === state.turn && card.location.deckPosition !== '3') {
     if (state.selectedCard && card.id === state.selectedCard.id) {
       return { ...state, selectedCard: null };
     }
@@ -126,7 +128,12 @@ const initialState = {
   ...newGameState,
 };
 
-const cardAtDeckPosition = (cards, deckPosition) => cards.find(c => c.deckPosition === deckPosition);
+const cardAtDeckPosition = (cards, deckPosition) => cards.find(card => card.deckPosition === deckPosition && card.location === 'deck');
+
+const setCardBoardLocation = (card, player, position) => {
+  card.location = player;
+  card.deckPosition = position;
+};
 
 export default function (state = initialState, action) {
   switch (action.type) {
@@ -140,11 +147,11 @@ export default function (state = initialState, action) {
       const cards = shuffleDeck(state.cards);
       const len = cards.length;
       const turn = cardAtDeckPosition(cards, len - 5).firstPlayer;
-      cardAtDeckPosition(cards, len - 1).location = 'blue-1';
-      cardAtDeckPosition(cards, len - 2).location = 'blue-2';
-      cardAtDeckPosition(cards, len - 3).location = 'red-1';
-      cardAtDeckPosition(cards, len - 4).location = 'red-2';
-      cardAtDeckPosition(cards, len - 5).location = (turn === players.blue ? 'blue-3' : 'red-3');
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 1), 'blue', 1)
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 2), 'blue', 2)
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 3), 'red', 1)
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 4), 'red', 2)
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 5), (turn === players.blue ? 'blue' : 'red'), 3)
 
       return {
         ...state,

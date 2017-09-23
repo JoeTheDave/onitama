@@ -20,26 +20,26 @@ const styles = {
     zIndex: props => (props.cardInfo.location === 'deck' ? props.cardInfo.deckPosition + 21 : 21),
     boxShadow: props => (props.isSelected ? '0 0 10px 10px gold' : 'none'),
     transform: props => {
-      if (props.cardInfo.location === 'deck') {
-        const deckPosition = props.cardInfo.deckPosition;
+      const { deckPosition, location } = props.cardInfo;
+      if (location === 'deck') {
         return `translateY(1300px) translateX(100px) rotateY(180deg) translateZ(${deckPosition * -5}px)`;
       }
-      if (props.cardInfo.location === 'blue-1') {
+      if (location === 'blue' && deckPosition === 1) {
         return 'translateY(1300px) translateX(600px)';
       }
-      if (props.cardInfo.location === 'blue-2') {
+      if (location === 'blue' && deckPosition === 2) {
         return 'translateY(1300px) translateX(1100px)';
       }
-      if (props.cardInfo.location === 'blue-3') {
+      if (location === 'blue' && deckPosition === 3) {
         return 'translateY(670px) translateX(140px)';
       }
-      if (props.cardInfo.location === 'red-1') {
+      if (location === 'red' && deckPosition === 1) {
         return 'translateY(40px) translateX(600px) rotateZ(180deg)';
       }
-      if (props.cardInfo.location === 'red-2') {
+      if (location === 'red' && deckPosition === 2) {
         return 'translateY(40px) translateX(1100px) rotateZ(180deg)';
       }
-      if (props.cardInfo.location === 'red-3') {
+      if (location === 'red' && deckPosition === 3) {
         return 'translateY(670px) translateX(140px) rotateZ(180deg)';
       }
       return '';

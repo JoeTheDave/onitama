@@ -29,6 +29,7 @@ module.exports = {
     "react/jsx-filename-extension": [0],
     "vars-on-top": [0],
     "max-len": [0],
+    "no-case-declorations": [0],
     "eqeqeq": ['error', 'smart'],
     "prefer-const": ['error', {
       destructuring: 'all',

@@ -7,14 +7,14 @@ export const START_NEW_GAME = 'START_NEW_GAME';
 export const RESET_ALL_REDUCERS = 'RESET_ALL_REDUCERS';
 
 export const players = {
-  red: 'RED',
-  blue: 'BLUE',
+  red: 'red',
+  blue: 'blue',
 };
 
 export const alignmentTypes = {
-  left: 'LEFT',
-  right: 'RIGHT',
-  center: 'CENTER',
+  left: 'left',
+  right: 'right',
+  center: 'center',
 };
 
 export const colors = {
