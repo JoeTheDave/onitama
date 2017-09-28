@@ -1,6 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
+import utilityService from 'Services/utility';
+import { players } from 'Architecture/constants';
 
 const styles = {
   container: {
@@ -29,6 +31,18 @@ const styles = {
     backgroundColor: 'rgba(255, 0, 0, 0.4)',
     cursor: 'pointer',
   },
+  squareName: {
+    fontSize: 36,
+    color: 'gray',
+    margin: 15,
+    pointerEvents: 'none',
+    transition: '2s',
+    transitionDelay: '2s',
+    transform: props =>
+      ((props.game.turn === players.red) ? 'rotateZ(180deg) translateY(-110px)' : 'rotateZ(0deg) translateY(0px)')
+      // Instead of transition, I may want to have to different divs with the name, and fade them in/out based on turn
+    ,
+  },
 };
 
 export const ActionGrid = ({ actions, classes, game }) => {
@@ -41,7 +55,11 @@ export const ActionGrid = ({ actions, classes, game }) => {
         const appliedClasses = [classes.actionSquare];
         if (square === true) { appliedClasses.push(classes.validMove); }
         if (square === false) { appliedClasses.push(classes.invalidMove); }
-        return (<div key={index} data-id={index} className={appliedClasses.join(' ')} onClick={executeMoveHandler} />);
+        return (
+          <div key={index} data-id={index} className={appliedClasses.join(' ')} onClick={executeMoveHandler}>
+            <div className={classes.squareName}>{utilityService.resolveSquareName(index)}</div>
+          </div>
+        );
       })}
     </div>
   );

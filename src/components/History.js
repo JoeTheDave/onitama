@@ -11,8 +11,8 @@ const styles = {
     width: 300,
     height: 200,
     position: 'absolute',
-    top: 800,
-    left: 1050,
+    top: 820,
+    left: 1100,
     zIndex: 5,
   },
 };
