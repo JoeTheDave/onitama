@@ -8,11 +8,12 @@ import { getCharacterComponent, MasterIcon, Logo, Swish } from './svg';
 import cardBackground from 'Assets/mural.jpg';
 import cardTexture from 'Assets/card-texture.png';
 
+const cardSizeStyles = { width: 400, height: 260, borderRadius: 10 };
+const verticallyAlign = { display: 'inline-block', verticalAlign: 'middle' };
+
 const styles = {
   cardContainer: {
-    width: 400,
-    height: 260,
-    borderRadius: 10,
+    ...cardSizeStyles,
     transition: '2s, box-shadow 0.5s',
     cursor: 'pointer',
     position: 'absolute',
@@ -46,56 +47,19 @@ const styles = {
     },
   },
   card: {
-    width: 400,
-    height: 260,
+    ...cardSizeStyles,
     backgroundImage: `url("${cardTexture}")`,
-    borderRadius: 10,
-    border: { style: 'solid', width: 1, color: '#444' },
+    border: { style: 'solid', width: 1, color: colors.darkGray },
     boxSizing: 'border-box',
     position: 'absolute',
     backfaceVisibility: 'hidden',
   },
-  cardBackground: {
-    width: '100%',
-    height: '100%',
-    backgroundColor: 'rgba(224, 221, 191, 0.8)',
-    borderRadius: 10,
-    padding: 10,
-    boxSizing: 'border-box',
-  },
-  content: {
-    width: '100%',
-    height: '100%',
-    position: 'relative',
-  },
-  leftContent: {
-    width: '55%',
-    height: '100%',
-    position: 'absolute',
-    left: 0,
-  },
-  character: {
-    width: '100%',
-    textAlign: 'center',
-    position: 'absolute',
-    top: 5,
-  },
-  cardName: {
-    width: '100%',
-    fontSize: 36,
-    fontFamily: 'IM Fell English SC',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    position: 'absolute',
-    top: 120,
-    color: 'rgba(60, 60, 60, 1)',
-  },
-  rightContent: {
-    width: 160,
-    height: '100%',
-    position: 'absolute',
-    right: 0,
-  },
+  cardBackground: { width: '100%', height: '100%', backgroundColor: colors.cardTan, borderRadius: 10, padding: 10, boxSizing: 'border-box' },
+  content: { width: '100%', height: '100%', position: 'relative' },
+  leftContent: { width: '55%', height: '100%', position: 'absolute', left: 0 },
+  character: { width: '100%', textAlign: 'center', position: 'absolute', top: 5 },
+  cardName: { width: '100%', fontSize: 36, fontFamily: 'IM Fell English SC', fontWeight: 'bold', textAlign: 'center', position: 'absolute', top: 120, color: colors.darkGray },
+  rightContent: { width: 160, height: '100%', position: 'absolute', right: 0 },
   bottomContent: {
     height: 70,
     width: '100%',
@@ -117,24 +81,10 @@ const styles = {
       }
     },
   },
-  verticalAligner: {
-    height: '100%',
-    width: 1,
-    display: 'inline-block',
-    verticalAlign: 'middle',
-  },
-  wisdom: {
-    width: '85%',
-    display: 'inline-block',
-    verticalAlign: 'middle',
-    fontSize: 12,
-    fontFamily: 'Caudex',
-    color: '#444',
-    textAlign: 'center',
-  },
+  verticalAligner: { ...verticallyAlign, height: '100%', width: 1 },
+  wisdom: { ...verticallyAlign, width: '85%', fontSize: 12, fontFamily: 'Caudex', color: '#444', textAlign: 'center' },
   firstPlayerIcon: {
-    display: 'inline-block',
-    verticalAlign: 'middle',
+    ...verticallyAlign,
     width: 40,
     height: 30,
     position: 'relative',
@@ -146,14 +96,11 @@ const styles = {
       return '';
     },
   },
-
   cardBack: {
-    width: 400,
-    height: 260,
+    ...cardSizeStyles,
     backgroundImage: `url("${cardBackground}")`,
     backgroundSize: [400, 260],
-    borderRadius: 10,
-    border: { style: 'solid', width: 1, color: '#444' },
+    border: { style: 'solid', width: 1, color: colors.darkGray },
     position: 'absolute',
     top: 0,
     left: 0,
@@ -161,39 +108,11 @@ const styles = {
     boxSizing: 'border-box',
     backfaceVisibility: 'hidden',
   },
-  cardBackTexture: {
-    width: 400,
-    height: 260,
-    backgroundImage: `url("${cardTexture}")`,
-    backgroundSize: [400, 260],
-    borderRadius: 10,
-    position: 'absolute',
-    opacity: 0.6,
-  },
-  cardBackTone: {
-    width: 400,
-    height: 260,
-    backgroundColor: 'orange',
-    borderRadius: 10,
-    position: 'absolute',
-    opacity: 0.6,
-  },
-  cardBackLogoContainer: {
-    width: 400,
-    height: 260,
-    borderRadius: 10,
-    position: 'absolute',
-  },
-  cardBackLogoBackground: {
-    position: 'absolute',
-    top: 80,
-    left: 25,
-  },
-  cardBackLogoForeground: {
-    position: 'absolute',
-    top: 75,
-    left: 30,
-  },
+  cardBackTexture: { ...cardSizeStyles, backgroundImage: `url("${cardTexture}")`, backgroundSize: [400, 260], position: 'absolute', opacity: 0.6 },
+  cardBackTone: { ...cardSizeStyles, backgroundColor: 'orange', position: 'absolute', opacity: 0.6 },
+  cardBackLogoContainer: { ...cardSizeStyles, position: 'absolute' },
+  cardBackLogoBackground: { position: 'absolute', top: 80, left: 25 },
+  cardBackLogoForeground: { position: 'absolute', top: 75, left: 30 },
 };
 
 export const Card = ({ cardInfo, cardSelectedHandler, classes }) => {

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 import utilityService from 'Services/utility';
-import { players } from 'Architecture/constants';
+import { players, colors } from 'Architecture/constants';
 
 const styles = {
   container: {
@@ -19,29 +19,36 @@ const styles = {
     float: 'left',
     transition: '0.5s',
     margin: 2,
-    border: { style: 'solid', width: 3, color: '#444' },
+    border: { style: 'solid', width: 3, color: colors.darkGray },
     boxSizing: 'border-box',
-    backgroundColor: 'rgba(255, 255, 255, 0.4)',
+    backgroundColor: colors.opaqueWhite,
   },
   validMove: {
-    backgroundColor: 'rgba(0, 255, 0, 0.4)',
+    backgroundColor: colors.validGreen,
     cursor: 'pointer',
   },
   invalidMove: {
-    backgroundColor: 'rgba(255, 0, 0, 0.4)',
+    backgroundColor: colors.invalidRed,
     cursor: 'pointer',
   },
-  squareName: {
+  squareNameP1: {
     fontSize: 36,
     color: 'gray',
     margin: 15,
     pointerEvents: 'none',
     transition: '2s',
     transitionDelay: '2s',
-    transform: props =>
-      ((props.game.turn === players.red) ? 'rotateZ(180deg) translateY(-110px)' : 'rotateZ(0deg) translateY(0px)')
-      // Instead of transition, I may want to have to different divs with the name, and fade them in/out based on turn
-    ,
+    opacity: props => ((props.game.turn === players.blue) ? 1 : 0),
+  },
+  squareNameP2: {
+    fontSize: 36,
+    color: 'gray',
+    margin: 15,
+    pointerEvents: 'none',
+    transition: '2s',
+    transitionDelay: '2s',
+    transform: 'rotateZ(180deg) translateY(-50px)',
+    opacity: props => ((props.game.turn === players.red) ? 1 : 0),
   },
 };
 
@@ -55,9 +62,11 @@ export const ActionGrid = ({ actions, classes, game }) => {
         const appliedClasses = [classes.actionSquare];
         if (square === true) { appliedClasses.push(classes.validMove); }
         if (square === false) { appliedClasses.push(classes.invalidMove); }
+        const squareName = utilityService.resolveSquareName(index);
         return (
           <div key={index} data-id={index} className={appliedClasses.join(' ')} onClick={executeMoveHandler}>
-            <div className={classes.squareName}>{utilityService.resolveSquareName(index)}</div>
+            <div className={classes.squareNameP1}>{squareName}</div>
+            <div className={classes.squareNameP2}>{squareName}</div>
           </div>
         );
       })}

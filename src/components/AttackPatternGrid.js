@@ -17,7 +17,7 @@ const styles = {
     float: 'left',
   },
   referencePoint: {
-    backgroundColor: '#444',
+    backgroundColor: colors.darkGray,
   },
   attackOption: {
     backgroundColor: props => {
