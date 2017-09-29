@@ -31,6 +31,9 @@ export const colors = {
   opaqueWhite: 'rgba(255, 255, 255, 0.4)',
   validGreen: 'rgba(0, 255, 0, 0.4)',
   invalidRed: 'rgba(255, 0, 0, 0.4)',
+  inCheck: 'rgba(255, 180, 50, 0.4)',
   deepRed: 'rgb(119, 0, 0)',
   cardTan: 'rgba(224, 221, 191, 0.8)',
+  pawnRed: 'rgba(200, 0, 0, 0.4)',
+  pawnBlue: 'rgba(0, 0, 200, 0.4)',
 };

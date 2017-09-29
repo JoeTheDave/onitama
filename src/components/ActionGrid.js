@@ -29,7 +29,9 @@ const styles = {
   },
   invalidMove: {
     backgroundColor: colors.invalidRed,
-    cursor: 'pointer',
+  },
+  check: {
+    backgroundColor: colors.inCheck,
   },
   squareNameP1: {
     fontSize: 36,
@@ -60,8 +62,9 @@ export const ActionGrid = ({ actions, classes, game }) => {
     <div className={classes.container}>
       {game.actionGrid.map((square, index) => {
         const appliedClasses = [classes.actionSquare];
-        if (square === true) { appliedClasses.push(classes.validMove); }
-        if (square === false) { appliedClasses.push(classes.invalidMove); }
+        if (square === 0) { appliedClasses.push(classes.validMove); }
+        if (square === 1) { appliedClasses.push(classes.invalidMove); }
+        if (square === 2) { appliedClasses.push(classes.check); }
         const squareName = utilityService.resolveSquareName(index);
         return (
           <div key={index} data-id={index} className={appliedClasses.join(' ')} onClick={executeMoveHandler}>

@@ -9,24 +9,25 @@ import {
   players,
 } from 'Architecture/constants';
 
-const isCheck = () => {
-
-};
+import gameLogicService from 'Services/gameLogic';
 
 const calculateValidMoves = state => {
   state.actionGrid = fill(Array(25), null);
   if (!state.selectedCard || !state.selectedPawn) {
     return state;
   }
-
-  state.selectedCard.attackPattern.forEach(attackOption => {
-    const playerVariant = (state.turn === players.blue ? 1 : -1);
-    const attackTarget = state.selectedPawn.location + (attackOption.y * -5 * playerVariant) + (attackOption.x * playerVariant);
-    const xPosition = (state.selectedPawn.location % 5) + (attackOption.x * playerVariant);
-    if (attackTarget >= 0 && attackTarget <= 24 && xPosition >= 0 && xPosition <= 4) {
-      state.actionGrid[attackTarget] = !state.pawns.some(p => p.location === attackTarget && p.player === state.turn);
-    }
+  gameLogicService.getValidMovesList(state.selectedPawn, state.selectedCard).forEach(validMove => {
+    state.actionGrid[validMove] = !state.pawns.some(p => p.location === validMove && p.player === state.turn) ? 0 : 1;
   });
+
+  if (state.selectedPawn.isMaster) {
+    const enemyAttackSquares = (state.turn === players.blue) ? state.redAttackOptions : state.blueAttackOptions;
+    state.actionGrid.forEach((square, index) => {
+      if (square === 0 && enemyAttackSquares.some(s => s === index)) {
+        state.actionGrid[index] = 2;
+      }
+    });
+  }
 
   return state;
 };
@@ -49,13 +50,13 @@ const newGameState = calculateValidMoves({
   turn: null,
   selectedCard: null,
   selectedPawn: null,
-  redInCheck: false,
-  blueInCheck: false,
   history: [],
+  redAttackOptions: null,
+  blueAttackOptions: null,
 });
 
 const executeMove = (state, squareId) => {
-  if (state.actionGrid[squareId]) {
+  if (state.actionGrid[squareId] === 0) {
     const history = state.history.slice(0);
     history.push({ pawn: state.selectedPawn, card: state.selectedCard, squareId, id: history.length });
     const turn = state.turn === players.blue ? players.red : players.blue;
@@ -92,6 +93,7 @@ const executeMove = (state, squareId) => {
       pawns,
       cards,
       history,
+      [`${state.turn}AttackOptions`]: gameLogicService.getPlayerAttackOptions(state.turn, pawns, cards),
     };
   }
   return state;
@@ -151,17 +153,19 @@ export default function (state = initialState, action) {
       const cards = shuffleDeck(state.cards);
       const len = cards.length;
       const turn = cardAtDeckPosition(cards, len - 5).firstPlayer;
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 1), 'blue', 1)
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 2), 'blue', 2)
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 3), 'red', 1)
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 4), 'red', 2)
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 5), (turn === players.blue ? 'blue' : 'red'), 3)
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 1), 'blue', 1);
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 2), 'blue', 2);
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 3), 'red', 1);
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 4), 'red', 2);
+      setCardBoardLocation(cardAtDeckPosition(cards, len - 5), (turn === players.blue ? 'blue' : 'red'), 3);
 
       return {
         ...state,
         ...newGameState,
         cards,
         turn,
+        redAttackOptions: gameLogicService.getPlayerAttackOptions(players.red, state.pawns, cards),
+        blueAttackOptions: gameLogicService.getPlayerAttackOptions(players.blue, state.pawns, cards),
       };
 
     case CARD_SELECTED:

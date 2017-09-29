@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 import { MasterIcon } from 'Components/svg';
+import { colors } from 'Architecture/constants';
 
 const getPawnStyles = () => ({
   width: 120,
@@ -58,10 +59,10 @@ const styles = {
     transform: props => (props.pawnInfo.isMaster ? 'translateZ(200px)' : 'translateZ(120px)'),
   },
   red: {
-    backgroundColor: 'rgba(200, 0, 0, 0.4)',
+    backgroundColor: colors.pawnRed,
   },
   blue: {
-    backgroundColor: 'rgba(0, 0, 200, 0.4)',
+    backgroundColor: colors.pawnBlue,
   },
   selected: {
     boxShadow: '0 0 5px 5px gold',
