@@ -31,7 +31,15 @@ const styles = {
     backgroundColor: colors.invalidRed,
   },
   check: {
-    backgroundColor: colors.inCheck,
+    animationName: 'checkWarning',
+    animationDuration: '0.5s',
+    animationIterationCount: 'infinite',
+    animationTimingFunction: 'linear',
+  },
+  '@keyframes checkWarning': {
+    '0%': { backgroundColor: colors.invalidRed },
+    '50%': { backgroundColor: colors.opaqueWhite },
+    '100%': { backgroundColor: colors.invalidRed },
   },
   squareNameP1: {
     fontSize: 36,

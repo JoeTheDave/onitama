@@ -13,20 +13,28 @@ import gameLogicService from 'Services/gameLogic';
 
 const calculateValidMoves = state => {
   state.actionGrid = fill(Array(25), null);
-  if (!state.selectedCard || !state.selectedPawn) {
-    return state;
-  }
-  gameLogicService.getValidMovesList(state.selectedPawn, state.selectedCard).forEach(validMove => {
-    state.actionGrid[validMove] = !state.pawns.some(p => p.location === validMove && p.player === state.turn) ? 0 : 1;
-  });
 
-  if (state.selectedPawn.isMaster) {
-    const enemyAttackSquares = (state.turn === players.blue) ? state.redAttackOptions : state.blueAttackOptions;
-    state.actionGrid.forEach((square, index) => {
-      if (square === 0 && enemyAttackSquares.some(s => s === index)) {
-        state.actionGrid[index] = 2;
-      }
+  if (state.selectedCard && state.selectedPawn) {
+    gameLogicService.getValidMovesList(state.selectedPawn, state.selectedCard).forEach(validMove => {
+      state.actionGrid[validMove] = !state.pawns.some(p => p.location === validMove && p.player === state.turn) ? 0 : 1;
     });
+
+    if (state.selectedPawn.isMaster) {
+      const enemyAttackSquares = (state.turn === players.blue) ? state.redAttackOptions : state.blueAttackOptions;
+      state.actionGrid.forEach((square, index) => {
+        if (square === 0 && enemyAttackSquares.some(s => s === index)) {
+          state.actionGrid[index] = 2;
+        }
+      });
+    }
+  }
+
+  const activeMaster = state.pawns.find(pawn => (pawn.isMaster && pawn.player === state.turn));
+  if (activeMaster) {
+    const enemeyAttackOptions = (state.turn === players.blue) ? state.redAttackOptions : state.blueAttackOptions;
+    if (enemeyAttackOptions.some(attackOption => (attackOption === activeMaster.location))) {
+      state.actionGrid[activeMaster.location] = 2;
+    }
   }
 
   return state;
@@ -51,8 +59,8 @@ const newGameState = calculateValidMoves({
   selectedCard: null,
   selectedPawn: null,
   history: [],
-  redAttackOptions: null,
-  blueAttackOptions: null,
+  redAttackOptions: [],
+  blueAttackOptions: [],
 });
 
 const executeMove = (state, squareId) => {
