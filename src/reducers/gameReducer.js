@@ -108,7 +108,7 @@ const executeMove = (state, squareId) => {
 };
 
 const cardSelected = (state, card) => {
-  if (state.turn && card.location === state.turn && card.location.deckPosition !== '3') {
+  if (state.turn && card.location === state.turn && card.deckPosition !== 3) {
     if (state.selectedCard && card.id === state.selectedCard.id) {
       return { ...state, selectedCard: null };
     }
@@ -118,7 +118,7 @@ const cardSelected = (state, card) => {
 };
 
 const pawnSelected = (state, pawn) => {
-  if (state.turn) {
+  if (state.turn && pawn.alive) {
     if (pawn.player === state.turn) {
       if (state.selectedPawn && pawn.id === state.selectedPawn.id) {
         return { ...state, selectedPawn: null };
