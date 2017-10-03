@@ -1,5 +1,5 @@
 import { padStart } from 'lodash';
-import { alignmentTypes, players } from 'Architecture/constants';
+import { alignmentTypes, players } from 'architecture/constants';
 
 const cards = [
   {

@@ -3,8 +3,8 @@ import React from 'react';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 
-import actionCreators from 'Actions';
-import ActionGrid from 'Components/ActionGrid';
+import actionCreators from 'actions';
+import ActionGrid from 'components/ActionGrid';
 
 const mapStateToProps = state => ({
   game: state.game,

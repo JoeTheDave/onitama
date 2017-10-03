@@ -2,11 +2,11 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 
-import { alignmentTypes, colors, players } from 'Architecture/constants';
+import { alignmentTypes, colors, players } from 'architecture/constants';
 import AttackPatternGrid from './AttackPatternGrid';
 import { getCharacterComponent, MasterIcon, Logo, Swish } from './svg';
-import cardBackground from 'Assets/mural.jpg';
-import cardTexture from 'Assets/card-texture.png';
+import cardBackground from 'assets/mural.jpg';
+import cardTexture from 'assets/card-texture.png';
 
 const cardSizeStyles = { width: 400, height: 260, borderRadius: 10 };
 const verticallyAlign = { display: 'inline-block', verticalAlign: 'middle' };

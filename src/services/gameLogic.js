@@ -1,5 +1,15 @@
 import { flattenDeep, sortedUniq } from 'lodash';
-import { players } from 'Architecture/constants';
+import { players } from 'architecture/constants';
+
+// Break down logic into methods like these and write tests
+
+const getActiveMaster = state => {
+  return state.pawns.find(pawn => (pawn.isMaster && pawn.player === state.turn));
+};
+
+const getEnemyMaster = state => {
+  return state.pawns.find(pawn => (pawn.isMaster && pawn.player !== state.turn));
+};
 
 const getValidMovesList = (selectedPawn, selectedCard) => {
   const validMoves = [];
@@ -21,7 +31,13 @@ const getPlayerAttackOptions = (player, pawns, cards) => {
   return sortedUniq(flattenDeep(playerPawns.map(pawn => playerCards.map(card => getValidMovesList(pawn, card)))).sort((a, b) => a - b));
 };
 
+const isPlayerInCheck = (player, pawns, cards) => {
+
+};
+
 export default {
+  getActiveMaster,
   getPlayerAttackOptions,
   getValidMovesList,
+  isPlayerInCheck,
 };

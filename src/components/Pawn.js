@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
-import { MasterIcon } from 'Components/svg';
-import { colors } from 'Architecture/constants';
+import { MasterIcon } from 'components/svg';
+import { colors } from 'architecture/constants';
 
 const getPawnStyles = () => ({
   width: 120,

@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 
-import { colors } from 'Architecture/constants';
+import { colors } from 'architecture/constants';
 import HistoryItem from './HistoryItem';
 
 const styles = {

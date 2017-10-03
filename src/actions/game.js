@@ -4,8 +4,8 @@ import {
   EXECUTE_MOVE,
   PAWN_SELECTED,
   START_NEW_GAME,
-} from 'Architecture/constants';
-import cardsService from 'Services/cards';
+} from 'architecture/constants';
+import cardsService from 'services/cards';
 
 export function startNewGame() {
   return {

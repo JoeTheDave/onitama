@@ -1,8 +1,8 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
-import utilityService from 'Services/utility';
-import { players, colors } from 'Architecture/constants';
+import utilityService from 'services/utility';
+import { players, colors } from 'architecture/constants';
 
 const styles = {
   container: {

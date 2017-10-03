@@ -2,13 +2,13 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 
-import { colors } from 'Architecture/constants';
-import ActionGridContainer from 'Containers/ActionGridContainer';
-import boardBackground from 'Assets/mural.jpg';
-import boardBackgroundCenter from 'Assets/ying-yang.png';
-import redHome from 'Assets/ying-yang-red.png';
-import blueHome from 'Assets/ying-yang-blue.png';
-import boardBackgroundTexture from 'Assets/board-background-texture.png';
+import { colors } from 'architecture/constants';
+import ActionGridContainer from 'containers/ActionGridContainer';
+import boardBackground from 'assets/mural.jpg';
+import boardBackgroundCenter from 'assets/ying-yang.png';
+import redHome from 'assets/ying-yang-red.png';
+import blueHome from 'assets/ying-yang-blue.png';
+import boardBackgroundTexture from 'assets/board-background-texture.png';
 
 const boardSurfaceStyles = { width: 1600, height: 1600, position: 'absolute', top: 0, left: 0 };
 

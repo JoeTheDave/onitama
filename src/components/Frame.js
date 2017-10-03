@@ -2,15 +2,15 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import injectSheet from 'react-jss';
 
-import { players } from 'Architecture/constants';
+import { players } from 'architecture/constants';
 
 import Board from './Board';
 import Card from './Card';
 import Pawn from './Pawn';
 import History from './History';
-import { Logo } from 'Components/svg';
-import backgroundGraphicOne from 'Assets/abstract-background-decoration-one.jpg';
-import backgroundGraphicTwo from 'Assets/abstract-background-decoration-two.jpg';
+import { Logo } from 'components/svg';
+import backgroundGraphicOne from 'assets/abstract-background-decoration-one.jpg';
+import backgroundGraphicTwo from 'assets/abstract-background-decoration-two.jpg';
 
 const newGameButtonStyles = {
   zIndex: 15,

@@ -7,9 +7,9 @@ import {
   START_NEW_GAME,
   RESET_ALL_REDUCERS,
   players,
-} from 'Architecture/constants';
+} from 'architecture/constants';
 
-import gameLogicService from 'Services/gameLogic';
+import gameLogicService from 'services/gameLogic';
 
 const calculateValidMoves = state => {
   state.actionGrid = fill(Array(25), null);
