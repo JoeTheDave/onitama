@@ -1,4 +1,4 @@
-import { sortBy, cloneDeep, fill, shuffle } from 'lodash';
+import { cloneDeep, fill, flattenDeep, shuffle, sortBy, sortedUniq } from 'lodash';
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
@@ -9,13 +9,58 @@ import {
   players,
 } from 'architecture/constants';
 
-import gameLogicService from 'services/gameLogic';
+// Tested
+
+export const isValidPlayer = player => player === players.blue || player === players.red;
+
+export const getActiveMaster = state => state.pawns.find(pawn =>
+  (isValidPlayer(state.turn) && pawn.isMaster && pawn.player === state.turn)
+);
+
+export const getEnemyMaster = state => state.pawns.find(pawn =>
+  (isValidPlayer(state.turn) && pawn.isMaster && pawn.player !== state.turn)
+);
+
+export const shuffleDeck = cards => sortBy(shuffle(cards).map((card, index) => ({
+  ...card,
+  location: 'deck',
+  deckPosition: index,
+})), 'physicalOrder');
+
+export const cardAtDeckPosition = (cards, deckPosition) => cards.find(card => card.deckPosition === deckPosition && card.location === 'deck');
+
+// Non Tested
+
+const setCardBoardLocation = (card, player, position) => {
+  card.location = player;
+  card.deckPosition = position;
+};
+
+const getValidMovesList = (selectedPawn, selectedCard) => {
+  const validMoves = [];
+  const activePlayer = selectedPawn.player;
+  const playerVariant = (activePlayer === players.blue ? 1 : -1);
+  selectedCard.attackPattern.forEach(attackOption => {
+    const attackTarget = selectedPawn.location + (attackOption.y * -5 * playerVariant) + (attackOption.x * playerVariant);
+    const xPosition = (selectedPawn.location % 5) + (attackOption.x * playerVariant);
+    if (attackTarget >= 0 && attackTarget <= 24 && xPosition >= 0 && xPosition <= 4) {
+      validMoves.push(attackTarget);
+    }
+  });
+  return validMoves;
+};
+
+const getPlayerAttackOptions = (player, pawns, cards) => {
+  const playerPawns = pawns.filter(pawn => pawn.player === player && pawn.alive);
+  const playerCards = cards.filter(card => card.location === player && card.deckPosition < 3);
+  return sortedUniq(flattenDeep(playerPawns.map(pawn => playerCards.map(card => getValidMovesList(pawn, card)))).sort((a, b) => a - b));
+};
 
 const calculateValidMoves = state => {
   state.actionGrid = fill(Array(25), null);
 
   if (state.selectedCard && state.selectedPawn) {
-    gameLogicService.getValidMovesList(state.selectedPawn, state.selectedCard).forEach(validMove => {
+    getValidMovesList(state.selectedPawn, state.selectedCard).forEach(validMove => {
       state.actionGrid[validMove] = !state.pawns.some(p => p.location === validMove && p.player === state.turn) ? 0 : 1;
     });
 
@@ -101,7 +146,7 @@ const executeMove = (state, squareId) => {
       pawns,
       cards,
       history,
-      [`${state.turn}AttackOptions`]: gameLogicService.getPlayerAttackOptions(state.turn, pawns, cards),
+      [`${state.turn}AttackOptions`]: getPlayerAttackOptions(state.turn, pawns, cards),
     };
   }
   return state;
@@ -131,22 +176,9 @@ const pawnSelected = (state, pawn) => {
   return state;
 };
 
-const shuffleDeck = cards => sortBy(shuffle(cards).map((card, index) => ({
-  ...card,
-  location: 'deck',
-  deckPosition: index,
-})), 'physicalOrder');
-
-const initialState = {
+export const initialState = {
   cards: [],
   ...newGameState,
-};
-
-const cardAtDeckPosition = (cards, deckPosition) => cards.find(card => card.deckPosition === deckPosition && card.location === 'deck');
-
-const setCardBoardLocation = (card, player, position) => {
-  card.location = player;
-  card.deckPosition = position;
 };
 
 export default function (state = initialState, action) {
@@ -172,8 +204,8 @@ export default function (state = initialState, action) {
         ...newGameState,
         cards,
         turn,
-        redAttackOptions: gameLogicService.getPlayerAttackOptions(players.red, state.pawns, cards),
-        blueAttackOptions: gameLogicService.getPlayerAttackOptions(players.blue, state.pawns, cards),
+        redAttackOptions: getPlayerAttackOptions(players.red, state.pawns, cards),
+        blueAttackOptions: getPlayerAttackOptions(players.blue, state.pawns, cards),
       };
 
     case CARD_SELECTED:
