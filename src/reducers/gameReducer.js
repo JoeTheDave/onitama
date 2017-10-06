@@ -1,4 +1,5 @@
 import { cloneDeep, fill, flattenDeep, shuffle, sortBy, sortedUniq } from 'lodash';
+import update from 'immutability-helper';
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
@@ -9,7 +10,7 @@ import {
   players,
 } from 'architecture/constants';
 
-// Tested
+// Tested //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 export const isValidPlayer = player => player === players.blue || player === players.red;
 
@@ -21,71 +22,23 @@ export const getEnemyMaster = state => state.pawns.find(pawn =>
   (isValidPlayer(state.turn) && pawn.isMaster && pawn.player !== state.turn)
 );
 
-export const shuffleDeck = cards => sortBy(shuffle(cards).map((card, index) => ({
-  ...card,
-  location: 'deck',
-  deckPosition: index,
-})), 'physicalOrder');
+export const shuffleDeck = cards => sortBy(shuffle(cards).map((card, index) => (
+  update(card, {
+    location: { $set: 'deck' },
+    deckPosition: { $set: index },
+  })
+)), 'physicalOrder');
 
 export const cardAtDeckPosition = (cards, deckPosition) => cards.find(card => card.deckPosition === deckPosition && card.location === 'deck');
 
-// Non Tested
-
-const setCardBoardLocation = (card, player, position) => {
-  card.location = player;
+export const setCardBoardLocation = (card, location, position) => {
+  card.location = location;
   card.deckPosition = position;
 };
 
-const getValidMovesList = (selectedPawn, selectedCard) => {
-  const validMoves = [];
-  const activePlayer = selectedPawn.player;
-  const playerVariant = (activePlayer === players.blue ? 1 : -1);
-  selectedCard.attackPattern.forEach(attackOption => {
-    const attackTarget = selectedPawn.location + (attackOption.y * -5 * playerVariant) + (attackOption.x * playerVariant);
-    const xPosition = (selectedPawn.location % 5) + (attackOption.x * playerVariant);
-    if (attackTarget >= 0 && attackTarget <= 24 && xPosition >= 0 && xPosition <= 4) {
-      validMoves.push(attackTarget);
-    }
-  });
-  return validMoves;
-};
+// Non Tested //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-const getPlayerAttackOptions = (player, pawns, cards) => {
-  const playerPawns = pawns.filter(pawn => pawn.player === player && pawn.alive);
-  const playerCards = cards.filter(card => card.location === player && card.deckPosition < 3);
-  return sortedUniq(flattenDeep(playerPawns.map(pawn => playerCards.map(card => getValidMovesList(pawn, card)))).sort((a, b) => a - b));
-};
-
-const calculateValidMoves = state => {
-  state.actionGrid = fill(Array(25), null);
-
-  if (state.selectedCard && state.selectedPawn) {
-    getValidMovesList(state.selectedPawn, state.selectedCard).forEach(validMove => {
-      state.actionGrid[validMove] = !state.pawns.some(p => p.location === validMove && p.player === state.turn) ? 0 : 1;
-    });
-
-    if (state.selectedPawn.isMaster) {
-      const enemyAttackSquares = (state.turn === players.blue) ? state.redAttackOptions : state.blueAttackOptions;
-      state.actionGrid.forEach((square, index) => {
-        if (square === 0 && enemyAttackSquares.some(s => s === index)) {
-          state.actionGrid[index] = 2;
-        }
-      });
-    }
-  }
-
-  const activeMaster = state.pawns.find(pawn => (pawn.isMaster && pawn.player === state.turn));
-  if (activeMaster) {
-    const enemeyAttackOptions = (state.turn === players.blue) ? state.redAttackOptions : state.blueAttackOptions;
-    if (enemeyAttackOptions.some(attackOption => (attackOption === activeMaster.location))) {
-      state.actionGrid[activeMaster.location] = 2;
-    }
-  }
-
-  return state;
-};
-
-const newGameState = calculateValidMoves({
+export const getNewGameState = () => ({
   pawns: [
     { id: 'r1', location: 0, player: players.red, isMaster: false, alive: true },
     { id: 'r2', location: 1, player: players.red, isMaster: false, alive: true },
@@ -106,7 +59,82 @@ const newGameState = calculateValidMoves({
   history: [],
   redAttackOptions: [],
   blueAttackOptions: [],
+  actionGrid: fill(Array(25), null),
 });
+
+export const initialState = {
+  cards: [],
+  ...getNewGameState(),
+};
+
+const getValidMovesList = (selectedPawn, selectedCard) => {
+  const validMoves = [];
+  const activePlayer = selectedPawn.player;
+  const playerVariant = (activePlayer === players.blue ? 1 : -1);
+  selectedCard.attackPattern.forEach(attackOption => {
+    const attackTarget = selectedPawn.location + (attackOption.y * -5 * playerVariant) + (attackOption.x * playerVariant);
+    const xPosition = (selectedPawn.location % 5) + (attackOption.x * playerVariant);
+    if (attackTarget >= 0 && attackTarget <= 24 && xPosition >= 0 && xPosition <= 4) {
+      validMoves.push(attackTarget);
+    }
+  });
+  return validMoves;
+};
+
+const calculateValidMoves = state => {
+  state.actionGrid = fill(Array(25), null);
+
+  if (state.selectedCard && state.selectedPawn) {
+    getValidMovesList(state.selectedPawn, state.selectedCard).forEach(validMove => {
+      state.actionGrid[validMove] = !state.pawns.some(p => p.location === validMove && p.player === state.turn) ? 0 : 1;
+    });
+
+    if (state.selectedPawn.isMaster) {
+      const enemyAttackSquares = (state.turn === players.blue) ? state.redAttackOptions : state.blueAttackOptions;
+      state.actionGrid.forEach((square, index) => {
+        if (square === 0 && enemyAttackSquares.some(s => s === index)) {
+          state.actionGrid[index] = 2;
+        }
+      });
+    }
+  }
+
+  const activeMaster = getActiveMaster(state);
+  if (activeMaster) {
+    const enemeyAttackOptions = (state.turn === players.blue) ? state.redAttackOptions : state.blueAttackOptions;
+    if (enemeyAttackOptions.some(attackOption => (attackOption === activeMaster.location))) {
+      state.actionGrid[activeMaster.location] = 2;
+    }
+  }
+
+  return state;
+};
+
+const getPlayerAttackOptions = (player, pawns, cards) => {
+  const playerPawns = pawns.filter(pawn => pawn.player === player && pawn.alive);
+  const playerCards = cards.filter(card => card.location === player && card.deckPosition < 3);
+  return sortedUniq(flattenDeep(playerPawns.map(pawn => playerCards.map(card => getValidMovesList(pawn, card)))).sort((a, b) => a - b));
+};
+
+const startNewGame = state => {
+  const cards = shuffleDeck(state.cards);
+  const len = cards.length;
+  const turn = cardAtDeckPosition(cards, len - 5).firstPlayer;
+  setCardBoardLocation(cardAtDeckPosition(cards, len - 1), 'blue', 1);
+  setCardBoardLocation(cardAtDeckPosition(cards, len - 2), 'blue', 2);
+  setCardBoardLocation(cardAtDeckPosition(cards, len - 3), 'red', 1);
+  setCardBoardLocation(cardAtDeckPosition(cards, len - 4), 'red', 2);
+  setCardBoardLocation(cardAtDeckPosition(cards, len - 5), (turn === players.blue ? 'blue' : 'red'), 3);
+
+  return {
+    ...state,
+    ...calculateValidMoves(getNewGameState()),
+    cards,
+    turn,
+    redAttackOptions: getPlayerAttackOptions(players.red, state.pawns, cards),
+    blueAttackOptions: getPlayerAttackOptions(players.blue, state.pawns, cards),
+  };
+};
 
 const executeMove = (state, squareId) => {
   if (state.actionGrid[squareId] === 0) {
@@ -176,11 +204,6 @@ const pawnSelected = (state, pawn) => {
   return state;
 };
 
-export const initialState = {
-  cards: [],
-  ...newGameState,
-};
-
 export default function (state = initialState, action) {
   switch (action.type) {
     case CARDS_RECEIVED:
@@ -190,23 +213,7 @@ export default function (state = initialState, action) {
       };
 
     case START_NEW_GAME:
-      const cards = shuffleDeck(state.cards);
-      const len = cards.length;
-      const turn = cardAtDeckPosition(cards, len - 5).firstPlayer;
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 1), 'blue', 1);
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 2), 'blue', 2);
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 3), 'red', 1);
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 4), 'red', 2);
-      setCardBoardLocation(cardAtDeckPosition(cards, len - 5), (turn === players.blue ? 'blue' : 'red'), 3);
-
-      return {
-        ...state,
-        ...newGameState,
-        cards,
-        turn,
-        redAttackOptions: getPlayerAttackOptions(players.red, state.pawns, cards),
-        blueAttackOptions: getPlayerAttackOptions(players.blue, state.pawns, cards),
-      };
+      return startNewGame(state);
 
     case CARD_SELECTED:
       return calculateValidMoves(cardSelected(cloneDeep(state), action.card));
