@@ -138,5 +138,3 @@ describe('gameReducer.setCardBoardLocation', () => {
     expect(modifiedCard.deckPosition).toBe(1);
   });
 });
-
-// Test
