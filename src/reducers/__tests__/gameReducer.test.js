@@ -4,7 +4,7 @@ import { players } from 'architecture/constants';
 import cardsService from 'services/cards';
 
 // TODO: The ultimate test of immutability is if all tests can be run without needing to deep clone prior to each test.
-const initializeState = () => ({ ...cloneDeep(gameReducer.initialState), cards: cardsService.getCards(true) });
+const initializeState = () => ({ ...cloneDeep(gameReducer.getInitialState()), cards: cardsService.getCards(true) });
 
 describe('gameReducer.getNewGameState', () => {
   test('should return an object with the oppropriate keys and having appropriate values initialized', () => {
@@ -37,6 +37,15 @@ describe('gameReducer.getNewGameState', () => {
     expect(newGameState.blueAttackOptions).toEqual([]);
     expect(newGameState.actionGrid.length).toBe(25);
     expect(newGameState.actionGrid.some(square => square !== null)).toBe(false);
+  });
+});
+
+describe('gameReducer.getInitialState', () => {
+  test('should add empty cards collection to the game state', () => {
+    const newGameState = gameReducer.getNewGameState();
+    const initialReducerState = gameReducer.getInitialState();
+    expect(Object.keys(newGameState)).not.toContain('cards');
+    expect(Object.keys(initialReducerState)).toContain('cards');
   });
 });
 
@@ -138,3 +147,79 @@ describe('gameReducer.setCardBoardLocation', () => {
     expect(modifiedCard.deckPosition).toBe(1);
   });
 });
+
+describe('gameReducer.calculateMovementOptions', () => {
+  test('should produce a list of moveOptions equal in size to the cards attackPattern list if pawn is in center of board', () => {
+    const state = initializeState();
+    const selectedPawn = state.pawns.find(pawn => pawn.id === 'b1');
+    const selectedCard = state.cards.find(card => card.name === 'Dragon');
+    selectedPawn.location = 12; // Set pawn in the center of the board
+    const movementOptions = gameReducer.calculateMovementOptions(selectedPawn, selectedCard);
+    expect(movementOptions.length).toEqual(selectedCard.attackPattern.length);
+  });
+
+  test('should not produce list containing moveOptions that would fall off the board', () => {
+    const state = initializeState();
+    const selectedPawn = state.pawns.find(pawn => pawn.id === 'b1');
+    const selectedCard = state.cards.find(card => card.name === 'Dragon');
+    selectedPawn.location = 10; // Set pawn on the edge of the board
+    const movementOptions = gameReducer.calculateMovementOptions(selectedPawn, selectedCard);
+    expect(movementOptions.length).toEqual(selectedCard.attackPattern.length - 2);
+  });
+
+  test('should produce correct movement options based on the selected pawn location and the attackOptions of the selected card', () => {
+    const state = initializeState();
+    const targetPawns = state.pawns.filter(pawn => pawn.id === 'b1' || pawn.id === 'r1');
+    const selectedCard = state.cards.find(card => card.name === 'Dragon');
+    targetPawns.forEach(selectedPawn => {
+      selectedPawn.location = 12; // Set pawn in the center of the board
+      const playerVariant = (selectedPawn.player === players.blue ? 1 : -1);
+      for (let x = -2; x <= 2; x++) {
+        for (let y = -2; y <= 2; y++) {
+          selectedCard.attackPattern = [{ x, y }];
+          const movementOptions = gameReducer.calculateMovementOptions(selectedPawn, selectedCard);
+          expect(movementOptions.length).toBe(1);
+          expect(movementOptions[0]).toBe(selectedPawn.location + (playerVariant * -5 * y) + (playerVariant * 1 * x));
+        }
+      }
+    });
+  });
+});
+
+describe('gameReducer.getPawnAtLocation', () => {
+  test('should return the pawn currently positioned at the given gridSquare', () => {
+    const state = initializeState();
+    const pawnAtTargetLocation = gameReducer.getPawnAtLocation(20, state.pawns);
+    expect(pawnAtTargetLocation).toBeDefined();
+    expect(pawnAtTargetLocation.id).toBe('b1');
+  });
+
+  test('should return null if no pawn is present at the given gridSquare', () => {
+    const state = initializeState();
+    const pawnAtTargetLocation = gameReducer.getPawnAtLocation(12, state.pawns);
+    expect(pawnAtTargetLocation).toBeNull();
+  });
+});
+
+describe('gameReducer.isFriendlyPawn', () => {
+  test('should return true if given pawn belongs to given player', () => {
+    const state = initializeState();
+    const pawn = state.pawns.find(p => p.id === 'r1');
+    const result = gameReducer.isFriendlyPawn(pawn, players.red);
+    expect(result).toBe(true);
+  });
+
+  test('should return false if given pawn belongs to enemy player', () => {
+    const state = initializeState();
+    const pawn = state.pawns.find(p => p.id === 'b1');
+    const result = gameReducer.isFriendlyPawn(pawn, players.red);
+    expect(result).toBe(false);
+  });
+
+  test('should return false if no pawn is given', () => {
+    const pawn = null;
+    const result = gameReducer.isFriendlyPawn(pawn, players.red);
+    expect(result).toBe(false);
+  });
+});
+

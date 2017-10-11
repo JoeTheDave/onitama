@@ -12,32 +12,6 @@ import {
 
 // Tested //////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-export const isValidPlayer = player => player === players.blue || player === players.red;
-
-export const getActiveMaster = state => state.pawns.find(pawn =>
-  (isValidPlayer(state.turn) && pawn.isMaster && pawn.player === state.turn)
-);
-
-export const getEnemyMaster = state => state.pawns.find(pawn =>
-  (isValidPlayer(state.turn) && pawn.isMaster && pawn.player !== state.turn)
-);
-
-export const shuffleDeck = cards => sortBy(shuffle(cards).map((card, index) => (
-  update(card, {
-    location: { $set: 'deck' },
-    deckPosition: { $set: index },
-  })
-)), 'physicalOrder');
-
-export const cardAtDeckPosition = (cards, deckPosition) => cards.find(card => card.deckPosition === deckPosition && card.location === 'deck');
-
-export const setCardBoardLocation = (card, location, position) => {
-  card.location = location;
-  card.deckPosition = position;
-};
-
-// Non Tested //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 export const getNewGameState = () => ({
   pawns: [
     { id: 'r1', location: 0, player: players.red, isMaster: false, alive: true },
@@ -62,31 +36,58 @@ export const getNewGameState = () => ({
   actionGrid: fill(Array(25), null),
 });
 
-export const initialState = {
-  cards: [],
-  ...getNewGameState(),
+export const getInitialState = () => ({ cards: [], ...getNewGameState() });
+
+export const isValidPlayer = player => player === players.blue || player === players.red;
+
+export const getActiveMaster = state => state.pawns.find(pawn =>
+  (isValidPlayer(state.turn) && pawn.isMaster && pawn.player === state.turn)
+);
+
+export const getEnemyMaster = state => state.pawns.find(pawn =>
+  (isValidPlayer(state.turn) && pawn.isMaster && pawn.player !== state.turn)
+);
+
+export const shuffleDeck = cards => sortBy(shuffle(cards).map((card, index) => (
+  update(card, {
+    location: { $set: 'deck' },
+    deckPosition: { $set: index },
+  })
+)), 'physicalOrder');
+
+export const cardAtDeckPosition = (cards, deckPosition) => cards.find(card => card.deckPosition === deckPosition && card.location === 'deck');
+
+export const setCardBoardLocation = (card, location, position) => {
+  card.location = location;
+  card.deckPosition = position;
 };
 
-const getValidMovesList = (selectedPawn, selectedCard) => {
-  const validMoves = [];
+export const calculateMovementOptions = (selectedPawn, selectedCard) => {
+  const movementOptions = [];
   const activePlayer = selectedPawn.player;
   const playerVariant = (activePlayer === players.blue ? 1 : -1);
   selectedCard.attackPattern.forEach(attackOption => {
     const attackTarget = selectedPawn.location + (attackOption.y * -5 * playerVariant) + (attackOption.x * playerVariant);
     const xPosition = (selectedPawn.location % 5) + (attackOption.x * playerVariant);
     if (attackTarget >= 0 && attackTarget <= 24 && xPosition >= 0 && xPosition <= 4) {
-      validMoves.push(attackTarget);
+      movementOptions.push(attackTarget);
     }
   });
-  return validMoves;
+  return movementOptions;
 };
+
+export const getPawnAtLocation = (gridSquare, pawns) => pawns.find(pawn => pawn.location === gridSquare) || null;
+
+// Non Tested //////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+export const isFriendlyPawn = (pawn, player) => !!pawn && pawn.player === player;
 
 const calculateValidMoves = state => {
   state.actionGrid = fill(Array(25), null);
 
   if (state.selectedCard && state.selectedPawn) {
-    getValidMovesList(state.selectedPawn, state.selectedCard).forEach(validMove => {
-      state.actionGrid[validMove] = !state.pawns.some(p => p.location === validMove && p.player === state.turn) ? 0 : 1;
+    calculateMovementOptions(state.selectedPawn, state.selectedCard).forEach(moveOption => {
+      state.actionGrid[moveOption] = getPawnAtLocation(moveOption, state.pawns).player === state.turn ? 1 : 0;
     });
 
     if (state.selectedPawn.isMaster) {
@@ -113,7 +114,7 @@ const calculateValidMoves = state => {
 const getPlayerAttackOptions = (player, pawns, cards) => {
   const playerPawns = pawns.filter(pawn => pawn.player === player && pawn.alive);
   const playerCards = cards.filter(card => card.location === player && card.deckPosition < 3);
-  return sortedUniq(flattenDeep(playerPawns.map(pawn => playerCards.map(card => getValidMovesList(pawn, card)))).sort((a, b) => a - b));
+  return sortedUniq(flattenDeep(playerPawns.map(pawn => playerCards.map(card => calculateMovementOptions(pawn, card)))).sort((a, b) => a - b));
 };
 
 const startNewGame = state => {
@@ -204,7 +205,7 @@ const pawnSelected = (state, pawn) => {
   return state;
 };
 
-export default function (state = initialState, action) {
+export default function (state = getInitialState(), action) {
   switch (action.type) {
     case CARDS_RECEIVED:
       return {
@@ -225,7 +226,7 @@ export default function (state = initialState, action) {
       return calculateValidMoves(executeMove(cloneDeep(state), action.squareId));
 
     case RESET_ALL_REDUCERS:
-      return { ...initialState };
+      return { ...getInitialState() };
 
     default:
       return state;
