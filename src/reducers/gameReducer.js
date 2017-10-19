@@ -78,22 +78,27 @@ export const calculateMovementOptions = (selectedPawn, selectedCard) => {
 
 export const getPawnAtLocation = (gridSquare, pawns) => pawns.find(pawn => pawn.location === gridSquare) || null;
 
-// Non Tested //////////////////////////////////////////////////////////////////////////////////////////////////////////
-
 export const isFriendlyPawn = (pawn, player) => !!pawn && pawn.player === player;
+
+export const getEnemyAttackOptions = state => {
+  if (state.turn === players.blue) { return state.redAttackOptions; }
+  if (state.turn === players.red) { return state.blueAttackOptions; }
+  return [];
+};
+
+// Non Tested //////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 const calculateValidMoves = state => {
   state.actionGrid = fill(Array(25), null);
 
   if (state.selectedCard && state.selectedPawn) {
     calculateMovementOptions(state.selectedPawn, state.selectedCard).forEach(moveOption => {
-      state.actionGrid[moveOption] = getPawnAtLocation(moveOption, state.pawns).player === state.turn ? 1 : 0;
+      state.actionGrid[moveOption] = isFriendlyPawn(getPawnAtLocation(moveOption, state.pawns), state.turn) ? 1 : 0;
     });
 
     if (state.selectedPawn.isMaster) {
-      const enemyAttackSquares = (state.turn === players.blue) ? state.redAttackOptions : state.blueAttackOptions;
       state.actionGrid.forEach((square, index) => {
-        if (square === 0 && enemyAttackSquares.some(s => s === index)) {
+        if (square === 0 && getEnemyAttackOptions(state).some(s => s === index)) {
           state.actionGrid[index] = 2;
         }
       });

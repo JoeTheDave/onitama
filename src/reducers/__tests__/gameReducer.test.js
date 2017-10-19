@@ -223,3 +223,17 @@ describe('gameReducer.isFriendlyPawn', () => {
   });
 });
 
+describe('gameReducer.getEnemyAttackOptions', () => {
+  test('should return non-active player attack options', () => {
+    const state = initializeState();
+    state.redAttackOptions = [1, 2, 3];
+    state.blueAttackOptions = [20, 21, 22];
+    state.turn = players.red;
+    const enemyOfRedAttackOptions = gameReducer.getEnemyAttackOptions(state);
+    state.turn = players.blue;
+    const enemyOfBlueAttackOptions = gameReducer.getEnemyAttackOptions(state);
+    expect(enemyOfRedAttackOptions).toEqual([20, 21, 22]);
+    expect(enemyOfBlueAttackOptions).toEqual([1, 2, 3]);
+  });
+});
+
