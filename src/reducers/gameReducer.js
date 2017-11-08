@@ -142,7 +142,8 @@ const startNewGame = state => {
   };
 };
 
-const executeMove = (state, squareId) => {
+const executeMove = (currentState, squareId) => {
+  const state = cloneDeep(currentState);
   if (state.actionGrid[squareId] === 0) {
     const history = state.history.slice(0);
     history.push({ pawn: state.selectedPawn, card: state.selectedCard, squareId, id: history.length });
@@ -172,7 +173,7 @@ const executeMove = (state, squareId) => {
     activeCard.location = turn;
     activeCard.deckPosition = 3;
 
-    return {
+    return calculateValidMoves({
       ...state,
       selectedCard: null,
       selectedPawn: null,
@@ -181,33 +182,35 @@ const executeMove = (state, squareId) => {
       cards,
       history,
       [`${state.turn}AttackOptions`]: getPlayerAttackOptions(state.turn, pawns, cards),
-    };
+    });
   }
-  return state;
+  return calculateValidMoves(state);
 };
 
-const cardSelected = (state, card) => {
+const cardSelected = (currentState, card) => {
+  const state = cloneDeep(currentState);
   if (state.turn && card.location === state.turn && card.deckPosition !== 3) {
     if (state.selectedCard && card.id === state.selectedCard.id) {
-      return { ...state, selectedCard: null };
+      return calculateValidMoves({ ...state, selectedCard: null });
     }
-    return { ...state, selectedCard: card };
+    return calculateValidMoves({ ...state, selectedCard: card });
   }
-  return state;
+  return calculateValidMoves(state);
 };
 
-const pawnSelected = (state, pawn) => {
+const pawnSelected = (currentState, pawn) => {
+  const state = cloneDeep(currentState);
   if (state.turn && pawn.alive) {
     if (pawn.player === state.turn) {
       if (state.selectedPawn && pawn.id === state.selectedPawn.id) {
-        return { ...state, selectedPawn: null };
+        return calculateValidMoves({ ...state, selectedPawn: null });
       }
-      return { ...state, selectedPawn: pawn };
+      return calculateValidMoves({ ...state, selectedPawn: pawn });
     } else if (state.selectedCard && state.selectedPawn) {
-      return executeMove(state, pawn.location);
+      return calculateValidMoves(executeMove(state, pawn.location));
     }
   }
-  return state;
+  return calculateValidMoves(state);
 };
 
 export default function (state = getInitialState(), action) {
@@ -222,13 +225,13 @@ export default function (state = getInitialState(), action) {
       return startNewGame(state);
 
     case CARD_SELECTED:
-      return calculateValidMoves(cardSelected(cloneDeep(state), action.card));
+      return cardSelected(state, action.card);
 
     case PAWN_SELECTED:
-      return calculateValidMoves(pawnSelected(cloneDeep(state), action.pawn));
+      return pawnSelected(state, action.pawn);
 
     case EXECUTE_MOVE:
-      return calculateValidMoves(executeMove(cloneDeep(state), action.squareId));
+      return executeMove(state, action.squareId);
 
     case RESET_ALL_REDUCERS:
       return { ...getInitialState() };
