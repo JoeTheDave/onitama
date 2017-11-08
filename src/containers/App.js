@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 
 import actionCreators from 'actions';
 import Frame from 'components/Frame';
+import { players } from 'architecture/constants';
 
 const mapStateToProps = state => ({
   game: state.game,
@@ -22,8 +23,29 @@ export class App extends React.Component {
     game: PropTypes.object.isRequired,
   };
 
+  constructor(props) {
+    super(props);
+    this.aiDelayTimer = null;
+  }
+
   componentWillMount() {
     this.props.actions.game.getCards();
+  }
+
+  componentWillUnMount() {
+    if (this.aiDelayTimer) {
+      clearTimeout(this.aiDelayTimer);
+    }
+    this.aiDelayTimer = null;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { game } = nextProps;
+    if (game.aiActive && game.turn === players.red) {
+      this.aiDelayTimer = setTimeout(() => {
+        this.props.actions.game.executeAiMove();
+      }, 2500);
+    }
   }
 
   render() {

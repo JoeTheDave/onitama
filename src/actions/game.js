@@ -1,15 +1,31 @@
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
+  EXECUTE_AI_MOVE,
   EXECUTE_MOVE,
   PAWN_SELECTED,
   START_NEW_GAME,
+  gameTypes,
 } from 'architecture/constants';
 import cardsService from 'services/cards';
 
-export function startNewGame() {
+export function startNewGameAgainstAI() {
   return {
     type: START_NEW_GAME,
+    gameType: gameTypes.ai,
+  };
+}
+
+export function startNewGameAgainstLocal() {
+  return {
+    type: START_NEW_GAME,
+    gameType: gameTypes.local,
+  };
+}
+
+export function startNewGameAgainstRemote() {
+  return {
+    type: 'not-implemented',
   };
 }
 
@@ -44,5 +60,11 @@ export function executeMove(squareId) {
   return {
     type: EXECUTE_MOVE,
     squareId,
+  };
+}
+
+export function executeAiMove() {
+  return {
+    type: EXECUTE_AI_MOVE,
   };
 }

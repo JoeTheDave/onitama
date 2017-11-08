@@ -48,7 +48,7 @@ const styles = {
     pointerEvents: 'none',
     transition: '2s',
     transitionDelay: '2s',
-    opacity: props => ((props.game.turn === players.blue) ? 1 : 0),
+    opacity: props => ((props.game.turn === players.blue || props.game.aiActive) ? 1 : 0),
   },
   squareNameP2: {
     fontSize: 36,
@@ -58,7 +58,7 @@ const styles = {
     transition: '2s',
     transitionDelay: '2s',
     transform: 'rotateZ(180deg) translateY(-50px)',
-    opacity: props => ((props.game.turn === players.red) ? 1 : 0),
+    opacity: props => ((props.game.turn === players.red && !props.game.aiActive) ? 1 : 0),
   },
 };
 

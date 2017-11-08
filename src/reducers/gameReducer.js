@@ -1,13 +1,15 @@
-import { cloneDeep, fill, flattenDeep, shuffle, sortBy, sortedUniq } from 'lodash';
+import { cloneDeep, fill, flattenDeep, random, shuffle, sortBy, sortedUniq } from 'lodash';
 import update from 'immutability-helper';
 import {
   CARDS_RECEIVED,
   CARD_SELECTED,
+  EXECUTE_AI_MOVE,
   EXECUTE_MOVE,
   PAWN_SELECTED,
   START_NEW_GAME,
   RESET_ALL_REDUCERS,
   players,
+  gameTypes,
 } from 'architecture/constants';
 
 // Tested //////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -122,7 +124,8 @@ const getPlayerAttackOptions = (player, pawns, cards) => {
   return sortedUniq(flattenDeep(playerPawns.map(pawn => playerCards.map(card => calculateMovementOptions(pawn, card)))).sort((a, b) => a - b));
 };
 
-const startNewGame = state => {
+const startNewGame = (currentState, gameType) => {
+  const state = cloneDeep(currentState);
   const cards = shuffleDeck(state.cards);
   const len = cards.length;
   const turn = cardAtDeckPosition(cards, len - 5).firstPlayer;
@@ -137,6 +140,7 @@ const startNewGame = state => {
     ...calculateValidMoves(getNewGameState()),
     cards,
     turn,
+    aiActive: gameType === gameTypes.ai,
     redAttackOptions: getPlayerAttackOptions(players.red, state.pawns, cards),
     blueAttackOptions: getPlayerAttackOptions(players.blue, state.pawns, cards),
   };
@@ -213,6 +217,25 @@ const pawnSelected = (currentState, pawn) => {
   return calculateValidMoves(state);
 };
 
+const executeArtificialIntelligenceMove = currentState => {
+  const state = cloneDeep(currentState);
+  const pawnOptions = state.pawns.filter(pawn => pawn.player === players.red && pawn.alive);
+  const cardOptions = state.cards.filter(card => card.location === players.red && card.deckPosition !== 3);
+  const moveOptions = [];
+  cardOptions.forEach(card => {
+    pawnOptions.forEach(pawn => {
+      pawnSelected(cardSelected(state, card), pawn).actionGrid.forEach((moveOption, gridSquare) => {
+        if (moveOption === 0) {
+          moveOptions.push({ card, pawn, gridSquare });
+        }
+      });
+    });
+  });
+
+  const selectedMove = moveOptions[random(moveOptions.length - 1)];
+  return executeMove(pawnSelected(cardSelected(state, selectedMove.card), selectedMove.pawn), selectedMove.gridSquare);
+};
+
 export default function (state = getInitialState(), action) {
   switch (action.type) {
     case CARDS_RECEIVED:
@@ -222,7 +245,7 @@ export default function (state = getInitialState(), action) {
       };
 
     case START_NEW_GAME:
-      return startNewGame(state);
+      return startNewGame(state, action.gameType);
 
     case CARD_SELECTED:
       return cardSelected(state, action.card);
@@ -232,6 +255,9 @@ export default function (state = getInitialState(), action) {
 
     case EXECUTE_MOVE:
       return executeMove(state, action.squareId);
+
+    case EXECUTE_AI_MOVE:
+      return executeArtificialIntelligenceMove(state);
 
     case RESET_ALL_REDUCERS:
       return { ...getInitialState() };

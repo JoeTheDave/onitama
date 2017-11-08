@@ -1,6 +1,7 @@
 // Redux state transitions
 export const CARDS_RECEIVED = 'CARDS_RECEIVED';
 export const CARD_SELECTED = 'CARD_SELECTED';
+export const EXECUTE_AI_MOVE = 'EXECUTE_AI_MOVE';
 export const EXECUTE_MOVE = 'EXECUTE_MOVE';
 export const PAWN_SELECTED = 'PAWN_SELECTED';
 export const START_NEW_GAME = 'START_NEW_GAME';
@@ -15,6 +16,11 @@ export const alignmentTypes = {
   left: 'left',
   right: 'right',
   center: 'center',
+};
+
+export const gameTypes = {
+  ai: 'ai',
+  local: 'local',
 };
 
 export const colors = {

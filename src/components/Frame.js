@@ -25,7 +25,7 @@ const newGameButtonStyles = {
     animationIterationCount: 'infinite',
     animationTimingFunction: 'linear',
   },
-}
+};
 
 const styles = {
   perspectiveFrame: {
@@ -49,7 +49,7 @@ const styles = {
     position: 'relative',
     transition: '2s',
     transitionDelay: '2s',
-    transform: props => (props.game.turn === players.red ?
+    transform: props => (props.game.turn === players.red && !props.game.aiActive ?
       'rotateX(35deg) rotateZ(165deg) translateX(-300px) translateY(900px) translateZ(-550px)' :
       'rotateX(35deg) rotateZ(-15deg) translateX(300px) translateY(-900px) translateZ(-550px)'),
     transformStyle: 'preserve-3d',
@@ -109,9 +109,9 @@ export const Frame = ({ actions, classes, game }) => {
           <Logo width={120} fillColor={'rgba(0, 0, 0, 0.2)'} styles={{ left: -5, top: 5 }} />
           <Logo width={120} fillColor={'black'} />
         </div>
-        <div className={classes.newGameButtonAI} onClick={actions.startNewGame}>New Game vs AI</div>
-        <div className={classes.newGameButtonLocal} onClick={actions.startNewGame}>New Game vs Local Opponent</div>
-        <div className={classes.newGameButtonRemote} onClick={actions.startNewGame}>New Game vs Remote Opponent</div>
+        <div className={classes.newGameButtonAI} onClick={actions.startNewGameAgainstAI}>New Game vs AI</div>
+        <div className={classes.newGameButtonLocal} onClick={actions.startNewGameAgainstLocal}>New Game vs Local Opponent</div>
+        <div className={classes.newGameButtonRemote} onClick={actions.startNewGameAgainstRemote}>New Game vs Remote Opponent</div>
         <div className={classes.graphicOne} />
         <div className={classes.graphicTwo} />
         <div className={classes.tableTop}>
@@ -122,6 +122,7 @@ export const Frame = ({ actions, classes, game }) => {
               cardInfo={card}
               cardSelectedHandler={(actions.cardSelected)}
               isSelected={!!(selectedCard && selectedCard.id === card.id)}
+              disableSelection={game.aiActive && game.turn === players.red}
             />
           ))}
           {pawns.map(pawn => (
@@ -130,6 +131,7 @@ export const Frame = ({ actions, classes, game }) => {
               pawnInfo={pawn}
               pawnSelectedHandler={(actions.pawnSelected)}
               isSelected={!!(selectedPawn && selectedPawn.id === pawn.id)}
+              disableSelection={game.aiActive && game.turn === players.red}
             />
           ))}
         </div>

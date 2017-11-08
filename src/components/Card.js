@@ -115,11 +115,13 @@ const styles = {
   cardBackLogoForeground: { position: 'absolute', top: 75, left: 30 },
 };
 
-export const Card = ({ cardInfo, cardSelectedHandler, classes }) => {
+export const Card = ({ cardInfo, cardSelectedHandler, classes, disableSelection }) => {
   const { alignment, attackPattern, name, text } = cardInfo;
   const Character = getCharacterComponent(name);
   const handleClick = () => {
-    cardSelectedHandler(cardInfo);
+    if (!disableSelection) {
+      cardSelectedHandler(cardInfo);
+    }
   };
   return (
     <div className={classes.cardContainer} onClick={handleClick}>
@@ -160,7 +162,12 @@ Card.propTypes = {
   cardInfo: PropTypes.object.isRequired,
   cardSelectedHandler: PropTypes.func.isRequired,
   classes: PropTypes.object.isRequired,
+  disableSelection: PropTypes.bool,
   isSelected: PropTypes.bool.isRequired, // eslint-disable-line react/no-unused-prop-types
+};
+
+Card.defaultProps = {
+  disableSelection: false,
 };
 
 export default injectSheet(styles)(Card);

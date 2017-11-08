@@ -90,7 +90,7 @@ for (let i = 0; i < 25; i++) {
 }
 
 
-export const Pawn = ({ classes, isSelected, pawnInfo, pawnSelectedHandler }) => {
+export const Pawn = ({ classes, disableSelection, isSelected, pawnInfo, pawnSelectedHandler }) => {
   const { player } = pawnInfo;
   const buildClasses = baseClass => {
     const classList = [baseClass, classes[player]];
@@ -99,7 +99,9 @@ export const Pawn = ({ classes, isSelected, pawnInfo, pawnSelectedHandler }) => 
     return classList.join(' ');
   };
   const handleClick = () => {
-    pawnSelectedHandler(pawnInfo);
+    if (!disableSelection) {
+      pawnSelectedHandler(pawnInfo);
+    }
   };
 
   return (
@@ -123,9 +125,14 @@ export const Pawn = ({ classes, isSelected, pawnInfo, pawnSelectedHandler }) => 
 
 Pawn.propTypes = {
   classes: PropTypes.object.isRequired,
+  disableSelection: PropTypes.bool,
   isSelected: PropTypes.bool.isRequired,
   pawnInfo: PropTypes.object.isRequired,
   pawnSelectedHandler: PropTypes.func.isRequired,
+};
+
+Pawn.defaultProps = {
+  disableSelection: false,
 };
 
 export default injectSheet(styles)(Pawn);
