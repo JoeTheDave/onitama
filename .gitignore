@@ -41,6 +41,3 @@ jspm_packages
 
 #VSCode project files
 .vscode
-
-#we don't want dist checked into source control, it should be rebuilt locally
-dist

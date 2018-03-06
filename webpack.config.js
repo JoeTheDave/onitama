@@ -4,7 +4,7 @@ const CleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
   entry: [
-    'webpack-dev-server/client?http://localhost:8080',
+    ...(process.env.NODE_ENV === 'dev' ? ['webpack-dev-server/client?http://localhost:3000'] : []),
     './src/index.js',
   ],
   devtool: 'inline-source-map',

@@ -5,13 +5,19 @@
   "author": "Joe Davis",
   "license": "MIT",
   "scripts": {
-    "start": "webpack-dev-server --open",
+    "start": "NODE_ENV=dev webpack-dev-server --host localhost --port 3000 --open",
+    "build": "NODE_ENV=production webpack",
+    "server": "NODE_ENV=dev node server.js",
     "lint": "eslint .",
     "lint-fix": "eslint . --fix",
     "test": "jest",
     "test-debug": "node --inspect-brk node_modules/.bin/jest --runInBand"
   },
   "dependencies": {
+    "hapi": "^17.2.1",
+    "inert": "^5.1.0"
+  },
+  "devDependencies": {
     "babel-core": "^6.26.0",
     "babel-eslint": "^8.0.0",
     "babel-loader": "^7.1.2",
