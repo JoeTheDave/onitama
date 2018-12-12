@@ -74,6 +74,11 @@ const styles = {
     top: 170,
     left: 0,
   },
+  signInButton: {
+    ...newGameButtonStyles,
+    top: 200,
+    left: -10,
+  },
   '@keyframes startGamePulsate': {
     '0%': { textShadow: '1px 1px 5px orange, -1px 1px 5px orange, 1px -1px 5px orange, -1px -1px 5px orange' },
     '50%': { textShadow: '5px 5px 20px orange, -5px 5px 20px orange, 5px -5px 20px orange, -5px -5px 20px orange' },
@@ -109,9 +114,11 @@ export const Frame = ({ actions, classes, game }) => {
           <Logo width={120} fillColor={'rgba(0, 0, 0, 0.2)'} styles={{ left: -5, top: 5 }} />
           <Logo width={120} fillColor={'black'} />
         </div>
-        <div className={classes.newGameButtonAI} onClick={actions.startNewGameAgainstAI}>New Game vs AI</div>
-        <div className={classes.newGameButtonLocal} onClick={actions.startNewGameAgainstLocal}>New Game vs Local Opponent</div>
-        <div className={classes.newGameButtonRemote} onClick={actions.startNewGameAgainstRemote}>New Game vs Remote Opponent</div>
+        <div className={classes.newGameButtonAI} onClick={actions.game.startNewGameAgainstAI}>New Game vs AI</div>
+        <div className={classes.newGameButtonLocal} onClick={actions.game.startNewGameAgainstLocal}>New Game vs Local Opponent</div>
+        <div className={classes.newGameButtonRemote} onClick={actions.game.startNewGameAgainstRemote}>New Game vs Remote Opponent</div>
+        <div className={classes.signInButton} onClick={actions.auth.authenticateWithGoogle}>Sign In</div>
+
         <div className={classes.graphicOne} />
         <div className={classes.graphicTwo} />
         <div className={classes.tableTop}>
@@ -120,7 +127,7 @@ export const Frame = ({ actions, classes, game }) => {
             <Card
               key={`card-${card.id}`}
               cardInfo={card}
-              cardSelectedHandler={(actions.cardSelected)}
+              cardSelectedHandler={(actions.game.cardSelected)}
               isSelected={!!(selectedCard && selectedCard.id === card.id)}
               disableSelection={game.aiActive && game.turn === players.red}
             />
@@ -129,7 +136,7 @@ export const Frame = ({ actions, classes, game }) => {
             <Pawn
               key={`pawn-${pawn.id}`}
               pawnInfo={pawn}
-              pawnSelectedHandler={(actions.pawnSelected)}
+              pawnSelectedHandler={(actions.game.pawnSelected)}
               isSelected={!!(selectedPawn && selectedPawn.id === pawn.id)}
               disableSelection={game.aiActive && game.turn === players.red}
             />

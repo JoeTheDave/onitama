@@ -14,6 +14,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   actions: {
     game: bindActionCreators(actionCreators.game, dispatch),
+    auth: bindActionCreators(actionCreators.authentication, dispatch),
   },
 });
 
@@ -51,7 +52,7 @@ export class App extends React.Component {
   render() {
     const { game, actions } = this.props;
     return (
-      <Frame game={game} actions={actions.game} />
+      <Frame game={game} actions={actions} />
     );
   }
 }

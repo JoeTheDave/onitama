@@ -40,6 +40,7 @@ module.exports = {
     "no-param-reassign": 0,
     "radix": 0,
     "no-mixed-operators": 0,
+    "import/prefer-default-export": 0,
 
     // ################################################################################################################
     // Copied and Pasted (should be audited to make sure these are desired)

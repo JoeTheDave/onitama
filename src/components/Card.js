@@ -138,7 +138,7 @@ export const Card = ({ cardInfo, cardSelectedHandler, classes, disableSelection 
             </div>
             <div className={classes.bottomContent}>
               <div className={classes.verticalAligner} />
-              <div className={classes.wisdom}>{text.split('\n').map((textPart, index) => <div key={index}>{textPart}</div>)}</div>
+              <div className={classes.wisdom}>{text.split('\n').map(textPart => <div key={textPart.split(' ').join('')}>{textPart}</div>)}</div>
               <div className={classes.firstPlayerIcon}>
                 <MasterIcon />
               </div>
