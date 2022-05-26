@@ -1,24 +1,5 @@
-export enum Player {
-  red,
-  blue,
-}
-
-export enum AlignmentType {
-  left,
-  right,
-  center,
-}
-
-export interface Card {
-  name: string;
-  firstPlayer: Player;
-  text: string;
-  attackPattern: {
-    x: number;
-    y: number;
-  }[];
-  alignment: AlignmentType;
-}
+import { AlignmentType, Player } from '~/lib/types';
+import type { Card } from '~/lib/types';
 
 export const cards: Card[] = [
   {
