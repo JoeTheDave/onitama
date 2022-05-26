@@ -8,9 +8,12 @@
     "dev:node": "cross-env NODE_ENV=development nodemon ./server.js --watch ./server.js",
     "dev:remix": "remix watch",
     "start": "cross-env NODE_ENV=production node ./server.js",
-    "test": "jest"
+    "test": "jest",
+    "init-db": "sh prisma/init-db.sh",
+    "push-schema": "npx prisma db push"
   },
   "dependencies": {
+    "@prisma/client": "^3.14.0",
     "@remix-run/express": "^1.5.1",
     "@remix-run/node": "^1.5.1",
     "@remix-run/react": "^1.5.1",
@@ -19,6 +22,7 @@
     "express": "^4.18.1",
     "lodash": "^4.17.21",
     "morgan": "^1.10.0",
+    "prisma": "^3.14.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
